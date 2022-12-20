@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+}
+
+:root {
+    --primary:rgba(65,173,193,1);
+    --secondary: rgba(45,132,150,1);
+    --primary_gradient: linear-gradient(160deg, rgba(145,224,241,1) 0%, rgba(65,173,193,1) 50%, rgba(45,132,150,1) 100%);
+    --creamy:#f2f2f2f2;
+}
+
+.html{
+    height: 100%;
+}
+
+.body{
+    height: 100%;
+}
+
+#app{
+    height: 100%;
+    background-color: aquamarine;
+}

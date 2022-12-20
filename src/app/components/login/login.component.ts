@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService : LoginService, private formBuilder : FormBuilder) { }
+  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -21,9 +22,13 @@ export class LoginComponent implements OnInit {
   });
 
   onSubmit(){
-    if (this.loginService.getValidation(this.loginForm.value))
-      console.log("true");
-    else
-      console.log("false");
+    this.apiService.validateLogin(this.loginForm.value).subscribe(
+      (error) => {
+        alert("Username or password are incorrect");
+      },
+      () => {
+        this.router.navigate(["/mail"]);
+      }
+    );
   }
 }
