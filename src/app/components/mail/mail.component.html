@@ -1,1 +1,56 @@
-<p>mail works!</p>
+
+<div class="mail-container">
+ 
+  <section>
+      <div class = "tools">
+        
+        <div class = "search_container">
+          <label for="search">Search:</label><br>
+          <input type = "text" id = "search_text">
+          <button type = "button" value = "Search" >Search</button>
+        </div>
+        
+        <div class="sort_container">
+          <label for="sort">Sort:</label><br>
+            <select name="sort_menu" id="sort_menu">
+                
+              <option value="date">Date</option>
+              <option value="priority">Priority</option>
+              <option value="contacts">Contacts</option>
+              <option value="sender">Sender</option>
+              <option value="subject">Subject</option>
+              <option value="body">Body</option>
+              
+            </select>
+            <button type = "button" value = "Sort" >Sort</button>
+        </div>
+        
+        <div id="filter_container">
+           <label for="filter">Filter: </label><br>
+          <input type = "text" id = "filter_text">
+           <select name="filter_menu" id="filter_menu">
+                <option value="sender">Sender</option>
+                <option value="recievers">Subject</option>
+            </select>
+            
+            <button type = "button" value = "Filter" >Filter</button>
+        </div>  
+      </div>
+
+    
+    <router-outlet></router-outlet>
+  </section>
+  
+  <aside>
+    <div id="logo">Email-Server</div>
+    <button  class="button">Compose</button>
+    <button class="button">Inbox</button>
+    <button class="button">Draft</button>
+    <button class="button">Trash</button>
+    <button class="button">Sent</button>
+    <button class="button">Contacts</button>
+    <button class="button">User Folders</button>
+    <button class="button">add Contact</button>
+    <button class="button">LogOut</button>
+  </aside>
+</div>
