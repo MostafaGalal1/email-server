@@ -1,0 +1,36 @@
+.layout{
+    background-color: var(--creamy);
+    height: 100vh;
+}
+
+.main-bar{
+    top: 0%;
+    height: 10vh;
+    background-color: var(--primary);
+    margin-bottom: 6px;
+    width:100%;
+}
+
+.options{
+    display: inline-block;
+    height: 88vh; 
+    width: 20vw;
+    margin-right: 16px;
+}
+
+.container{
+    overflow-y: auto;
+    display: inline-block;
+    height: 88vh; 
+    width: 78vw;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.navigation-bar {
+    position: sticky;
+    top: 0; 
+    background-color: azure;
+    height: 50px;
+    width: 100%;
+  }
