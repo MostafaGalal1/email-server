@@ -1,165 +1,165 @@
 .layout{
-    background-color: var(--creamy);
-    height: 100vh;
+  background-color: var(--creamy);
+  height: 100vh;
 }
 
 .main-bar{
-    top: 0%;
-    height: 10vh;
-    background-color: var(--primary);
-    margin-bottom: 6px;
-    width:100%;
+  top: 0%;
+  height: 10vh;
+  background-color: var(--primary);
+  margin-bottom: 6px;
+  width:100%;
 }
 
 .material-symbols-outlined {
-  opacity: 0.6;
-  vertical-align:middle;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+opacity: 0.6;
+vertical-align:middle;
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 48
 }
 
 .search-container{
-  display: flex;
-  position: relative;
-  align-self: center;
-  width: 548px;
-  padding: 0px;
-  height: 46px;
-  border-radius: 10px;
-  border: 1px;
-  left:20px;
-  border: 1px solid whitesmoke;
-  background: var(--creamy);
+display: flex;
+position: relative;
+align-self: center;
+width: 548px;
+padding: 0px;
+height: 46px;
+border-radius: 10px;
+border: 1px;
+left:20px;
+border: 1px solid whitesmoke;
+background: var(--creamy);
 }
 
 .refresh-button{
-  display: inline-block;
-  align-self: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  margin: 12px;
-  padding: 0;
-  border: 1px;
+display: inline-block;
+align-self: center;
+width: 40px;
+height: 40px;
+border-radius: 100%;
+margin: 12px;
+padding: 0;
+border: 1px;
 }
 
 .search-container button{
-  display: inline-block;
-  align-self: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  margin: 6px;
-  padding: 0;
-  border: 1px;
-  background: transparent;
+display: inline-block;
+align-self: center;
+width: 40px;
+height: 40px;
+border-radius: 100%;
+margin: 6px;
+padding: 0;
+border: 1px;
+background: transparent;
 }
 
 .search-container input{
-  box-sizing: border-box;
-  align-self: center;
-  display: inline-block;
-  width: 396px;
-  height: 35px;
-  border: 1px;
-  background: transparent;
+box-sizing: border-box;
+align-self: center;
+display: inline-block;
+width: 396px;
+height: 35px;
+border: 1px;
+background: transparent;
 }
 
 .search-container .reset-button{
-  margin-right: 0px;
-  visibility: hidden;
+margin-right: 0px;
+visibility: hidden;
 }
 
 .search-container button:hover{
-  background: var(--hover);
+background: var(--hover);
 }
 
 .options{
-    display: inline-block;
-    border-radius: 30px;
-    height: 88vh; 
-    width: 14vw;
-    margin-right: 14px;
-    margin-left: 16px;
-    background-color: var(--primary);
-    border-radius: 30px;
-}
-
-.container{
-  overflow-y: auto;
   display: inline-block;
+  border-radius: 30px;
   height: 88vh; 
-  width: 83vw;
-  background-color: white;
+  width: 14vw;
+  margin-right: 14px;
+  margin-left: 16px;
+  background-color: var(--primary);
   border-radius: 30px;
 }
 
+.container{
+overflow-y: auto;
+display: inline-block;
+height: 88vh; 
+width: 83vw;
+background-color: white;
+border-radius: 30px;
+}
+
 .navigation-bar {
-  display: flex;
-  position: sticky;
-  top: 0;
-  background-color: var(--primary);
-  height: 60px;
-  width: 100%;
+display: flex;
+position: sticky;
+top: 0;
+background-color: var(--primary);
+height: 60px;
+width: 100%;
 }
 
 .search-container input:focus{
-  outline: none;
+outline: none;
 }
 
 .filter-search {
-  position: relative;
-  visibility: hidden;
-  top:-8px;
-  left: 84px;
+position: relative;
+visibility: hidden;
+top:-8px;
+left: 84px;
 }
 
 .refresh-button:hover{
-  background: var(--hover);
+background: var(--hover);
 }
 
 .options-div{
-  display: block;
-  font-size: 15px;
-  margin: auto;
-  width: 156px;
-  border-radius: 100px;
-  padding: 6px 20px;
-  border: 1px solid var(--primary);
-  background: var(--primary);
-  color: var(--creamy);
-  transition: 0.35s;
+display: block;
+font-size: 15px;
+margin: auto;
+width: 156px;
+border-radius: 100px;
+padding: 6px 20px;
+border: 1px solid var(--primary);
+background: var(--primary);
+color: var(--creamy);
+transition: 0.35s;
 }
 
 .options-div span{
-  opacity: 1;
+opacity: 1;
 }
 
 .options-div input{
-  display: inline-block;
-  font-size: 15px;
-  vertical-align:middle;
-  margin: auto;
-  border: 0px solid var(--primary);
-  color:white;
-  background: transparent;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 144px;
+display: inline-block;
+font-size: 15px;
+vertical-align:middle;
+margin: auto;
+border: 0px solid var(--primary);
+color:white;
+background: transparent;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 144px;
 
 }
 
 .options-div:hover{
-  cursor: pointer;
-  background: white;
-  color: var(--primary);
+cursor: pointer;
+background: white;
+color: var(--primary);
 }
 
 .options-div:hover .button{
-  cursor: pointer;
-  color: var(--primary);
+cursor: pointer;
+color: var(--primary);
 }
