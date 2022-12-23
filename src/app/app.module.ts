@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ComposeBoxComponent } from './components/mail/compose-box/compose-box.component';
 import { FilterSearchComponent } from './components/mail/filter-search/filter-search.component';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FilterSearchComponent } from './components/mail/filter-search/filter-se
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ClickOutsideModule
   ],
   providers: [],
   bootstrap: [AppComponent]
