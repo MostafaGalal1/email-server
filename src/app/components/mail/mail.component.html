@@ -1,56 +1,80 @@
-
-<div class="mail-container">
- 
-  <section>
-      <div class = "tools">
-        
-        <div class = "search_container">
-          <label for="search">Search:</label><br>
-          <input type = "text" id = "search_text">
-          <button type = "button" value = "Search" >Search</button>
-        </div>
-        
-        <div class="sort_container">
-          <label for="sort">Sort:</label><br>
-            <select name="sort_menu" id="sort_menu">
-                
-              <option value="date">Date</option>
-              <option value="priority">Priority</option>
-              <option value="contacts">Contacts</option>
-              <option value="sender">Sender</option>
-              <option value="subject">Subject</option>
-              <option value="body">Body</option>
-              
-            </select>
-            <button type = "button" value = "Sort" >Sort</button>
-        </div>
-        
-        <div id="filter_container">
-           <label for="filter">Filter: </label><br>
-          <input type = "text" id = "filter_text">
-           <select name="filter_menu" id="filter_menu">
-                <option value="sender">Sender</option>
-                <option value="recievers">Subject</option>
-            </select>
-            
-            <button type = "button" value = "Filter" >Filter</button>
-        </div>  
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class = "layout">
+  <div class = "main-bar">
+  </div>
+  <div class="options">
+    <aside>
+      <div id="logo">Email-Server</div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">edit</span>
+        <input type="button" class="button" value="Compose">
       </div>
-
-    
-    <router-outlet></router-outlet>
-  </section>
-  
-  <aside>
-    <div id="logo">Email-Server</div>
-    <button  class="button">Compose</button>
-    <button class="button">Inbox</button>
-    <button class="button">Draft</button>
-    <button class="button">Trash</button>
-    <button class="button">Sent</button>
-    <button class="button">Contacts</button>
-    <button class="button">User Folders</button>
-    <button class="button">add Contact</button>
-    <button class="button">LogOut</button>
-  </aside>
+      <div class="options-div">
+        <span class="material-symbols-outlined">inbox</span>
+        <input type="button" class="button" value="Inbox">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">send</span>
+        <input type="button" class="button" value="Sent">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">draft</span>
+        <input type="button" class="button" value="Draft">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">delete</span>
+        <input type="button" class="button" value="Trash">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">contacts</span>
+        <input type="button" class="button" value="Contacts">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">folder</span>
+        <input type="button" class="button" value="User Folders">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">folder</span>
+        <input type="button" class="button" value="add Contact">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">logout</span>
+        <input type="button" class="button" value="Log out">
+      </div>
+    </aside>
+  </div>
+  <div class="container">
+    <div class = "navigation-bar">
+      <button class = "refresh-button" #refreshButton type = "button"><span class="material-symbols-outlined">refresh</span></button>
+      <div class = "search-container" [ngStyle]="{'background-color': searchColor}">
+        <button class = "Search-button" type = "button"><span class="material-symbols-outlined">search</span></button>
+        <input type = "text" id = "search_text" #searchBar (click)="whitenBar()" (clickOutside)="darkenBar()" value="Search in mail">
+        <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
+        <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : isVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
+      </div>
+    </div>
+    <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
+    <table class = "email-table" cellpadding="0" role="grid" aria-readonly="true">
+      <tbody>
+        <tr tabindex="-1" role="row" draggable="false">
+          <td class="email-info" role="gridcell" tabindex="-1">
+          <span class="email-sender">CFI eNews</span>
+          <span class="email-data">12:07 AM</span>
+          <span class="email-date">12:07 AM</span>
+        </tr>
+        <tr tabindex="-1" role="row" draggable="false">
+          <td class="email-info" role="gridcell" tabindex="-1">
+          <span class="email-sender">CFI eNews</span>
+          <span class="email-data">12:07 AM</span>
+          <span class="email-date">12:07 AM</span>
+        </tr>
+        <tr tabindex="-1" role="row" draggable="false">
+          <td class="email-info" role="gridcell" tabindex="-1">
+          <span class="email-sender">CFI eNews</span>
+          <span class="email-data">12:07 AM</span>
+          <span class="email-date">12:07 AM</span>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

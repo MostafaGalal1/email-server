@@ -16,4 +16,8 @@ export class ApiService {
   validateLogin(loginForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/login', loginForm);
   }
+
+  searchMails(searchForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/login', searchForm);
+  }
 }
