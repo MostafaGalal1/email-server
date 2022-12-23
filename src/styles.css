@@ -8,10 +8,8 @@
     --secondary: rgba(45,132,150,1);
     --primary_gradient: linear-gradient(160deg, rgba(145,224,241,1) 0%, rgba(65,173,193,1) 50%, rgba(45,132,150,1) 100%);
     --creamy:#f2f2f2f2;
-}
-
-.html{
-    height: 100%;
+    --hover:rgb(220, 230, 230);
+    --hoveight: 100%;
 }
 
 .body{
