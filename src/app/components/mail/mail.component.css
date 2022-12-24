@@ -134,39 +134,55 @@ left: 84px;
 }
 
 .refresh-button:hover{
-background: var(--hover);
+  background: var(--hover);
+}
+
+.emails-table{
+  width: 100%;
+}
+
+th, td {
+  min-width: 120px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px 8px;
+  height: 10px;
+}
+
+tr:hover{
+  background-color: var(--hover);
 }
 
 .options-div{
-display: block;
-font-size: 15px;
-margin: auto;
-width: 156px;
-border-radius: 100px;
-padding: 6px 20px;
-border: 1px solid var(--primary);
-background: var(--primary);
-color: var(--creamy);
-transition: 0.35s;
+  display: block;
+  font-size: 15px;
+  margin: auto;
+  width: 156px;
+  border-radius: 100px;
+  padding: 6px 20px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--creamy);
+  transition: 0.35s;
 }
 
 .options-div span{
-opacity: 1;
+  opacity: 1;
 }
 
 .options-div input{
-display: inline-block;
-font-size: 15px;
-vertical-align:middle;
-margin: auto;
-border: 0px solid var(--primary);
-color:white;
-background: transparent;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-max-width: 144px;
-
+  display: inline-block;
+  font-size: 15px;
+  vertical-align:middle;
+  margin: auto;
+  border: 0px solid var(--primary);
+  color:white;
+  background: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 144px;
 }
 
 .options-div:hover{
@@ -176,6 +192,10 @@ color: var(--primary);
 }
 
 .options-div:hover .button{
-cursor: pointer;
-color: var(--primary);
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.ngx-pagination .pagination-next ~ {
+  content: "ss";
 }
