@@ -12,9 +12,13 @@ export class MailComponent implements OnInit {
   @ViewChild('searchBar', { read: ElementRef }) searchBar!: ElementRef;
   
   protected isVisible:boolean;
+  protected compose:boolean;
+  protected searchReset:boolean;
   protected searchColor:string;
 
   constructor() { 
+    this.searchReset = true;
+    this.compose = false;
     this.isVisible = false;
     this.searchColor = "";
   }
@@ -42,13 +46,33 @@ export class MailComponent implements OnInit {
   async whitenBar(){
     setTimeout(() => {
       this.searchColor = "white";
-    });
+      if (this.searchReset){
+        console.log("sdfgdfg");
+        this.searchBar.nativeElement.value = "";
+      }
+    }, 250);
   }
 
   async darkenBar(){
     setTimeout(() => {
       if (!this.isVisible)
         this.searchColor = "";
+      
+      if (this.searchBar.nativeElement.value === ""){
+        this.searchReset = true;
+        this.searchBar.nativeElement.value = "Search in mail";
+      } else {
+        if (this.searchReset && this.searchBar.nativeElement.value !== "Search in mail")
+          this.searchReset = false;
+      }
+    });
+  }
+
+  async composeIt(){
+    if (this.compose)
+      return;
+    setTimeout(() => {
+      this.compose = true;
     });
   }
 }
