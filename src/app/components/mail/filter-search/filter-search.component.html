@@ -1,0 +1,54 @@
+<div class="filter-search">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div class="sender-div">
+            <span class="sender-slabel"><label for="sender">From</label></span>
+            <span class="sender-sinput"><input type="text" class="sender" formControlName="sender" value="" id="sender"></span>
+        </div>
+        <div class="recievers-div">
+            <span class="recievers-slabel"><label for="recievers">To</label></span>
+            <span class="recievers-sinput"><input type="text" class="recievers" formControlName="recievers" value="" id="recievers"></span>
+        </div>
+        <div class="subject-div">
+            <span class="subject-slabel"><label for="subject">Subject</label></span>
+            <span class="subject-sinput"><input type="text" class="subject" formControlName="subject" value="" id="subject"></span>
+        </div>
+        <div class="body-div">
+            <span class="body-slabel"><label for="body">Has words</label></span>
+            <span class="body-sinput"><input type="text" class="body" formControlName="body" value="" id="body"></span>
+        </div>
+        <div class="date-div">
+            <span class="date-slabel"><label for="date">Date</label></span>
+        </div>
+        <div class="form-submit">
+            <input class="form-submit" type="submit" value="Search">
+        </div>
+    </form>
+
+
+    <div class="jjj" role="listbox" aria-haspopup="true" style="user-select: none; visibility: visible; overflow-y: auto; height: auto; left: 144.975px; top: 260.988px; display: none;">
+        <div class="J-N" role="option" id=":2j2" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">1 day</div>
+        </div>
+        <div class="J-N" role="option" id=":2j3" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">3 days</div>
+        </div>
+        <div class="J-N" role="option" id=":2j4" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">1 week</div>
+        </div>
+        <div class="J-N" role="option" id=":2j5" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">2 weeks</div>
+        </div>
+        <div class="J-N" role="option" id=":2j6" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">1 month</div>
+        </div>
+        <div class="J-N" role="option" id=":2j7" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">2 months</div>
+        </div>
+        <div class="J-N" role="option" id=":2j8" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">6 months</div>
+        </div>
+        <div class="J-N" role="option" id=":2j9" style="user-select: none;">
+            <div class="J-N-Jz" style="user-select: none;">1 year</div>
+        </div>
+    </div>
+</div>

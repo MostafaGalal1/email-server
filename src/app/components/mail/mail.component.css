@@ -1,85 +1,181 @@
-.mail-container {
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: 10vh auto;
-    grid-template-areas:"nav nav sec sec sec sec sec sec sec sec"
-      "nav nav sec sec sec sec sec sec sec sec";
-  }
-  
-  header {
-    background: var(--primary_gradient);
-    color: var(--creamy);
-    grid-area: header;
-    display: flex;
-    padding: 5px;
-    margin: 0px;
-    justify-content: center;
-    align-items: center;
-  }
-  section {
-    background-color: white;
-    grid-area: sec;
-    padding: 5px;
-  }
-  
-  aside {
-    background: var(--primary_gradient);
-    color: var(--creamy);
-    grid-area: nav;
-    padding: 5px;
-  }
-  
-  #logo{
-    max-width:90%;
-    max-height: 100px;
-    border-radius: 10px;
-    margin-top: 20px;
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    color: white;
-    text-decoration: none;
-    font-size: 50px;
-    display: flex;
-    height: 100%;
-    justify-content: center;
+.layout{
+  background-color: var(--creamy);
+  height: 100vh;
+}
 
-  }
+.main-bar{
+  top: 0%;
+  height: 10vh;
+  background-color: var(--primary);
+  margin-bottom: 6px;
+  width:100%;
+}
 
-  .button {
-    width: 90%;
-    max-height: 55px;
-    height: 100%;
-    font-size: 25px;
-    border-radius: 100px;
-    margin-top: 10px;
-    background-color: transparent;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    color: white;
-    
-  }
-  
-  aside button:hover {
-    cursor: pointer;
-    background: white;
-    color: var(--primary)
-  }
-  
-  .tools{
-    color :  var(--primary);
-    display: flex;
-    
-  }
+.material-symbols-outlined {
+  opacity: 0.6;
+  vertical-align:middle;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
 
-  .search_container{
-    margin-right: 20px;
-  }
+.search-container{
+display: flex;
+position: relative;
+align-self: center;
+width: 548px;
+padding: 0px;
+height: 46px;
+border-radius: 10px;
+border: 1px;
+left:20px;
+border: 1px solid whitesmoke;
+background: var(--creamy);
+}
 
-  .sort_container{
-    margin-right: 20px;
-  }
-  
+.refresh-button{
+display: inline-block;
+align-self: center;
+width: 40px;
+height: 40px;
+border-radius: 100%;
+margin: 12px;
+padding: 0;
+border: 1px;
+}
+
+.search-container button{
+display: inline-block;
+align-self: center;
+width: 40px;
+height: 40px;
+border-radius: 100%;
+margin: 6px;
+padding: 0;
+border: 1px;
+background: transparent;
+}
+
+.pigeon{
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+}
+
+.pigeon-span{
+  position: relative;
+  display:inline-block;
+  left: 16px;
+  top:4px;
+}
+
+.search-container input{
+  box-sizing: border-box;
+  align-self: center;
+  display: inline-block;
+  color: #4f4f4f;
+  width: 396px;
+  height: 35px;
+  border: 1px;
+  background: transparent;
+  transition-delay: 150ms;
+}
+
+.search-container .reset-button{
+  margin-right: 0px;
+  visibility: hidden;
+}
+
+.search-container button:hover{
+  background: var(--hover);
+}
+
+.options{
+  display: inline-block;
+  border-radius: 30px;
+  height: 88vh; 
+  width: 14vw;
+  margin-right: 14px;
+  margin-left: 16px;
+  background-color: var(--primary);
+  border-radius: 30px;
+}
+
+.container{
+overflow-y: auto;
+display: inline-block;
+height: 88vh; 
+width: 83vw;
+background-color: white;
+border-radius: 30px;
+}
+
+.navigation-bar {
+display: flex;
+position: sticky;
+top: 0;
+background-color: var(--primary);
+height: 60px;
+width: 100%;
+}
+
+.search-container input:focus{
+  outline: none;
+  color: black;
+}
+
+.filter-search {
+position: relative;
+visibility: hidden;
+top:-8px;
+left: 84px;
+}
+
+.refresh-button:hover{
+background: var(--hover);
+}
+
+.options-div{
+display: block;
+font-size: 15px;
+margin: auto;
+width: 156px;
+border-radius: 100px;
+padding: 6px 20px;
+border: 1px solid var(--primary);
+background: var(--primary);
+color: var(--creamy);
+transition: 0.35s;
+}
+
+.options-div span{
+opacity: 1;
+}
+
+.options-div input{
+display: inline-block;
+font-size: 15px;
+vertical-align:middle;
+margin: auto;
+border: 0px solid var(--primary);
+color:white;
+background: transparent;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 144px;
+
+}
+
+.options-div:hover{
+cursor: pointer;
+background: white;
+color: var(--primary);
+}
+
+.options-div:hover .button{
+cursor: pointer;
+color: var(--primary);
+}
