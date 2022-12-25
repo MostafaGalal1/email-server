@@ -58,27 +58,26 @@
     </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
     <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}"></app-compose-box>
-    <table class = "email-table" cellpadding="0" role="grid" aria-readonly="true">
-      <tbody>
-        <tr tabindex="-1" role="row" draggable="false">
-          <td class="email-info" role="gridcell" tabindex="-1">
-          <span class="email-sender">CFI eNews</span>
-          <span class="email-data">12:07 AM</span>
-          <span class="email-date">12:07 AM</span>
-        </tr>
-        <tr tabindex="-1" role="row" draggable="false">
-          <td class="email-info" role="gridcell" tabindex="-1">
-          <span class="email-sender">CFI eNews</span>
-          <span class="email-data">12:07 AM</span>
-          <span class="email-date">12:07 AM</span>
-        </tr>
-        <tr tabindex="-1" role="row" draggable="false">
-          <td class="email-info" role="gridcell" tabindex="-1">
-          <span class="email-sender">CFI eNews</span>
-          <span class="email-data">12:07 AM</span>
-          <span class="email-date">12:07 AM</span>
-        </tr>
-      </tbody>
-    </table>
+    <div class="emails-container">
+      <table class = "emails-table" cellpadding="0" role="grid" aria-readonly="true">
+        <tbody>
+            <tr>  
+              <th class="sender-column" >sender</th>  
+              <th class="recievers-column">recievers</th>  
+              <th class="subject-column">subject</th>  
+              <th class="body-column">body</th>
+              <th class="date-column">date</th>
+            </tr>
+            <tr *ngFor="let email of emails | paginate : {itemsPerPage : 10, currentPage : page}">  
+                <td>{{email.sender}}</td>  
+                <td>{{email.recievers}}</td>  
+                <td>{{email.subject}}</td>  
+                <td>{{email.body}}</td>  
+                <td>{{email.date}}</td>  
+            </tr>  
+        </tbody>
+      </table>
+    </div>
+    <pagination-controls (pageChange)= "page = $event"></pagination-controls>
   </div>
 </div>
