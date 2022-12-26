@@ -236,4 +236,13 @@ export class MailComponent implements OnInit {
         this.emailSelection(this.checkAll, emailID);
       }
   }
+
+  async resetSelection(){
+    if (this.checkAll){
+      this.checkAll = false;
+      for (const emailID in this.emailsQueue){ 
+        this.emailSelection(this.checkAll, emailID);
+      }
+    }
+  }
 }

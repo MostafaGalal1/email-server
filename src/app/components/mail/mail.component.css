@@ -6,7 +6,7 @@
 .main-bar{
   top: 0%;
   height: 10vh;
-  background-color: var(--primary);
+  background: var(--primary_gradient);
   margin-bottom: 6px;
   width:100%;
 }
@@ -98,7 +98,19 @@
   height: 40px;
   border-radius: 100%;
   margin: 12px;
-  margin-left: 40px;
+  margin-left: 52px;
+  padding: 0;
+  border: 1px;
+}
+
+.select-button{
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 12px;
+  margin-left: 0px;
   padding: 0;
   border: 1px;
 }

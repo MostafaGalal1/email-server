@@ -2,7 +2,7 @@
 <div class = "layout">
   <div class = "main-bar">
     <span class="pigeon-span">
-    <img class="pigeon" src="./assets/pigeon.png">
+    <img class="pigeon" src="./assets/pigeon-trans.png">
     </span>
   </div>
   <div class="options">
@@ -57,8 +57,8 @@
         <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
         <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : isVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
       </div>
-      <button class = "delete-button" #refreshButton type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
-      <button class = "delete-button" #refreshButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
+      <button class = "delete-button" #deleteButton type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
+      <button class = "select-button" #selectButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
       </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
     <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}"></app-compose-box>
@@ -85,7 +85,7 @@
       </table>
     </div>
     <div class = "paging">
-      <pagination-controls class="paging-ngx" [autoHide]=true previousLabel="" nextLabel=""(pageChange)= "page = $event"></pagination-controls>
+      <pagination-controls class="paging-ngx" [autoHide]=true previousLabel="" nextLabel="" (pageChange)="resetSelection()" (pageChange)= "page = $event"></pagination-controls>
     </div>
   </div>
 </div>
