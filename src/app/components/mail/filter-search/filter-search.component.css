@@ -1,7 +1,7 @@
 .filter-search{
     position: absolute;
     width: 500px;
-    height: 400px;
+    height: 344px;
     background-color: white;
     visibility: visible;
     color: #202124;
@@ -55,35 +55,60 @@
     min-width: 88px;
 }
 
-.jjj{
-    color: #202124;
-    transition: opacity 0.218s;
-    background: #fff;
-    cursor: default;
-    margin: 0;
-    outline: none;
-    padding: 6px 0;
-    position: absolute;
-    max-height: 600px;
-    overflow: auto;
-    -webkit-font-smoothing: antialiased;
-    font-size: .875rem;
-    letter-spacing: normal;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0px 8px 10px 1px rgba(0,0,0,.14),0px 3px 14px 2px rgba(0,0,0,.12),0px 5px 5px -3px rgba(0,0,0,.2);
-    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    line-height: 20px;
-    user-select: none;
-    visibility: visible;
-    overflow-y: auto;
-    height: auto;
-    left: 144.975px;
-    top: 260.988px;
-    display: none;
+datalist {
+    display: flex;
+    justify-content: space-between;
+    writing-mode: horizontal-tb;
+    width: 200px;
 }
 
-.filter-search input{
+option {
+    padding: 0;
+}
+
+input[type="range"] {
+    width: 200px;
+}
+
+.data-within-list{
+    margin-left: 2px;
+    margin-right: 44px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 2px 6px;
+    width: 50%;
+    border-radius: 10px;
+    background-color: var(--creamy);
+    font-size: 15px;
+    cursor: pointer;
+    border: 2px solid var(--creamy);
+} 
+
+.data-within-list:focus{
+    outline : none;
+    border : 2px solid var(--primary);
+}
+
+.start-date{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-right: 44px !important;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background-color: var(--creamy);
+    font-size: 15px;
+    cursor: pointer;
+    width: 50%;
+    border: 2px solid var(--creamy);
+}
+
+.start-date:focus{
+    outline : none;
+    vertical-align: super;
+    border : 2px solid var(--primary);
+}
+
+.filter-search input:not(.start-date, .form-submit, #attachment){
     visibility: visible;
     -webkit-font-smoothing: antialiased;
     white-space: nowrap;
@@ -109,6 +134,7 @@
 }
 
 .form-submit{
+    position: relative;
     width: 300px;
     margin: auto;
     padding: 30px;
@@ -116,13 +142,14 @@
 
 .form-submit input{
     display: block;
+    position: absolute;
     font-size: 15px;
     width: 100px;
     height: 30px;
-    margin: auto;
-    border-radius: 10px;
+    right: 26px;
+    border-radius: 100px;
     padding: 6px 20px;
-    border: 6px solid var(--primary);
+    border: 1px solid var(--primary);
     background: var(--primary);
     color: var(--creamy);
     transition: 0.35s;
