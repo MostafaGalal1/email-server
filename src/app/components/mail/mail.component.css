@@ -21,29 +21,86 @@
   'opsz' 48
 }
 
+.emails-container{
+  position: sticky;
+  overflow-y: auto;
+  max-height: 544px;
+}
+
+.emails-container::-webkit-scrollbar {
+  width: 8px;
+}
+ 
+.emails-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+ 
+.emails-container::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 6px;
+}
+
+.options-container{
+  height: 600px;
+  overflow: auto;
+}
+
+.options-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+ 
+.options-container::-webkit-scrollbar-track {
+  background-color: var(--primary);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+ 
+.options-container::-webkit-scrollbar-thumb {
+  background-color: rgb(247, 247, 247);
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+}
+
+.options-container::-webkit-scrollbar-corner {
+  background-color: var(--secondary);
+}
+
 .search-container{
-display: flex;
-position: relative;
-align-self: center;
-width: 548px;
-padding: 0px;
-height: 46px;
-border-radius: 10px;
-border: 1px;
-left:20px;
-border: 1px solid whitesmoke;
-background: var(--creamy);
+  display: flex;
+  position: relative;
+  align-self: center;
+  width: 548px;
+  padding: 0px;
+  height: 46px;
+  border-radius: 10px;
+  border: 1px;
+  left:20px;
+  border: 1px solid whitesmoke;
+  background: var(--creamy);
 }
 
 .refresh-button{
-display: inline-block;
-align-self: center;
-width: 40px;
-height: 40px;
-border-radius: 100%;
-margin: 12px;
-padding: 0;
-border: 1px;
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 12px;
+  padding: 0;
+  border: 1px;
+}
+
+.delete-button{
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 12px;
+  margin-left: 40px;
+  padding: 0;
+  border: 1px;
 }
 
 .search-container button{
@@ -92,10 +149,14 @@ background: transparent;
   background: var(--hover);
 }
 
+.delete-button:hover{
+  background: var(--hover);
+}
+
 .options{
   display: inline-block;
   border-radius: 30px;
-  height: 88vh; 
+  height: 88vh;
   width: 14vw;
   margin-right: 14px;
   margin-left: 16px;
@@ -104,21 +165,33 @@ background: transparent;
 }
 
 .container{
-overflow-y: auto;
-display: inline-block;
-height: 88vh; 
-width: 83vw;
-background-color: white;
-border-radius: 30px;
+  display: inline-block;
+  height: 88vh; 
+  width: 83vw;
+  background-color: white;
+  border-radius: 30px;
 }
 
 .navigation-bar {
-display: flex;
-position: sticky;
-top: 0;
-background-color: var(--primary);
-height: 60px;
-width: 100%;
+  display: flex;
+  position: sticky;
+  top: 0%;
+  background-color: var(--primary);
+  height: 60px;
+  width: 100%;
+}
+
+.paging{
+  display: flex;
+  position: sticky;
+  top: 100%;
+  height: 30px;
+  padding-top: 6px;
+  border-top: 1px solid #ddd;
+}
+
+.paging-ngx{
+  margin: auto;
 }
 
 .search-container input:focus{
@@ -127,10 +200,10 @@ width: 100%;
 }
 
 .filter-search {
-position: relative;
-visibility: hidden;
-top:-8px;
-left: 84px;
+  position: relative;
+  visibility: hidden;
+  top:-8px;
+  left: 84px;
 }
 
 .refresh-button:hover{
@@ -138,20 +211,27 @@ left: 84px;
 }
 
 .emails-table{
+  position: relative;
   width: 100%;
 }
 
-th, td {
+.emails-table th, td {
   min-width: 120px;
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0px 8px;
-  height: 10px;
+  height: 42px;
+  border-bottom: 1px solid #ddd;
 }
 
-tr:hover{
-  background-color: var(--hover);
+.emails-table input{
+  display: block;
+  margin: auto;
+}
+
+tr:hover:not(.table-headers){
+  background-color: var(--email-hover);
+  box-shadow: 0 3px 2px -2px gray;
 }
 
 .options-div{

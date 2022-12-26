@@ -1,4 +1,5 @@
 .filter-search{
+    position: absolute;
     width: 500px;
     height: 400px;
     background-color: white;
@@ -18,6 +19,7 @@
         2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
         6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
     ;
+    z-index: 1;
 }
 
 .filter-search div{
