@@ -6,7 +6,7 @@
 .main-bar{
   top: 0%;
   height: 10vh;
-  background-color: var(--primary);
+  background: var(--primary_gradient);
   margin-bottom: 6px;
   width:100%;
 }
@@ -91,6 +91,17 @@
   border: 1px;
 }
 
+.add-folder-button, .add-contact-button{
+  display: inline-block;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  margin: 12px;
+  padding: 0;
+  border: 1px;
+}
+
 .delete-button{
   display: inline-block;
   align-self: center;
@@ -98,21 +109,33 @@
   height: 40px;
   border-radius: 100%;
   margin: 12px;
-  margin-left: 40px;
+  margin-left: 52px;
+  padding: 0;
+  border: 1px;
+}
+
+.select-button{
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 12px;
+  margin-left: 0px;
   padding: 0;
   border: 1px;
 }
 
 .search-container button{
-display: inline-block;
-align-self: center;
-width: 40px;
-height: 40px;
-border-radius: 100%;
-margin: 6px;
-padding: 0;
-border: 1px;
-background: transparent;
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 6px;
+  padding: 0;
+  border: 1px;
+  background: transparent;
 }
 
 .pigeon{
@@ -274,4 +297,17 @@ color: var(--primary);
 .options-div:hover .button{
   cursor: pointer;
   color: var(--primary);
+}
+
+.folders-div, .contacts-div{
+  display: block;
+  font-size: 15px;
+  margin: auto;
+  width: 156px;
+  border-radius: 100px;
+  padding: 6px 20px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--creamy);
+  transition: 0.35s;
 }

@@ -11,6 +11,8 @@
     --creamy:#f2f2f2f2;
     --hover:rgb(220, 230, 230);
     --hoveight: 100%;
+    --email-selection: #c2dbff;
+    --email-hover: rgb(240, 240, 255);
 }
 
 .body{
@@ -45,4 +47,18 @@
 .ngx-pagination a:hover, .ngx-pagination button:hover {
     border-radius: 20px !important;
     background-color: var(--hover) !important;
+}
+
+.ngx-pagination{
+    padding-left: 0% !important;
+}
+
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before{
+    content: "◁" !important;
+}
+
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
+    content: "▷" !important;
 }
