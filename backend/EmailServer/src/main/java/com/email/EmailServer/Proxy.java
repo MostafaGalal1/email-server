@@ -1,9 +1,6 @@
 package com.email.EmailServer;
 
-import com.email.EmailServer.Immutables.InputData;
 import com.email.EmailServer.commands.CommandFactory;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
