@@ -17,18 +17,15 @@ export class LoginComponent implements OnInit {
   }
 
   loginForm = this.formBuilder.group({
-    email: '',
+    username: '',
     password: ''
   });
 
   onSubmit(){
     this.apiService.validateLogin(this.loginForm.value).subscribe(
-      (error) => {
-        alert("Username or password are incorrect");
-      },
-      () => {
-        this.router.navigate(["/mail"]);
-      }
+      (repose) => {
+        console.log(JSON.parse(repose))
+        alert(repose.toString());}
     );
   }
 }

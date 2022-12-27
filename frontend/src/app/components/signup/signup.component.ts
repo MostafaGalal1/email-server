@@ -35,8 +35,9 @@ export class SignupComponent implements OnInit {
         this.router.navigate(["/mail"]);
       }
     );
+    console.log(this.signupForm.value)
   }
-
+  
   togglePassword() {
     if (this.visibility === "password") {
       this.visibility = "text";
