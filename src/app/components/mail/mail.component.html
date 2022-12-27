@@ -61,7 +61,7 @@
       <button class = "delete-button" #refreshButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
       </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
-    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}"></app-compose-box>
+    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
     <div class="emails-container">
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true">
         <tbody>
