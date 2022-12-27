@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class = "layout">
+  <div class = "main-bar">
+    <span class="pigeon-span">
+    <img class="pigeon" src="./assets/pigeon-trans.png">
+    </span>
+  </div>
+  <div class="options">
+    <br>
+    <div class = "options-container">
+    <aside>
+      <div class="options-div" (click)="composeIt()">
+        <span class="material-symbols-outlined">edit</span>
+        <input type="button" class="button" value="Compose">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">inbox</span>
+        <input type="button" class="button" value="Inbox">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">send</span>
+        <input type="button" class="button" value="Sent">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">draft</span>
+        <input type="button" class="button" value="Draft">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">delete</span>
+        <input type="button" class="button" value="Trash">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">contacts</span>
+        <input type="button" class="button" value="Contacts">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">folder</span>
+        <input type="button" class="button" value="User Folders">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">folder</span>
+        <input type="button" class="button" value="add Contact">
+      </div>
+      <div class="options-div">
+        <span class="material-symbols-outlined">logout</span>
+        <input type="button" class="button" value="Log out">
+      </div>
+
+      <div class="folders-div">
+        <label>Folders</label>
+        <button class = "add-folder-button" #folderButton type = "button"><span class="material-symbols-outlined">add</span></button>
+      </div>
+      <div class="contacts-div">
+        <label>Contacts</label>
+        <button class = "add-contact-button" #contactButton type = "button"><span class="material-symbols-outlined">add</span></button>
+      </div>
+    </aside>
+    </div>
+  </div>
+  <div class="container">
+    <div class = "navigation-bar">
+      <button class = "refresh-button" #refreshButton type = "button"><span class="material-symbols-outlined">refresh</span></button>
+      <div class = "search-container" [ngStyle]="{'background-color': searchColor}">
+        <button class = "Search-button" type = "button"><span class="material-symbols-outlined">search</span></button>
+        <input type = "text" id = "search_text" placeholder="Search in mail" #searchBar (focus)="whitenBar()" (clickOutside)="darkenBar()">
+        <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
+        <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : isVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
+      </div>
+      <button class = "delete-button" #deleteButton type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
+      <button class = "select-button" #selectButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
+      </div>
+    <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
+    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
+    <div class="emails-container">
+      <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true">
+        <tbody>
+            <tr class="table-headers">  
+              <th class="check-column" >chk</th> 
+              <th class="sender-column" >sender</th>  
+              <th class="recievers-column">recievers</th>  
+              <th class="subject-column">subject</th>  
+              <th class="body-column">body</th>
+              <th class="date-column">date</th>
+            </tr>
+            <tr *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
+              <td><input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)"></td>  
+              <td>{{email.value.sender}}</td>  
+              <td>{{email.value.recievers}}</td>  
+              <td>{{email.value.subject}}</td>  
+              <td>{{email.value.body}}</td>  
+              <td>{{email.value.date | date: email.value.date.getDate() === nowDate.getDate()? 'h:mm a':'MMM d'}}</td>  
+            </tr>  
+        </tbody>
+      </table>
+    </div>
+    <div class = "paging">
+      <pagination-controls class="paging-ngx" [autoHide]=true previousLabel="" nextLabel="" (pageChange)="resetSelection()" (pageChange)= "page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
