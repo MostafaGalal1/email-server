@@ -1,4 +1,5 @@
 .compose-box{
+    position : absolute;
     width: 500px;
     height: 400px;
     background-color: white;
@@ -17,6 +18,11 @@
       2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
       6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
     ;
+    z-index: 1;
+    bottom:0px;
+    right:10px;
+    border: 2px solid var(--primary);
+
 }
 
 
@@ -32,34 +38,34 @@ label{
   color: #282d36;
   margin-left: 15px;
 }
-input.subject{
+input#subject-message{
   text-align: left;
   border: none;
   border-bottom: 2px solid var(--creamy);
 }
 
-input.subject:focus{
+input#subject-message:focus{
   outline: none;
   border-bottom: 2px solid var(--primary);
 }
 
-input.to{
+input#to{
   text-align: left;
   border: none;
   border-bottom: 2px solid var(--creamy);
 }
 
-input.to:focus{
+input#to:focus{
   outline: none;
   border-bottom: 2px solid var(--primary);
 }
 
 
-.message{
+#message{
   width: 95%;
   font-size: 15px;
 }
-.message{
+#message{
   text-align: left;
   margin-top: 10px;
   border: 2px solid var(--creamy);
@@ -67,7 +73,7 @@ input.to:focus{
   resize: none;
   padding: 1%;
 }
-.message:focus{
+#message:focus{
   outline: none;
   border: 2px solid var(--primary);
 }
