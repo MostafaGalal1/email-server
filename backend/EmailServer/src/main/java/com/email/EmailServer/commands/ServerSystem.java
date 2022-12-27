@@ -26,13 +26,13 @@ public class ServerSystem{
     }*/
     public static JSONObject CreateNewUser(JSONObject UserInfo){
         JSONObject Api = new JSONObject();
-        if(userRepo.getByAddress(String.valueOf(UserInfo.get("email"))) != null){
-            return Api.put("state","Failed").put("data","").put("message","Address is used");
+        if(userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null){
+            return Api.put("state","Failed").put("data","").put("message","Username is used");
         }
         User user = new User();
-        user.setFirstName(String.valueOf(UserInfo.get("fistName")));
-        user.setLastName(String.valueOf(UserInfo.get("lastName")));
-        user.setAddress(String.valueOf(UserInfo.get("email")));
+        user.setFirstName(String.valueOf(UserInfo.get("first_name")));
+        user.setLastName(String.valueOf(UserInfo.get("last_name")));
+        user.setAddress(String.valueOf(UserInfo.get("username")));
         user.setPassword(String.valueOf(UserInfo.get("password")));
         user.setDate(new Date());
         userRepo.save(user);
@@ -41,7 +41,7 @@ public class ServerSystem{
 
     public static JSONObject ValidateUser(JSONObject UserInfo){
         JSONObject Api = new JSONObject();
-        User user = userRepo.getByAddress(String.valueOf(UserInfo.get("email")));
+        User user = userRepo.getByAddress(String.valueOf(UserInfo.get("username")));
         if(user == null){
             return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
         }

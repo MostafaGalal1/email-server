@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     first_name: '',
     last_name: '',
     username: '',
-    password: ''
+    enter_password: ''
   });
 
   onSubmit(){
@@ -35,8 +35,9 @@ export class SignupComponent implements OnInit {
         this.router.navigate(["/mail"]);
       }
     );
+    console.log(this.signupForm.value)
   }
-
+  
   togglePassword() {
     if (this.visibility === "password") {
       this.visibility = "text";

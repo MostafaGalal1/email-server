@@ -3,6 +3,7 @@ package com.email.EmailServer;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/Email")
 public class Controller {
@@ -10,15 +11,17 @@ public class Controller {
 
     public Controller(Proxy proxy) { this.proxy = proxy; }
 
-    @PostMapping("/SignUp")
+    @PutMapping("/SignUp")
     @ResponseBody
     public String SignUp(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("SignUp", new JSONObject(data));
     }
 
     @PostMapping("/LogIn")
+    @ResponseBody
     public String LogIn(@RequestBody String data){
-       return proxy.run("LogIn",new JSONObject(data));
+        return proxy.run("LogIn",new JSONObject(data));
     }
 
 }

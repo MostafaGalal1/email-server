@@ -9,15 +9,23 @@ export class ApiService {
 
   constructor(private http: HttpClient) {  }
 
-  createAccount(signupForm : object): Observable<object> {
-    return this.http.put<object>('http://localhost:8080/signup', signupForm);
+  createAccount(signupForm : object): Observable<string> {
+    return this.http.put<string>('http://localhost:8080/Email/SignUp', signupForm);
   }
   
-  validateLogin(loginForm : object): Observable<object> {
-    return this.http.post<object>('http://localhost:8080/login', loginForm);
+  validateLogin(loginForm : object): Observable<string> {
+    return this.http.post<string>('http://localhost:8080/Email/LogIn', loginForm);
   }
 
   searchMails(searchForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/login', searchForm);
+  }
+
+  createFolder(folderForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/login', folderForm);
+  }
+
+  createContact(contactForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/login', contactForm);
   }
 }

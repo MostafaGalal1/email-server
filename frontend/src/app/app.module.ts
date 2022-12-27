@@ -11,6 +11,8 @@ import { ComposeBoxComponent } from './components/mail/compose-box/compose-box.c
 import { FilterSearchComponent } from './components/mail/filter-search/filter-search.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ContactBoxComponent } from './components/mail/contact-box/contact-box.component';
+import { FolderBoxComponent } from './components/mail/folder-box/folder-box.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SignupComponent,
     MailComponent,
     ComposeBoxComponent,
-    FilterSearchComponent
+    FilterSearchComponent,
+    ContactBoxComponent,
+    FolderBoxComponent
   ],
   imports: [
     BrowserModule,
