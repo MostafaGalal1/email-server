@@ -1,8 +1,7 @@
 package com.email.EmailServer.commands;
 
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
-import com.email.EmailServer.DatabaseModels.User;
-import com.google.gson.JsonObject;
+import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,7 +45,7 @@ public class ServerSystem{
         if(user == null){
             return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
         }
-        if(!user.getPassword().equals(String.valueOf(UserInfo.get("password")))){
+        if(!user.GetPassword().equals(String.valueOf(UserInfo.get("password")))){
             return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
         }
         return Api.put("state","Success").put("data","").put("message","LogeIn successfully");
