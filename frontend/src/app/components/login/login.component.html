@@ -1,0 +1,23 @@
+<div class="layout">
+    <div class="container">
+        <div class = "form-header">
+            <h2>Sign in</h2>
+            <h3>to continue to your mail</h3>
+        </div>
+        <div class = "form-container">
+            <form class = "form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-input">
+                    <label for="username">Email or phone</label><br>
+                    <input type="text" id="username" formControlName="username"><br><br>
+                </div>
+                <div class="form-input">
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" formControlName="password"><br><br>
+                </div>
+                <div class="form-submit">
+                    <input class="form-submit" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
