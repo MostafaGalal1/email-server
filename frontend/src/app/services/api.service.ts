@@ -20,4 +20,12 @@ export class ApiService {
   searchMails(searchForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/login', searchForm);
   }
+
+  createFolder(folderForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/login', folderForm);
+  }
+
+  createContact(contactForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/login', contactForm);
+  }
 }

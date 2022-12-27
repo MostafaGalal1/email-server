@@ -3,6 +3,20 @@
   height: 100vh;
 }
 
+.dark-layout{
+  position: absolute;
+  background-color: rgb(39, 44, 44, 0.7);
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+}
+
+.folder-box, .contact-box{
+  position: absolute;
+  left: calc(50% - 250px);
+  top: calc(50% - 172px);
+}
+
 .main-bar{
   top: 0%;
   height: 10vh;
@@ -40,8 +54,15 @@
   border-radius: 6px;
 }
 
+.main-folders{
+  width: 210px;
+}
+
 .options-container{
   height: 600px;
+}
+
+.options-container:hover{
   overflow: auto;
 }
 
@@ -94,12 +115,25 @@
 .add-folder-button, .add-contact-button{
   display: inline-block;
   align-self: center;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 100%;
   margin: 12px;
   padding: 0;
   border: 1px;
+}
+
+.folders-div label, .contacts-div label{
+  overflow: auto!important;
+  vertical-align: bottom;
+  margin-left: 4px;
+  font-size: 20px;
+}
+
+.folders-div button, .contacts-div button{
+  margin: 0px;
+  position: absolute;
+  right: 12px;
 }
 
 .delete-button{
@@ -176,6 +210,10 @@
   background: var(--hover);
 }
 
+.select-button:hover{
+  background: var(--hover);
+}
+
 .options{
   display: inline-block;
   border-radius: 30px;
@@ -229,7 +267,7 @@
   left: 84px;
 }
 
-.refresh-button:hover{
+.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover{
   background: var(--hover);
 }
 
@@ -270,6 +308,21 @@ tr:hover:not(.table-headers){
   transition: 0.35s;
 }
 
+.fsublist-div{
+  display: block;
+  width: 132px;
+  border-radius: 100px;
+  padding: 1px 6px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--creamy);
+  transition: 0.35s;
+}
+
+.fsublist-div span{
+  opacity: 1;
+}
+
 .options-div span{
   opacity: 1;
 }
@@ -288,10 +341,21 @@ tr:hover:not(.table-headers){
   max-width: 144px;
 }
 
+.fsublist-div input{
+  display: inline-block;
+  border: 0px solid var(--primary);
+  color:white;
+  background: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
 .options-div:hover{
-cursor: pointer;
-background: white;
-color: var(--primary);
+  cursor: pointer;
+  background: white;
+  color: var(--primary);
 }
 
 .options-div:hover .button{
@@ -299,15 +363,42 @@ color: var(--primary);
   color: var(--primary);
 }
 
+.fsublist-div:hover{
+  cursor: pointer;
+  background: white;
+  color: var(--primary);
+}
+
+.fsublist-div:hover .button{
+  cursor: pointer;
+  color: var(--primary);
+}
+
 .folders-div, .contacts-div{
   display: block;
+  position: relative;
   font-size: 15px;
   margin: auto;
-  width: 156px;
+  width: 176px;
+  overflow: unset;
   border-radius: 100px;
   padding: 6px 20px;
   border: 1px solid var(--primary);
   background: var(--primary);
   color: var(--creamy);
   transition: 0.35s;
+}
+
+.g-cl{
+  position: relative;
+  height: 30px;
+}
+
+.g-cl span{
+  opacity: 1;
+}
+
+.folders-div ul, .contacts-div ul{
+  padding-inline-start: 16px;
+  padding-top: 4px;
 }

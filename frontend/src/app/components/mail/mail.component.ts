@@ -8,6 +8,7 @@ import { Email } from 'src/app/shared/email';
   templateUrl: './mail.component.html',
   styleUrls: ['./mail.component.css']
 })
+
 export class MailComponent implements OnInit {
   @ViewChild('filterSearch', { read: ElementRef }) filterSearch!: ElementRef;
   @ViewChild('refreshButton', { read: ElementRef }) filterButton!: ElementRef;
@@ -15,6 +16,8 @@ export class MailComponent implements OnInit {
   @ViewChild('searchBar', { read: ElementRef }) searchBar!: ElementRef;
   
   protected isVisible:boolean;
+  protected folderBoxVisible:boolean;
+  protected contactBoxVisible:boolean;
   protected checkAll:boolean;
   protected page:number = 0;
   protected compose:boolean;
@@ -124,8 +127,9 @@ export class MailComponent implements OnInit {
   {id:"", sender:"SFghfg", recievers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()}
 ];
   protected emailsQueue: {[id : string] : Email};
-  protected selectionQueue: {[id : string] : Email};
-  
+  protected selectionQueue: {[id : string] : Email};  
+  protected folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
+  protected contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
   constructor() {
     this.emailsQueue = {};
@@ -135,6 +139,8 @@ export class MailComponent implements OnInit {
     this.searchReset = true;
     this.compose = false;
     this.isVisible = false;
+    this.folderBoxVisible = false;
+    this.contactBoxVisible = false;
     this.searchColor = "";
   }
 
@@ -244,5 +250,15 @@ export class MailComponent implements OnInit {
         this.emailSelection(this.checkAll, emailID);
       }
     }
+  }
+
+  async addFolder(){
+    this.folderBoxVisible = true;
+    this.folders.push("rgthjytry");
+  }
+
+  async addContact(){
+    this.contactBoxVisible = true;
+    this.contacts.push("yuhn");
   }
 }

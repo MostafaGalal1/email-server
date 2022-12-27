@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     first_name: '',
     last_name: '',
     username: '',
-    password: ''
+    enter_password: ''
   });
 
   onSubmit(){
