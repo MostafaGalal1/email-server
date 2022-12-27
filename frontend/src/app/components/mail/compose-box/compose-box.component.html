@@ -1,15 +1,15 @@
-<div class = "compose-box">
+<div class = "compose-box" >
     <div>
         <label for="to">To</label><br>
-        <input  name = "to" placeholder="to" type="text" class="to">
+        <input name="to" placeholder="to" type="text" id="to">
     </div>
     <div>
         <label for="subject">Subject</label><br>
-        <input type="text" placeholder="Subject" class="subject">
+        <input name="subject-message" placeholder="Subject" type="text" id="subject-message">
     </div>
     <div>
-        <label for="Content">Content</label><br>
-        <textarea type="text" placeholder="message.." rows="9"  class="message"></textarea>
+        <label for="message">message</label><br>
+        <textarea type="text" placeholder="message.." rows="9"  id="message"></textarea>
     </div>
     <div class="attach">
         <select name="priority"  id="priority">
@@ -20,11 +20,11 @@
         <option value="1">Low</option>
         </select>
         <div >
-        <input type="file" class="file"   multiple="multiple">
+        <input type="file" class="file"   multiple="multiple"  (change)="upload($event.target)">
         </div>
     </div>
     <div>
-        <button class="send" >Send</button>
+        <button class="send" (click)="send()"  >Send</button>
         <button class="send" >Save to draft</button>
     </div>
 </div>
