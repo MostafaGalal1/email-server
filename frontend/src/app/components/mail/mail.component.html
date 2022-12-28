@@ -53,6 +53,7 @@
               <div class="fsublist-div">
                 <span class="material-symbols-outlined">folder</span>
                 <input type="button" class="button" value={{list}}>
+                <button class = "edit-button" #editButton type = "button"><span class="material-symbols-outlined">more_vert</span></button>
               </div>
             </li>
            </ul>
@@ -67,9 +68,10 @@
         <div class="contacts-list">
           <ul *ngFor="let list of getcontacts; let i=index">
             <li>
-              <div class="fsublist-div">
+              <div class="fsublist-div" autofocus>
                 <span class="material-symbols-outlined">account_circle</span>
                 <input type="button" class="button" value={{list}}>
+                <button class = "edit-button" #editButton type = "button"><span class="material-symbols-outlined">more_vert</span></button>
               </div>
             </li>
            </ul>
@@ -85,12 +87,13 @@
         <button class = "Search-button" type = "button"><span class="material-symbols-outlined">search</span></button>
         <input type = "text" id = "search_text" placeholder="Search in mail" #searchBar (focus)="whitenBar()" (clickOutside)="darkenBar()">
         <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
-        <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : isVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
+        <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : filterBoxVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
       </div>
-      <button class = "delete-button" #deleteButton type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
       <button class = "select-button" #selectButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
-      </div>
-    <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
+      <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
+      <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined" (click)="moveEmail()">drive_file_move</span></button>
+    </div>
+    <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : filterBoxVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
     <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : getcomposeVisible? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
     <div class="emails-container">
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true">

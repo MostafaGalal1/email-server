@@ -14,35 +14,18 @@ export class ContactBoxComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  name : string = "";
-  username : string = "";
+
   contactForm = this.formBuilder.group({
     name: '',
     username: ''
   });
 
-  onSubmit(){
-    this.apiService.createContact(this.contactForm.value).subscribe(
-      (error) => {
-        alert("Username or password are incorrect");
-      },
-      () => {
-      }
-    );
-  }
-
-  create(){
-    this.name = (<HTMLInputElement>document.getElementById("name-contact")).value;
-    this.username = (<HTMLInputElement>document.getElementById("username")).value;
-
-    if(this.name == ""){
+  onSubmit(event:any){
+    if(event.target.name.value === "")
       return ;
-    }
-    //check for the user name...
-    MailComponent.contacts.push(this.name);
+    MailComponent.contacts.push(event.target.name.value);
+    event.target.name.value = "";
+    event.target.username.value = "";
     MailComponent.contactBoxVisible = false;
-
-    
-
   }
 }

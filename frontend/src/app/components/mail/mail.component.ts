@@ -15,7 +15,9 @@ export class MailComponent implements OnInit{
   @ViewChild('refreshButton', { read: ElementRef }) filterButton!: ElementRef;
   @ViewChild('resetButton', { read: ElementRef }) resetButton!: ElementRef;
   @ViewChild('searchBar', { read: ElementRef }) searchBar!: ElementRef;
-  protected isVisible:boolean;
+
+  protected filterBoxVisible:boolean;
+  protected buttonsVisible:boolean;
   static folderBoxVisible:boolean;
   static contactBoxVisible:boolean;
   protected checkAll:boolean;
@@ -136,9 +138,10 @@ export class MailComponent implements OnInit{
     this.selectionQueue = {};
     this.nowDate = new Date();
     this.checkAll = false;
+    this.buttonsVisible = false;
     this.searchReset = true;
     MailComponent.compose = false;
-    this.isVisible = false;
+    this.filterBoxVisible = false;
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
@@ -149,7 +152,6 @@ export class MailComponent implements OnInit{
       this.emails[i].id = i.toString();
       this.emailsQueue[i.toString()] = this.emails[i];
     }
-    
   }
 
   returnZero() {
@@ -157,18 +159,18 @@ export class MailComponent implements OnInit{
   }
 
   async showFilter(){
-    if (this.isVisible)
+    if (this.filterBoxVisible)
       return;
     setTimeout(() => {
-      this.isVisible = true;
+      this.filterBoxVisible = true;
     });
   }
 
   async hideFilter(){
-    if (!this.isVisible)
+    if (!this.filterBoxVisible)
       return;
     setTimeout(() => {
-      this.isVisible = false;
+      this.filterBoxVisible = false;
       this.searchColor = "";
     });
   }
@@ -181,7 +183,7 @@ export class MailComponent implements OnInit{
 
   async darkenBar(){
     setTimeout(() => {
-      if (!this.isVisible)
+      if (!this.filterBoxVisible)
         this.searchColor = "";
       if (this.searchBar.nativeElement.value === ""){
         this.searchReset = true;
@@ -211,26 +213,29 @@ export class MailComponent implements OnInit{
 
   async emailSelection(event:any, emailID:string) {
     if (event.target !== undefined){
-    if (event.target.checked) {
-      document.getElementById(emailID)!.style.background = "var(--email-selection)";
-      this.selectionQueue[emailID] = this.emailsQueue[emailID];
-    } else {
-      document.getElementById(emailID)!.style.background = "white";
-      delete this.selectionQueue[emailID];
-    }
-  } else {
-    try {
-      if (this.checkAll) {
+      if (event.target.checked) {
         document.getElementById(emailID)!.style.background = "var(--email-selection)";
         this.selectionQueue[emailID] = this.emailsQueue[emailID];
+        this.buttonsVisible = true;
       } else {
         document.getElementById(emailID)!.style.background = "white";
         delete this.selectionQueue[emailID];
+        if (!this.checkAll)
+          this.buttonsVisible = false;
       }
-    } catch (error) {
-      
+    } else {
+      try {
+        if (this.checkAll) {
+          document.getElementById(emailID)!.style.background = "var(--email-selection)";
+          this.selectionQueue[emailID] = this.emailsQueue[emailID];
+          this.buttonsVisible = true;
+        } else {
+          document.getElementById(emailID)!.style.background = "white";
+          delete this.selectionQueue[emailID];
+          this.buttonsVisible = false;
+        }
+      } catch (error) { }
     }
-  }
   }
 
   async deleteEmail(){
@@ -238,8 +243,8 @@ export class MailComponent implements OnInit{
       delete this.emailsQueue[emailID];
       delete this.selectionQueue[emailID];
     }
-    
     this.checkAll = false;
+    this.buttonsVisible = false;
   }
 
   async selectAll(){
@@ -320,5 +325,12 @@ export class MailComponent implements OnInit{
     return MailComponent.contacts;
   }
 
-
+  async moveEmail(){
+    for(const emailID in this.selectionQueue){
+      delete this.emailsQueue[emailID];
+      delete this.selectionQueue[emailID];
+    }
+    this.checkAll = false;
+    this.buttonsVisible = false;
+  }
 }

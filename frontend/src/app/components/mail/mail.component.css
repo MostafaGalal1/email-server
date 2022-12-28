@@ -123,6 +123,26 @@
   border: 1px;
 }
 
+.edit-button{
+  display: none;
+  position: absolute;
+  right: 0px !important;
+  align-self: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background: white;
+  margin: 12px;
+  padding: 0;
+  border: 1px;
+}
+
+.edit-button:hover{
+  opacity: 1;
+  background: var(--hover);
+  color: var(--primary);
+}
+
 .folders-div label, .contacts-div label{
   overflow: auto!important;
   vertical-align: bottom;
@@ -136,7 +156,7 @@
   right: 12px;
 }
 
-.delete-button{
+.select-button{
   display: inline-block;
   align-self: center;
   width: 40px;
@@ -148,7 +168,19 @@
   border: 1px;
 }
 
-.select-button{
+.delete-button{
+  display: inline-block;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 12px;
+  margin-left: 0px;
+  padding: 0;
+  border: 1px;
+}
+
+.move-button{
   display: inline-block;
   align-self: center;
   width: 40px;
@@ -214,6 +246,10 @@
   background: var(--hover);
 }
 
+.move-button:hover{
+  background: var(--hover);
+}
+
 .options{
   display: inline-block;
   border-radius: 30px;
@@ -267,8 +303,18 @@
   left: 84px;
 }
 
-.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover{
+.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover{
   background: var(--hover);
+  background: white;
+  color: var(--primary);
+}
+
+.add-folder-button span, .add-contact-button span{
+  opacity: 0.6 !important;
+}
+
+.add-folder-button span:hover, .add-contact-button span:hover{
+  opacity: 1 !important;
 }
 
 .emails-table{
@@ -310,6 +356,7 @@ tr:hover:not(.table-headers){
 
 .fsublist-div{
   display: block;
+  position: relative;
   width: 132px;
   border-radius: 100px;
   padding: 1px 6px;
@@ -317,6 +364,12 @@ tr:hover:not(.table-headers){
   background: var(--primary);
   color: var(--creamy);
   transition: 0.35s;
+}
+
+.edit-button span{
+  position: relative;
+  opacity: 0.6!important;
+  z-index: 1;
 }
 
 .fsublist-div span{
@@ -372,6 +425,10 @@ tr:hover:not(.table-headers){
 .fsublist-div:hover .button{
   cursor: pointer;
   color: var(--primary);
+}
+
+.fsublist-div:hover .edit-button{
+  display: inline-block;
 }
 
 .folders-div, .contacts-div{
