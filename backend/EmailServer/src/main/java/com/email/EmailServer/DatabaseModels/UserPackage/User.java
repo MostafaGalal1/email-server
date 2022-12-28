@@ -3,63 +3,48 @@ package com.email.EmailServer.DatabaseModels.UserPackage;
 
 import com.email.EmailServer.DatabaseModels.Folder;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
 
     @Column(name = "user_firstName" , length = 128)
-    private String FirstName;
+    private String firstName;
 
     @Column(name = "user_lastName" , length = 128)
-    private String LastName;
+    private String lastName;
 
     @Id
-    @Column(name = "user_address", length = 128, nullable = false)
-    private String Address;
+    @Column(name = "user_address", length = 128)
+    private String address;
 
     @Column(name = "user_password")
-    private String Password;
+    private String password;
 
     @Column(name = "user_Date", updatable = false)
-    private Date Date;
+    private Date date;
 
-    private ArrayList<Folder> Folders;
-
-    public String GetAdress()
-    {
-        return this.Address;
-    }
-
-    public String GetPassword()
-    {
-        return this.Password;
-    }
-    public String GetFirstName()
-    {
-        return this.FirstName;
-    }
-    public String GetLastName()
-    {
-        return this.LastName;
-    }
-
+    @OneToMany(mappedBy = "user")
+    private List<Folder> folders = new ArrayList<Folder>() ;
+/*
     @Override
     public boolean equals(Object obj)
     {
         if (obj instanceof User) return false;
 
         User OtherUser = (User) obj;
-        return (this.GetAdress() == OtherUser.GetAdress());
+        return (this.getAddress() == OtherUser.getAddress());
     }
+    */
+
 }
 
 

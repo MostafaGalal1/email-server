@@ -2,45 +2,62 @@ package com.email.EmailServer.DatabaseModels;
 
 
 import com.email.EmailServer.DatabaseModels.SystemPackage.EmailIterator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import com.email.EmailServer.DatabaseModels.UserPackage.User;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.HashSet;
 
-public abstract class  Folder
-{
-    private int ID;
-    private String Name;
-    private HashSet<Integer> EmailIds;
+@Getter
+@Setter
+@Entity
+public class Folder{
 
-    public Folder(int id, String name)
-    {
-        this.ID = id;
-        this.Name = name;
-        this.EmailIds = new HashSet<>();
+    @Id
+    @Column(name = "folder_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long folderID;
+    @ManyToOne
+    @JoinColumn(name="user_address", nullable = false)
+    private User user;
+
+    @Column(name="folder_name")
+    private String name;
+
+    @Column(name="emails_id")
+    private HashSet<Long> emailsId;
+
+    @Column(name="type")
+    private FolderType type;
+
+    private Folder(){
+
     }
+    public Folder(FolderType Type, String Name){
+        this.name = Name;
+        this.type = Type;
+    }
+
 
     protected void SetName(String newName)
     {
-        this.Name = newName;
+        this.name = newName;
     }
 
-    public int GetID()
+    public boolean hasEmail(Long EmailId)
     {
-        return this.ID;
-    }
-
-    public boolean hasEmail(int EmailId)
-    {
-        return this.EmailIds.contains(EmailId);
+        return this.emailsId.contains(EmailId);
     }
 
     public EmailIterator GetFolderEmailsIterator()
     {
-        return new EmailIterator(this.EmailIds);
+        return new EmailIterator(this.emailsId);
+    }
+
+    public enum FolderType
+    {
+        primary,
+        Secondary
     }
 }

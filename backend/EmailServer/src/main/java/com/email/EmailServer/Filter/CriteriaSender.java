@@ -20,7 +20,7 @@ public class CriteriaSender implements EmailCriteria
 
         for (Email email : list)
         {
-            if (email.GetSenderHandle() != this.SenderHandle)
+            if (email.getSenderHandle() != this.SenderHandle)
                 newList.add(email);
         }
 

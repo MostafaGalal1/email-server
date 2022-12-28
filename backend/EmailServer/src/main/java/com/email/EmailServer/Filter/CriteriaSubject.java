@@ -20,7 +20,7 @@ public class CriteriaSubject implements EmailCriteria
 
         for (Email email : list)
         {
-            if (this.Subject.equals(email.GetSubject()))
+            if (this.Subject.equals(email.getSubject()))
                 newList.add(email);
         }
         return newList;

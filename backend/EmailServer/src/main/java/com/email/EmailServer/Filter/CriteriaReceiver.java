@@ -20,7 +20,7 @@ public class CriteriaReceiver implements EmailCriteria
 
         for (Email email : list)
         {
-            for (String receiverHandle : email.GetReceiversHandle())
+            for (String receiverHandle : email.getReceiversHandle())
                 if (receiverHandle.equals(this.ReceiverHandle))
                     newList.add(email);
         }

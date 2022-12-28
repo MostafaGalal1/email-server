@@ -21,7 +21,7 @@ public class CriteriaDate implements EmailCriteria
 
         for (Email email : list)
         {
-            if (email.GetDate() != this.date)
+            if (email.getDateOfEmail() != this.date)
                 newList.add(email);
         }
         return newList;

@@ -1,5 +1,7 @@
 package com.email.EmailServer.commands;
 
+import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
 import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import org.json.JSONObject;
@@ -14,19 +16,24 @@ public class ServerSystem{
 
     @Autowired
     private static UserRepo userRepo;
+    @Autowired
+    private static FolderRepo folderRepo;
     //private User currentUser;
 
-    public ServerSystem(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo) {
+        this.userRepo = UserRepo;
+        this.folderRepo = FolderRepo;
     }
 
     /*public ServerSystem(UserRepo userRepo, Long UserId) {
         this.userRepo = userRepo;
         currentUser = userRepo.getById(UserId);
     }*/
-    public static JSONObject CreateNewUser(JSONObject UserInfo){
+    public static JSONObject CreateNewUser(JSONObject UserInfo)
+    {
         JSONObject Api = new JSONObject();
-        if(userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null){
+        if(userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null)
+        {
             return Api.put("state","Failed").put("data","").put("message","Username is used");
         }
         User user = new User();
@@ -36,16 +43,26 @@ public class ServerSystem{
         user.setPassword(String.valueOf(UserInfo.get("password")));
         user.setDate(new Date());
         userRepo.save(user);
+        Folder folder2 = new Folder(Folder.FolderType.primary,"dasda");
+        folder2.setUser(user);
+        folderRepo.save(folder2);
+        user.getFolders().add(folder2);
+        Folder folder1 = new Folder(Folder.FolderType.primary,"gdoad");
+        folder1.setUser(user);
+        folderRepo.save(folder1);
+        user.getFolders().add(folder1);
+        System.out.println(user.getFolders().toArray().toString());
         return Api.put("state","Success").put("data","").put("message","Created successfully");
     }
 
-    public static JSONObject ValidateUser(JSONObject UserInfo){
+    public static JSONObject ValidateUser(JSONObject UserInfo)
+    {
         JSONObject Api = new JSONObject();
         User user = userRepo.getByAddress(String.valueOf(UserInfo.get("username")));
         if(user == null){
             return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
         }
-        if(!user.GetPassword().equals(String.valueOf(UserInfo.get("password")))){
+        if(!user.getPassword().equals(String.valueOf(UserInfo.get("password")))){
             return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
         }
         return Api.put("state","Success").put("data","").put("message","LogeIn successfully");

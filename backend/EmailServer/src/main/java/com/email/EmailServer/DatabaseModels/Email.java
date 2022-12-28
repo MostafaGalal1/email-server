@@ -1,59 +1,56 @@
 package com.email.EmailServer.DatabaseModels;
 
+import com.email.EmailServer.DatabaseModels.UserPackage.User;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-public class Email
-{
-    private int ID;
-    private String SenderHander;
-    private ArrayList<String> ReceiversHandle = new ArrayList<>();
+@Setter
+@Getter
+@Entity
+public class Email{
+    @Id
+    @Column(name = "email_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private String Subject;
-    private String Content;
-    private Date DateOfEmail;
+    @Column(name = "email_sender_handle", nullable = false)
+    private String senderHandle;
+
+    @Column(name = "email_receivers_handel")
+    private ArrayList<String> receiversHandle = new ArrayList<>();
+
+    @Column(name = "email_subject")
+    private String subject;
+    @Column(name = "email_content")
+    private String content;
+
+    @Column(name = "email_date")
+    private Date dateOfEmail;
+
+    @Column(name = "email_priority")
     private int priority;
-    private HashSet<String> ContentSet;
+    @Column(name = "email_content_set")
+    private HashSet<String> contentSet;
 
 
     private void SetContentSet()
     {
-        this.ContentSet = new HashSet<>();
+        this.contentSet = new HashSet<>();
 
-        String[] ContentWords = this.Content.split(" ");
+        String[] ContentWords = this.content.split(" ");
 
         for (String Word : ContentWords)
-            ContentSet.add(Word);
+            contentSet.add(Word);
     }
 
-    public int GetID()
-    {
-        return this.ID;
-    }
-    public String GetSenderHandle()
-    {
-        return this.SenderHander;
-    }
-    public ArrayList<String> GetReceiversHandle()
-    {
-        return this.ReceiversHandle;
-    }
-    public Date GetDate()
-    {
-        return this.DateOfEmail;
-    }
-    public String GetContent()
-    {
-        return this.Content;
-    }
-    public String GetSubject()
-    {
-        return this.Subject;
-    }
     public boolean ContentHasWord(String Word)
     {
-        return this.ContentSet.contains(Word);
+        return this.contentSet.contains(Word);
     }
 
     @Override
@@ -62,6 +59,6 @@ public class Email
         if (obj instanceof Email) return false;
 
         Email OtherEmail = (Email) obj;
-        return (this.GetID() == OtherEmail.GetID());
+        return (this.getId() == OtherEmail.getId());
     }
 }
