@@ -2,6 +2,7 @@ import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { delay, Subject } from 'rxjs';
 import { Email } from 'src/app/shared/email';
+import { FolderBoxComponent } from './folder-box/folder-box.component';
 
 @Component({
   selector: 'app-mail',
@@ -9,18 +10,17 @@ import { Email } from 'src/app/shared/email';
   styleUrls: ['./mail.component.css']
 })
 
-export class MailComponent implements OnInit {
+export class MailComponent implements OnInit{
   @ViewChild('filterSearch', { read: ElementRef }) filterSearch!: ElementRef;
   @ViewChild('refreshButton', { read: ElementRef }) filterButton!: ElementRef;
   @ViewChild('resetButton', { read: ElementRef }) resetButton!: ElementRef;
   @ViewChild('searchBar', { read: ElementRef }) searchBar!: ElementRef;
-  
   protected isVisible:boolean;
-  protected folderBoxVisible:boolean;
-  protected contactBoxVisible:boolean;
+  static folderBoxVisible:boolean;
+  static contactBoxVisible:boolean;
   protected checkAll:boolean;
   protected page:number = 0;
-  protected compose:boolean;
+  static compose:boolean;
   protected searchReset:boolean;
   protected searchColor:string;
   protected nowDate:Date;
@@ -128,8 +128,8 @@ export class MailComponent implements OnInit {
 ];
   protected emailsQueue: {[id : string] : Email};
   protected selectionQueue: {[id : string] : Email};  
-  protected folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
-  protected contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
+  static folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
+  static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
   constructor() {
     this.emailsQueue = {};
@@ -137,10 +137,10 @@ export class MailComponent implements OnInit {
     this.nowDate = new Date();
     this.checkAll = false;
     this.searchReset = true;
-    this.compose = false;
+    MailComponent.compose = false;
     this.isVisible = false;
-    this.folderBoxVisible = false;
-    this.contactBoxVisible = false;
+    MailComponent.folderBoxVisible = false;
+    MailComponent.contactBoxVisible = false;
     this.searchColor = "";
   }
 
@@ -149,6 +149,7 @@ export class MailComponent implements OnInit {
       this.emails[i].id = i.toString();
       this.emailsQueue[i.toString()] = this.emails[i];
     }
+    
   }
 
   returnZero() {
@@ -192,19 +193,19 @@ export class MailComponent implements OnInit {
   }
 
   async composeIt(){
-    if (this.compose)
+    if (MailComponent.compose)
       return;
     setTimeout(() => {
-      this.compose = true;
+      MailComponent.compose = true;
     });
   }
 
   async hideCompose(){
-    if(!this.compose){
+    if(!MailComponent.compose ){
       return ;
     }
     setTimeout(() => {
-      this.compose = false;
+      MailComponent.compose = false;
     });
   }
 
@@ -263,12 +264,61 @@ export class MailComponent implements OnInit {
   }
 
   async addFolder(){
-    this.folderBoxVisible = true;
-    this.folders.push("rgthjytry");
+    if (MailComponent.folderBoxVisible)
+      return;
+    setTimeout(() => {
+      MailComponent.folderBoxVisible = true;
+    });
+    
   }
 
   async addContact(){
-    this.contactBoxVisible = true;
-    this.contacts.push("yuhn");
+    if (MailComponent.contactBoxVisible)
+      return;
+    setTimeout(() => {
+      MailComponent.contactBoxVisible = true;
+    });
+    
   }
+  async hideFolder(){
+    if(!MailComponent.folderBoxVisible ){
+      return ;
+    }
+    setTimeout(() => {
+      MailComponent.folderBoxVisible = false;
+    });
+  }
+
+  async hideContact(){
+    if(!MailComponent.contactBoxVisible ){
+      return ;
+    }
+    setTimeout(() => {
+      MailComponent.contactBoxVisible = false;
+    });
+  }
+
+  get getcomposeVisible() {
+    console.log( MailComponent.compose) ; 
+    return MailComponent.compose;
+  }
+
+  get getFolderVisible() {
+    console.log( MailComponent.folderBoxVisible) ; 
+    return MailComponent.folderBoxVisible;
+  }
+  
+  get getContactVisible() {
+    console.log( MailComponent.contactBoxVisible) ; 
+    return MailComponent.contactBoxVisible;
+  }
+  get getfolders(){
+    return MailComponent.folders;
+  }
+
+  get getcontacts(){
+    return MailComponent.contacts;
+  }
+
+
 }
