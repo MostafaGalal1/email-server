@@ -43,6 +43,7 @@ export class ComposeBoxComponent implements OnInit {
     this.email.subject = this.subject;
     this.email.file = this.file;
     console.log(this.email);
+    MailComponent.compose = false;
     //request the send 
   } 
 
@@ -59,6 +60,7 @@ export class ComposeBoxComponent implements OnInit {
     this.email.subject = this.subject;
     this.email.file = this.file;
     console.log(this.email);
+    MailComponent.compose = false;
     //request the save to draft  
   }
 

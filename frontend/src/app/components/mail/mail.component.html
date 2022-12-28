@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   
-<div class = "dark-layout" [ngStyle]="{'display' : (folderBoxVisible || contactBoxVisible)? 'block':'none'}">
-  <app-folder-box class="folder-box"></app-folder-box>
-  <app-contact-box class="contact-box"></app-contact-box>
+<div class = "dark-layout" [ngStyle]="{'display' : (getFolderVisible || getContactVisible)? 'block':'none'}">
+  <app-folder-box class="folder-box" [ngStyle]="{'display' : getFolderVisible ? 'block':'none'}" (clickOutside)="hideFolder()"></app-folder-box>
+  <app-contact-box class="contact-box" [ngStyle]="{'display' :  getContactVisible ? 'block':'none'}" (clickOutside)="hideContact()"></app-contact-box>
 </div>
 <div class = "layout">
   <div class = "main-bar">
@@ -48,7 +48,7 @@
           <button class = "add-folder-button" #folderButton type = "button" (click)="addFolder()"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="folders-list">
-          <ul *ngFor="let list of folders; let i=index">
+          <ul *ngFor="let list of getfolders ; let i=index">
             <li>
               <div class="fsublist-div">
                 <span class="material-symbols-outlined">folder</span>
@@ -65,7 +65,7 @@
           <button class = "add-contact-button" #contactButton type = "button" (click)="addContact()"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="contacts-list">
-          <ul *ngFor="let list of contacts; let i=index">
+          <ul *ngFor="let list of getcontacts; let i=index">
             <li>
               <div class="fsublist-div">
                 <span class="material-symbols-outlined">account_circle</span>
@@ -91,7 +91,7 @@
       <button class = "select-button" #selectButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
       </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : isVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
-    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : compose? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
+    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : getcomposeVisible? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
     <div class="emails-container">
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true">
         <tbody>
