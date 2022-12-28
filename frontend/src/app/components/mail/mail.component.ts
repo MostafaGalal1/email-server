@@ -1,8 +1,7 @@
-import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { delay, Subject } from 'rxjs';
 import { Email } from 'src/app/shared/email';
-import { FolderBoxComponent } from './folder-box/folder-box.component';
+import { Location } from '@angular/common';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-mail',
@@ -133,7 +132,7 @@ export class MailComponent implements OnInit{
   static folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
-  constructor() {
+  constructor(private apiService : ApiService, private location: Location) {
     this.emailsQueue = {};
     this.selectionQueue = {};
     this.nowDate = new Date();
@@ -332,5 +331,21 @@ export class MailComponent implements OnInit{
     }
     this.checkAll = false;
     this.buttonsVisible = false;
+  }
+
+  async getEmails(folder : string){
+    this.apiService.requestEmails(folder).subscribe(
+      (emails) => {
+        this.emails = emails;
+      }
+    );
+    this.checkAll = false;
+    this.buttonsVisible = false;
+    this.selectionQueue = {};
+    this.emailsQueue = {};
+    for (let i = 0 ; i < this.emails.length; i++){
+      this.emails[i].id = i.toString();
+      this.emailsQueue[i.toString()] = this.emails[i];
+    }
   }
 }
