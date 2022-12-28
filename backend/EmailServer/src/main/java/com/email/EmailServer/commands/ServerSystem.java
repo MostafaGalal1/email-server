@@ -43,15 +43,7 @@ public class ServerSystem{
         user.setPassword(String.valueOf(UserInfo.get("password")));
         user.setDate(new Date());
         userRepo.save(user);
-        Folder folder2 = new Folder(Folder.FolderType.primary,"dasda");
-        folder2.setUser(user);
-        folderRepo.save(folder2);
-        user.getFolders().add(folder2);
-        Folder folder1 = new Folder(Folder.FolderType.primary,"gdoad");
-        folder1.setUser(user);
-        folderRepo.save(folder1);
-        user.getFolders().add(folder1);
-        System.out.println(user.getFolders().toArray().toString());
+        // add folders
         return Api.put("state","Success").put("data","").put("message","Created successfully");
     }
 

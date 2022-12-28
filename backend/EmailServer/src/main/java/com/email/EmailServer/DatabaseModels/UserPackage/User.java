@@ -5,7 +5,6 @@ import com.email.EmailServer.DatabaseModels.Folder;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,13 +15,17 @@ import java.util.List;
 @Table(name = "users")
 public class User{
 
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+
     @Column(name = "user_firstName" , length = 128)
     private String firstName;
 
     @Column(name = "user_lastName" , length = 128)
     private String lastName;
 
-    @Id
     @Column(name = "user_address", length = 128)
     private String address;
 
@@ -33,7 +36,10 @@ public class User{
     private Date date;
 
     @OneToMany(mappedBy = "user")
-    private List<Folder> folders = new ArrayList<Folder>() ;
+    private List<Folder> folders = new ArrayList<Folder>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Contact> contacts = new ArrayList<Contact>();
 /*
     @Override
     public boolean equals(Object obj)

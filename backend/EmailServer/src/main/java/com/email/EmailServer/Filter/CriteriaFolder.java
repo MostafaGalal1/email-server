@@ -21,7 +21,7 @@ public class CriteriaFolder implements EmailCriteria
 
         for (Email email : list)
         {
-            if (this.Folder.hasEmail(email.getId()))
+            if (this.Folder.hasEmail(email.getEmailId()))
                 newList.add(email);
         }
         return newList;

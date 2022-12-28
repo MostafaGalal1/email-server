@@ -1,22 +1,22 @@
 package com.email.EmailServer.DatabaseModels;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
+@Table(name = "emails")
 public class Email{
     @Id
     @Column(name = "email_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long emailId;
 
     @Column(name = "email_sender_handle", nullable = false)
     private String senderHandle;
@@ -37,6 +37,8 @@ public class Email{
     @Column(name = "email_content_set")
     private HashSet<String> contentSet;
 
+    @OneToMany(mappedBy = "email")
+    private List<Attachment> attachments = new ArrayList<Attachment>();
 
     private void SetContentSet()
     {
@@ -59,6 +61,6 @@ public class Email{
         if (obj instanceof Email) return false;
 
         Email OtherEmail = (Email) obj;
-        return (this.getId() == OtherEmail.getId());
+        return (this.getEmailId() == OtherEmail.getEmailId());
     }
 }
