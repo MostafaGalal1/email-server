@@ -12,14 +12,15 @@ import java.util.HashSet;
 @Getter
 @Setter
 @Entity
+@Table(name = "folders")
 public class Folder{
 
     @Id
     @Column(name = "folder_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long folderID;
+    private Long folderId;
     @ManyToOne
-    @JoinColumn(name="user_address", nullable = false)
+    @JoinColumn(name="user_id", nullable = false)
     private User user;
 
     @Column(name="folder_name")

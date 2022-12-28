@@ -1,7 +1,7 @@
 package com.email.EmailServer.DatabaseModels.Repos;
 
-import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Email;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FolderRepo extends JpaRepository<Folder,Long> {
+public interface EmailRepo extends JpaRepository<Email,Long> {
 }
