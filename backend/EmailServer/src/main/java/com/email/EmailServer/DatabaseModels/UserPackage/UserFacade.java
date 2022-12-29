@@ -124,6 +124,7 @@ public class UserFacade
     public boolean RenameFolder(String oldName, String newName)
     {
         if (this.user.HasFolder(oldName) == false) return false;
+        if (this.user.HasFolder(newName) == true) return false;
         this.user.RenameFolder(oldName, newName);
         return true;
     }
