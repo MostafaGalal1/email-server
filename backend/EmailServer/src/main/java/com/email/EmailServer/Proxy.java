@@ -13,7 +13,7 @@ public class Proxy {
     }
 
     public synchronized String run(String command, JSONObject data){
-        return commandFactory.create(command).execute(data).toString();
+        return commandFactory.create(command,data).execute().toString();
     }
 
 

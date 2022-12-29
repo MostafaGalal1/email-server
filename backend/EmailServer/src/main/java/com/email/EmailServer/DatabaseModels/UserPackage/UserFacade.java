@@ -108,6 +108,19 @@ public class UserFacade
         this.user.RemoveEmailFromAllFolders(EmailID);
     }
 
+    public static boolean CreateNewUser(String firstName, String lastName, String username, String password){
+        if(ServerSystem.GetUserByAddress(username) != null) return false;
+        new User(firstName, lastName, username, password);
+        return true;
+    }
+
+    public static boolean ValidateUser(String username, String password){
+        User user = ServerSystem.GetUserByAddress(username);
+        if(user == null) return false;
+        if(!user.getPassword().equals(password)) return false;
+        return true;
+    }
+
     public boolean RenameFolder(String oldName, String newName)
     {
         if (this.user.HasFolder(oldName) == false) return false;
