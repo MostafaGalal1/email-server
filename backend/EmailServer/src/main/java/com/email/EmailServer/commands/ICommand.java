@@ -4,5 +4,5 @@ package com.email.EmailServer.commands;
 import org.json.JSONObject;
 
 public interface ICommand {
-    public JSONObject execute(JSONObject data);
+    public JSONObject execute();
 }

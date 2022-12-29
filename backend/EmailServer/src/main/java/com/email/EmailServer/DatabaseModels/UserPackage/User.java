@@ -83,13 +83,15 @@ public class User
     public void AddFolder(Folder folder)
     {
         this.folders.put(folder.getName(), folder);
+        ServerSystem.AddFolderToDataBase(folder);  // has problem her
         ServerSystem.AddUserToDataBase(this);
     }
 
     protected void RemoveFolder(String FolderName)
     {
         Folder folder = this.getFolderByName(FolderName);
-        this.folders.remove(folder);
+        this.folders.remove(FolderName);
+        ServerSystem.RemoveFolderFromDataBase(folder);
         ServerSystem.AddUserToDataBase(this);
     }
 
@@ -98,6 +100,7 @@ public class User
         Folder folder = this.getFolderByName(oldName);
         this.RemoveFolder(oldName);
         folder.setName(newName);
+        folder.setFolderId(folder.getFolderId()+1);// has problem her
         this.AddFolder(folder);
     }
 

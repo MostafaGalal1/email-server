@@ -29,4 +29,15 @@ public class Controller {
         return proxy.run("AddFolder", new JSONObject(data));
     }
 
+    @DeleteMapping("/DeleteFolder")
+    @ResponseBody
+    public String DeleteFolder(@RequestBody String data){
+        return proxy.run("DeleteFolder",new JSONObject(data));
+    }
+
+    @PostMapping("/RenameFolder")
+    @ResponseBody
+    public String RenameFolder(@RequestBody String data){
+        return proxy.run("RenameFolder",new JSONObject(data));
+    }
 }

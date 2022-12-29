@@ -1,11 +1,32 @@
 package com.email.EmailServer.commands;
 
+import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
 import org.json.JSONObject;
 
 public class SignUp implements ICommand{
+
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
+    public SignUp(JSONObject Data){
+        this.firstName = Data.getString("first_name");
+        this.lastName = Data.getString("last_name");
+        this.username = Data.getString("username");
+        this.password = Data.getString("password");
+    }
     @Override
-    public JSONObject execute(JSONObject data) {
-        JSONObject Api = ServerSystem.CreateNewUser(data);
-        return  Api;
+    public JSONObject execute() {
+        boolean state = UserFacade.CreateNewUser(this.firstName, this.lastName, this.username, this.password);
+        return CreateApi(state);
+    }
+
+    private JSONObject CreateApi(boolean State){
+        JSONObject Api = new JSONObject();
+        if(State){
+            return Api.put("state","success").put("data","").put("message","User Created successfully");
+        }else{
+            return Api.put("state","failed").put("data","").put("message","Username is used");
+        }
     }
 }
