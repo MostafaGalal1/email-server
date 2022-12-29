@@ -5,9 +5,9 @@
 }
 
 :root {
-    --primary:rgba(65,173,193,1);
-    --secondary: rgba(45,132,150,1);
-    --primary_gradient: linear-gradient(160deg, rgba(145,224,241,1) 0%, rgba(65,173,193,1) 50%, rgba(45,132,150,1) 100%);
+    --primary:#02A884;
+    --secondary: #015A47;
+    --primary_gradient: linear-gradient(160deg, #9ffbde 0%, #72FDDF 25%, #02A884 50%, #015A47 100%);
     --creamy:#f2f2f2f2;
     --hover:rgb(220, 230, 230);
     --hoveight: 100%;

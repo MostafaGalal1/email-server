@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Email } from 'src/app/shared/email';
-import { Location } from '@angular/common';
+import { CurrencyPipe, Location } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
+import { EmailValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-mail',
@@ -19,6 +20,9 @@ export class MailComponent implements OnInit{
   protected buttonsVisible:boolean;
   static folderBoxVisible:boolean;
   static contactBoxVisible:boolean;
+  protected emailVisible:boolean;
+  protected currentEmail!:Email;
+  protected currentFolder:string;
   protected checkAll:boolean;
   protected page:number = 0;
   static compose:boolean;
@@ -137,6 +141,7 @@ export class MailComponent implements OnInit{
     this.selectionQueue = {};
     this.nowDate = new Date();
     this.checkAll = false;
+    this.emailVisible = false;
     this.buttonsVisible = false;
     this.searchReset = true;
     MailComponent.compose = false;
@@ -144,6 +149,8 @@ export class MailComponent implements OnInit{
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
+    this.currentFolder = "inbox";
+    this.currentEmail = this.emails[0];
   }
 
   ngOnInit(): void {
@@ -243,6 +250,7 @@ export class MailComponent implements OnInit{
       delete this.selectionQueue[emailID];
     }
     this.checkAll = false;
+    this.emailVisible = false;
     this.buttonsVisible = false;
   }
 
@@ -330,11 +338,13 @@ export class MailComponent implements OnInit{
       delete this.selectionQueue[emailID];
     }
     this.checkAll = false;
+    this.emailVisible = false;
     this.buttonsVisible = false;
   }
 
   async getEmails(folder : string){
-    this.apiService.requestEmails(folder).subscribe(
+    this.currentFolder = folder;
+    this.apiService.requestEmails(this.currentFolder).subscribe(
       (emails) => {
         this.emails = emails;
       }
@@ -346,6 +356,53 @@ export class MailComponent implements OnInit{
     for (let i = 0 ; i < this.emails.length; i++){
       this.emails[i].id = i.toString();
       this.emailsQueue[i.toString()] = this.emails[i];
+    }
+    this.emailVisible = false;
+  }
+
+  async refreshEmails(){
+    this.apiService.requestEmails(this.currentFolder).subscribe(
+      (emails) => {
+        this.emails = emails;
+      }
+    );
+    this.checkAll = false;
+    this.buttonsVisible = false;
+    this.selectionQueue = {};
+    this.emailsQueue = {};
+    for (let i = 0 ; i < this.emails.length; i++){
+      this.emails[i].id = i.toString();
+      this.emailsQueue[i.toString()] = this.emails[i];
+    }
+    this.emailVisible = false;
+  }
+
+  async previewEmail(emailID : string){
+    this.emailVisible = true;
+    this.buttonsVisible = true;
+    this.selectionQueue = {};
+    this.selectionQueue[emailID] = this.emailsQueue[emailID];
+    this.currentEmail = this.emailsQueue[emailID];
+  }
+
+  async backToFolder(){
+    this.emailVisible = false;
+    this.buttonsVisible = false;
+    this.selectionQueue = {};
+  }
+
+  async navigateEmails(left : boolean){
+    let emailID:number = parseInt(this.currentEmail.id);
+    if (left && emailID < this.emails.length-1) {
+      this.selectionQueue = {};
+      emailID++;
+      this.selectionQueue[emailID.toString()] = this.emailsQueue[emailID.toString()];
+      this.currentEmail = this.emailsQueue[emailID.toString()];
+    } else if (!left && emailID > 0) {
+      this.selectionQueue = {};
+      emailID--;
+      this.selectionQueue[emailID.toString()] = this.emailsQueue[emailID.toString()];
+      this.currentEmail = this.emailsQueue[emailID.toString()];
     }
   }
 }
