@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Setter
 @Entity
 @DynamicUpdate
 @Table(name = "folders")
@@ -53,6 +52,12 @@ public class Folder{
         ServerSystem.RemoveFolderFromDataBase(this);
     }
 
+    public void setName(String newName)
+    {
+        this.name = newName;
+        ServerSystem.AddFolderToDataBase(this);
+    }
+
     public boolean HasEmail(Long EmailID)
     {
         return this.emailsId.contains(EmailID);
@@ -84,4 +89,5 @@ public class Folder{
         primary,
         Secondary
     }
+
 }

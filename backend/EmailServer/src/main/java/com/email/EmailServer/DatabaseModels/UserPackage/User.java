@@ -42,7 +42,7 @@ public class User
     private List<Contact> contacts = new ArrayList<Contact>();
 
     @OneToMany(mappedBy = "user")
-    private Map<String, Folder> folders = new HashMap<String,Folder>();
+    public Map<String, Folder> folders = new HashMap<String,Folder>();
 
     final String InboxName = "Inbox";
     final String SentName = "Sent";
@@ -55,14 +55,13 @@ public class User
     }
     public User(String FirstName, String LastName, String UserName, String Password)
     {
+        ServerSystem.AddUserToDataBase(this);
         this.firstName = FirstName;
         this.lastName = LastName;
         this.address = UserName;
         this.password = Password;
         this.date = new Date();
-        ServerSystem.AddUserToDataBase(this);
         this.InitializeFolders();
-        //ServerSystem.AddUserToDataBase(this);
     }
 
     private void InitializeFolders()
@@ -79,28 +78,32 @@ public class User
         this.AddFolder(Draft);
         this.AddFolder(Trash);
     }
-    
+
     public void AddFolder(Folder folder)
     {
         this.folders.put(folder.getName(), folder);
-        ServerSystem.AddFolderToDataBase(folder);  // has problem her
         ServerSystem.AddUserToDataBase(this);
     }
 
     protected void RemoveFolder(String FolderName)
     {
         Folder folder = this.getFolderByName(FolderName);
+        this.RemoveFolderFromHashMap(FolderName);
+        folder.DestroyFolder();
+    }
+
+    private void RemoveFolderFromHashMap(String FolderName)
+    {
         this.folders.remove(FolderName);
-        ServerSystem.RemoveFolderFromDataBase(folder);
         ServerSystem.AddUserToDataBase(this);
     }
 
     protected void RenameFolder(String oldName, String newName)
     {
         Folder folder = this.getFolderByName(oldName);
-        this.RemoveFolder(oldName);
+        this.RemoveFolderFromHashMap(oldName);
         folder.setName(newName);
-        folder.setFolderId(folder.getFolderId()+1);// has problem her
+
         this.AddFolder(folder);
     }
 
@@ -115,7 +118,6 @@ public class User
         });
         return this.folders.containsKey(FolderName);
     }
-
 
     protected void RemoveEmailFromAllFolders(long EmailID)
     {
