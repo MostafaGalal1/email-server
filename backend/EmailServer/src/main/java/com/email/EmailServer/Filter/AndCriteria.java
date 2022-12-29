@@ -3,18 +3,19 @@ package com.email.EmailServer.Filter;
 import com.email.EmailServer.DatabaseModels.Email;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AndCriteria implements EmailCriteria
 {
-    ArrayList<EmailCriteria> AllCriteria;
+    List<EmailCriteria> AllCriteria;
 
-    public AndCriteria(ArrayList<EmailCriteria> allCriteria)
+    public AndCriteria(List<EmailCriteria> allCriteria)
     {
         this.AllCriteria = allCriteria;
     }
 
     @Override
-    public ArrayList<Email> MeetCriteria(ArrayList<Email> list)
+    public List<Email> MeetCriteria(List<Email> list)
     {
         for (EmailCriteria emailCriteria : this.AllCriteria)
         {

@@ -3,15 +3,18 @@ package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.SystemPackage.EmailIterator;
 import com.email.EmailServer.DatabaseModels.UserPackage.User;
+import com.email.EmailServer.commands.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
-import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@DynamicUpdate
 @Table(name = "folders")
 public class Folder{
 
@@ -19,7 +22,9 @@ public class Folder{
     @Column(name = "folder_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long folderId;
+
     @ManyToOne
+    @Setter(AccessLevel.NONE)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
@@ -27,31 +32,49 @@ public class Folder{
     private String name;
 
     @Column(name="emails_id")
-    private HashSet<Long> emailsId;
+    private Set<Long> emailsId = new HashSet<Long>();
 
     @Column(name="type")
     private FolderType type;
 
-    private Folder(){
+    private Folder()
+    {
 
     }
-    public Folder(FolderType Type, String Name){
+    public Folder(FolderType Type, String Name, User user){
         this.name = Name;
         this.type = Type;
+        this.user = user;
+        ServerSystem.AddFolderToDataBase(this);
     }
 
-
-    protected void SetName(String newName)
+    public void DestroyFolder() // removes from database
     {
-        this.name = newName;
+        ServerSystem.RemoveFolderFromDataBase(this);
     }
 
-    public boolean hasEmail(Long EmailId)
+    public boolean HasEmail(Long EmailID)
     {
-        return this.emailsId.contains(EmailId);
+        return this.emailsId.contains(EmailID);
     }
 
-    public EmailIterator GetFolderEmailsIterator()
+    public void AddEmail(long EmailID)
+    {
+        this.emailsId.add(EmailID);
+        ServerSystem.AddFolderToDataBase(this);
+    }
+
+    public boolean RemoveEmail(long EmailID)
+    {
+        if (this.HasEmail(EmailID) == false)
+            return false;
+
+        this.emailsId.remove(EmailID);
+        ServerSystem.AddFolderToDataBase(this);
+        return true;
+    }
+
+    public EmailIterator GetIterator()
     {
         return new EmailIterator(this.emailsId);
     }

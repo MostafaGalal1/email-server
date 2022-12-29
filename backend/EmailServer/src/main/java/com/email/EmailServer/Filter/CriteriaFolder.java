@@ -4,6 +4,7 @@ import com.email.EmailServer.DatabaseModels.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CriteriaFolder implements EmailCriteria
 {
@@ -15,13 +16,13 @@ public class CriteriaFolder implements EmailCriteria
     }
 
     @Override
-    public ArrayList<Email> MeetCriteria(ArrayList<Email> list)
+    public List<Email> MeetCriteria(List<Email> list)
     {
-        ArrayList<Email> newList = new ArrayList<>();
+        List<Email> newList = new ArrayList<>();
 
         for (Email email : list)
         {
-            if (this.Folder.hasEmail(email.getEmailId()))
+            if (this.Folder.HasEmail(email.getEmailId()))
                 newList.add(email);
         }
         return newList;
