@@ -22,6 +22,7 @@ export class FolderBoxComponent implements OnInit {
   onSubmit(event:any){
     if(event.target.name.value === "")
       return;
+    console.log(event.target.name.value);
     MailComponent.folders.push(event.target.name.value);
     event.target.name.value = "";
     MailComponent.folderBoxVisible = false;

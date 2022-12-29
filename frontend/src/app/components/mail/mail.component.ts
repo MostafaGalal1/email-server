@@ -302,7 +302,6 @@ export class MailComponent implements OnInit{
     setTimeout(() => {
       MailComponent.folderBoxVisible = true;
     });
-    
   }
 
   async addContact(){
