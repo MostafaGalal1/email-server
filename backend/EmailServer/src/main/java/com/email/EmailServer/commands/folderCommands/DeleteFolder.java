@@ -6,16 +6,17 @@ import org.json.JSONObject;
 
 public class DeleteFolder implements ICommand {
 
-    private User user;
+    private String userAddress;
     private String folderName;
+
     public DeleteFolder(JSONObject Data){
-        this.user = ServerSystem.GetUserByAddress(Data.getString("username"));
+        this.userAddress = Data.getString("username");
         this.folderName = Data.getString("folderName");
     }
 
     @Override
     public JSONObject execute() {
-        UserFacade userFacade = new UserFacade(this.user);
+        UserFacade userFacade = new UserFacade(this.userAddress);
         boolean state =  userFacade.DeleteFolder(this.folderName);
         return CreateApi(state);
     }

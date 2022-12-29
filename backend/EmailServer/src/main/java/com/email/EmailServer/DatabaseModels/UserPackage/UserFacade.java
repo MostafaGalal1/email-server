@@ -62,7 +62,7 @@ public class UserFacade
     }
 
     // Still need to implement sorting the Emails/////////////////////
-    public List<Email> GetAllFolderEmailsWithFilterAndSort
+    public List<JSONObject> GetAllFolderEmailsWithFilterAndSort
             (String FolderName, List<EmailCriteria> AllCriteria)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);

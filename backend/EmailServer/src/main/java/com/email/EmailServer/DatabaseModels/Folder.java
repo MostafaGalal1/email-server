@@ -19,7 +19,7 @@ public class Folder{
     @Id
     @Column(name = "folder_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long folderId;
+    private Long id;
 
     @ManyToOne
     @Setter(AccessLevel.NONE)

@@ -9,6 +9,7 @@ public class SignUp implements ICommand{
     private String lastName;
     private String username;
     private String password;
+
     public SignUp(JSONObject Data){
         this.firstName = Data.getString("first_name");
         this.lastName = Data.getString("last_name");

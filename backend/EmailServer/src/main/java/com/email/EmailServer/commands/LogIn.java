@@ -4,6 +4,7 @@ import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
 import org.json.JSONObject;
 
 public class LogIn implements ICommand{
+
     private String username;
     private String password;
 

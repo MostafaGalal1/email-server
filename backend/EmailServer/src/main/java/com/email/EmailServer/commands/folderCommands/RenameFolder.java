@@ -9,6 +9,7 @@ public class RenameFolder implements ICommand {
     private String userAddress;
     private String oldName;
     private String newName;
+
     public RenameFolder(JSONObject Data){
         this.userAddress = Data.getString("username");
         this.oldName = Data.getString("oldName");

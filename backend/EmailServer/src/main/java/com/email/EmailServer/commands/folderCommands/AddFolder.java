@@ -5,15 +5,17 @@ import com.email.EmailServer.commands.ICommand;
 import org.json.JSONObject;
 
 public class AddFolder implements ICommand {
-    private User user;
+
+    private String userAddress;
     private String folderName;
+
     public AddFolder(JSONObject Data){
-        this.user = ServerSystem.GetUserByAddress(Data.getString("username"));
+        this.userAddress = Data.getString("username");
         this.folderName = Data.getString("folderName");
     }
     @Override
     public JSONObject execute() {
-        UserFacade userFacade = new UserFacade(this.user);
+        UserFacade userFacade = new UserFacade(this.userAddress);
         Boolean state = userFacade.AddFolder(this.folderName);
         return this.CreateApi(state);
     }
