@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   public visibility:string;
 
-  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) { 
+  constructor(private authService : AuthenticationService, private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) { 
     this.visibility = "password";
   }
 
@@ -27,15 +28,7 @@ export class SignupComponent implements OnInit {
   });
 
   onSubmit(){
-    this.apiService.createAccount(this.signupForm.value).subscribe(
-      (error) => {
-        alert("Username taken");
-      },
-      () => {
-        this.router.navigate(["/mail"]);
-      }
-    );
-    console.log(this.signupForm.value)
+    this.authService.signup(this.signupForm.value).subscribe(() => this.router.navigate(["/mail"]));
   }
   
   togglePassword() {

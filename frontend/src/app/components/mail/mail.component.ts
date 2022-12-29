@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Email } from 'src/app/shared/email';
 import { Location } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-mail',
@@ -154,7 +156,7 @@ export class MailComponent implements OnInit{
   static folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
-  constructor(private apiService : ApiService, private location: Location) {
+  constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router) {
 
     this.emailsQueue = {};
     this.selectionQueue = {};
@@ -423,5 +425,10 @@ export class MailComponent implements OnInit{
       this.selectionQueue[emailID.toString()] = this.emailsQueue[emailID.toString()];
       this.currentEmail = this.emailsQueue[emailID.toString()];
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

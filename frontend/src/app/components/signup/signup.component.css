@@ -12,11 +12,12 @@
 .container{
     position: absolute;
     width: 500px;
+    height: 644px;
     left: 0; 
-    right: 0; 
+    right: 0;
     margin-left: auto; 
     margin-right: auto; 
-    top: 6%;
+    top: calc(50% - 322px);
     text-align: center;
     background-color: white;
     box-shadow: 32px black;
@@ -51,13 +52,16 @@
 .form-input{
     text-align: left;
     width: 400px;
+    height: 110px;
     color: var(--secondary);
     margin: auto;
 }
 
 .form-input input{
-    width: 355px;
-    height: 35px;
+    display: block;
+    width: 196px;
+    height: 45px;
+    margin: auto;
     border-radius: 100px;
     padding: 6px 22.5px;
     border: 1px;
@@ -94,24 +98,6 @@
     outline-color: var(--primary);
 }
 
-#first_name{
-    width: 150px;
-}
-
-#last_name{
-    width: 150px;
-    margin-left: 6px;
-}
-
-#password{
-    width: 150px;
-}
-
-#confirm_password{
-    width: 150px;
-    margin-left: 6px;
-}
-
 #name{
     display: inline-block;
     width: 200px;
@@ -124,13 +110,16 @@
     margin: auto;
 }
 
+#username{
+    width: 396px;
+}
+
 .show-password{
     text-align: left;
     margin: auto;
     margin-left: 50px;
     color: var(--secondary);
 }
-
 
 #show-password{
     padding-left: 30px;

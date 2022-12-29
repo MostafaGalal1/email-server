@@ -16,7 +16,7 @@
     right: 0; 
     margin-left: auto; 
     margin-right: auto; 
-    top: 12%;
+    top: calc(50% - 267px);
     background-color: white;
     box-shadow: 32px black;
 }
@@ -49,13 +49,17 @@
 
 .form-input{
     width: 300px;
+    height: 110px;
     color: var(--secondary);
     margin: auto;
 }
 
 .form-input input{
-    width: 255px;
-    height: 35px;
+    display: block;
+    position: relative;
+    width: 298px;
+    margin: auto;
+    height: 45px;
     border-radius: 100px;
     padding: 6px 22.5px;
     border: 1px;
@@ -90,4 +94,68 @@
 
 .form-input input:focus{
     outline-color: var(--primary);
+}
+
+
+.show-password{
+    text-align: left;
+    margin: auto;
+    margin-left: 50px;
+    color: var(--secondary);
+}
+
+#show-password{
+    padding-left: 30px;
+}
+
+.show-password input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.show-password-target{
+    position: absolute;
+    border-radius: 8px;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+.container input:hover ~ .show-password-target{
+    cursor: pointer;
+    background-color: #ccc;
+}
+
+.container input:checked:hover ~ .show-password-target{
+    cursor: pointer;
+    background-color: var(--secondary);
+}
+
+.container input:checked ~ .show-password-target{
+    background-color: var(--primary);
+}
+
+.show-password-target:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked ~ .show-password-target:after{
+    display: block;
+}
+
+.container .show-password-target:after{
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }

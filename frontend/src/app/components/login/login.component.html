@@ -12,7 +12,14 @@
                 </div>
                 <div class="form-input">
                     <label for="password">Password</label><br>
-                    <input type="password" id="password" formControlName="password"><br><br>
+                    <input type={{visibility}} id="password" formControlName="password"><br><br>
+                </div>
+                <div class="show-password">
+                    <label>
+                        <input type="checkbox" (change)="togglePassword()">
+                        <span class="show-password-target"></span>
+                    </label>
+                    <label id="show-password">Show password</label>
                 </div>
                 <div class="form-submit">
                     <input class="form-submit" type="submit" value="Submit">
