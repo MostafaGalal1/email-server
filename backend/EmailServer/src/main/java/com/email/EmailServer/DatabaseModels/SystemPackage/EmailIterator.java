@@ -9,10 +9,10 @@ import java.util.Iterator;
 
 public class EmailIterator implements Iterator
 {
-    public HashSet<Long> Set;
-    public Iterator MyIterator;
+    private  Set<Long> Set;
+    private Iterator MyIterator;
 
-    public EmailIterator(HashSet<Long> set)
+    public EmailIterator(Set<Long> set)
     {
         this.Set = set;
         this.MyIterator = this.Set.iterator();
