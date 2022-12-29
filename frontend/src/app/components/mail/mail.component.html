@@ -109,12 +109,21 @@
       <div class = "email-preview" [ngStyle]="{'display' : emailVisible? 'block':'none'}">
         <div class = "email-pad">
           <div>
-            <h2 class="email-subject">{{currentEmail.subject}}</h2>
+            <h1 class="email-subject">{{currentEmail.subject}}</h1>
           </div>
+          <br>
           <div>
-            <h4>{{currentEmail.sender}}</h4>  
-            <h5>{{currentEmail.recievers}}</h5>
+            <h4>From: {{currentEmail.sender}}</h4>  
+            <h5>To: {{currentEmail.recievers}}</h5>
+            <br>
             <p>{{currentEmail.body}}</p>
+          </div>
+          <br>
+          <h4 *ngIf="attachs.length > 0">{{attachs.length}} attachments</h4>
+          <div class = "attach-preview" *ngFor="let att of attachs">
+            <a href={{att}} download>
+              <img src={{att}}>
+            </a>
           </div>
         </div>
       </div>

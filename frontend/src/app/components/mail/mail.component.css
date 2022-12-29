@@ -348,12 +348,27 @@
   width: 100%;
 }
 
-.email-pad {
-  padding: 20px;
+.attach-preview {
+  padding: 2px;
+  margin: 12px;
+  border: 1px solid var(--hover);
+  display: inline-block;
 }
 
-.email-pad h2 {
-  text-align: center;
+.attach-preview img {
+  height: 100px;
+}
+
+.email-preview p{
+  border-spacing: 0;
+  border-collapse: collapse;
+  color: #222;
+  direction: ltr;
+  font: small/1.5 Arial,Helvetica,sans-serif;
+}
+
+.email-pad {
+  padding: 20px;
 }
 
 .refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover{
