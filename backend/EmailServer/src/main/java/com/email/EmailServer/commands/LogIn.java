@@ -20,9 +20,9 @@ public class LogIn implements ICommand{
     private JSONObject CreateApi(boolean State){
         JSONObject Api = new JSONObject();
         if(State){
-            return Api.put("state","success").put("data","").put("message","LogeIn successfully");
+            return Api.put("state","success").put("data",this.username).put("message","LogeIn successfully");
         }else{
-            return Api.put("state","failed").put("data","").put("message","Wrong username or wrong password");
+            return Api.put("state","failed").put("data",this.username).put("message","Wrong username or wrong password");
         }
     }
 }

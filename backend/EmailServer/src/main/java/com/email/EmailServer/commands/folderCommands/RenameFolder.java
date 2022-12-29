@@ -27,9 +27,9 @@ public class RenameFolder implements ICommand {
     private JSONObject CreateApi(boolean State){
         JSONObject Api = new JSONObject();
         if(State){
-            return Api.put("state","success").put("data","").put("message","Folder renamed successfully");
+            return Api.put("state","success").put("data",this.newName).put("message","Folder renamed successfully");
         }else{
-            return Api.put("state","failed").put("data","").put("message","Folder doesn't exist");
+            return Api.put("state","failed").put("data",this.oldName).put("message","Folder doesn't exist");
         }
     }
 }

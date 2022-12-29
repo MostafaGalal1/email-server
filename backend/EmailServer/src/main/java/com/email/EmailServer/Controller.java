@@ -14,6 +14,7 @@ public class Controller {
     @PutMapping("/SignUp")
     @ResponseBody
     public String SignUp(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("SignUp", new JSONObject(data));
     }
 

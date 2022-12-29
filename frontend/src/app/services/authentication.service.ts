@@ -12,21 +12,21 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login(loginForm : object) {
-    return this.http.post('http://localhost:8080/login', loginForm).pipe(
+    return this.http.post('http://localhost:8080/Email/LogIn', loginForm).pipe(
       map((user:any) => {
-        console.log(localStorage.getItem('currentUser'));
         if (user.state === "success") {
           localStorage.setItem('currentUser', user["data"]);
         }
       }));
   }
 
-  signup(loginForm : object) {
-    return this.http.post('http://localhost:8080/signup', loginForm).pipe(
+  signup(signupForm : object) {
+    return this.http.put('http://localhost:8080/Email/SignUp', signupForm).pipe(
       map((user:any) => {
-        console.log(localStorage.getItem('currentUser'));
         if (user.state === "success") {
           localStorage.setItem('currentUser', user["data"]);
+        }else{
+          alert(user.message)
         }
       }));
   }

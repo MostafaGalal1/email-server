@@ -25,9 +25,9 @@ public class DeleteFolder implements ICommand {
     private JSONObject CreateApi(boolean State){
         JSONObject Api = new JSONObject();
         if(State){
-            return Api.put("state","success").put("data","").put("message","Folder deleted successfully");
+            return Api.put("state","success").put("data",this.folderName).put("message","Folder deleted successfully");
         }else{
-            return Api.put("state","failed").put("data","").put("message","Folder doesn't exist");
+            return Api.put("state","failed").put("data",this.folderName).put("message","Folder doesn't exist");
         }
     }
 }

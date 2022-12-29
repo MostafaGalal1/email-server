@@ -24,9 +24,9 @@ public class AddFolder implements ICommand {
     private JSONObject CreateApi(boolean State){
         JSONObject Api = new JSONObject();
         if(State){
-            return Api.put("state","success").put("data","").put("message","Folder created successfully");
+            return Api.put("state","success").put("data",this.folderName).put("message","Folder created successfully");
         }else{
-            return Api.put("state","failed").put("data","").put("message","Folder exist");
+            return Api.put("state","failed").put("data",this.folderName).put("message","Folder exist");
         }
     }
 }

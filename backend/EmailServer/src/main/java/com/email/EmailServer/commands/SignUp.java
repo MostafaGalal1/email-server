@@ -24,9 +24,9 @@ public class SignUp implements ICommand{
     private JSONObject CreateApi(boolean State){
         JSONObject Api = new JSONObject();
         if(State){
-            return Api.put("state","success").put("data","").put("message","User Created successfully");
+            return Api.put("state","success").put("data",this.username).put("message","User Created successfully");
         }else{
-            return Api.put("state","failed").put("data","").put("message","Username is used");
+            return Api.put("state","failed").put("data",this.username).put("message","Username is used");
         }
     }
 }
