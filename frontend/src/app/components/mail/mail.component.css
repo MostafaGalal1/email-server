@@ -19,6 +19,7 @@
 
 .main-bar{
   top: 0%;
+  position: relative;
   height: 10vh;
   background: var(--primary_gradient);
   margin-bottom: 6px;
@@ -112,6 +113,55 @@
   border: 1px;
 }
 
+.settings-button, .logout-button{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-top: 0px;
+  margin-left: 12px;
+  border-radius: 100%;
+  padding: 0;
+  border: 1px;
+}
+
+.main-buttons{
+  position: absolute;
+  top: calc(50% - 20px);
+  right: 12px;
+}
+
+.state-button{
+  position: absolute;
+  left: 0px !important;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: var(--creamy);
+  color: green;
+  padding: 0;
+  border: 1px;
+}
+
+.usermail{
+  display: block;
+  margin: 10px;
+  margin-left: 50px;
+}
+
+.user-info{
+  display: inline-block;
+  width: 340px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: var(--creamy);
+  vertical-align: bottom;
+}
+
+.settings-button span, .logout-button span{
+  opacity: 0.6;
+}
+
 .add-folder-button, .add-contact-button{
   display: inline-block;
   align-self: center;
@@ -156,7 +206,7 @@
   right: 12px;
 }
 
-.select-button{
+.select-button, .return-button{
   display: inline-block;
   align-self: center;
   width: 40px;
@@ -168,19 +218,7 @@
   border: 1px;
 }
 
-.delete-button{
-  display: inline-block;
-  align-self: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  margin: 12px;
-  margin-left: 0px;
-  padding: 0;
-  border: 1px;
-}
-
-.move-button{
+.delete-button, .move-button, .left-nav-button, .right-nav-button {
   display: inline-block;
   align-self: center;
   width: 40px;
@@ -208,6 +246,11 @@
   width: 60px;
   height: 60px;
   border-radius: 100%;
+}
+
+.pigeon-text{
+  margin-left: 6px;
+  width: 170px;
 }
 
 .pigeon-span{
@@ -239,10 +282,6 @@
 }
 
 .delete-button:hover{
-  background: var(--hover);
-}
-
-.select-button:hover{
   background: var(--hover);
 }
 
@@ -303,7 +342,21 @@
   left: 84px;
 }
 
-.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover{
+.email-preview {
+  display: none;
+  position: relative;
+  width: 100%;
+}
+
+.email-pad {
+  padding: 20px;
+}
+
+.email-pad h2 {
+  text-align: center;
+}
+
+.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover{
   background: var(--hover);
   background: white;
   color: var(--primary);

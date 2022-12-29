@@ -7,8 +7,19 @@
 <div class = "layout">
   <div class = "main-bar">
     <span class="pigeon-span">
-    <img class="pigeon" src="./assets/pigeon-trans.png">
+      <img class="pigeon" src="./assets/pigeon-symbol.png">
     </span>
+    <span>
+      <img class="pigeon-text" src="./assets/pigeonon-text.png">
+    </span>
+    <div class="main-buttons">
+      <div class = "user-info">
+        <button class = "state-button" #stateButton type = "button"><span class="material-symbols-outlined">radio_button_checked</span></button>
+        <label class = "usermail">MostafaM.Galal@pigeonon.com</label>
+      </div>
+      <button class = "settings-button" #settingsButton type = "button"><span class="material-symbols-outlined">settings</span></button>
+      <button class = "logout-button" #logoutButton type = "button"><span class="material-symbols-outlined">logout</span></button>
+    </div>
   </div>
   <div class="options">
     <br>
@@ -34,10 +45,6 @@
       <div class="options-div" (click)="getEmails('trash')">
         <span class="material-symbols-outlined">delete</span>
         <input type="button" class="button" value="Trash">
-      </div>
-      <div class="options-div">
-        <span class="material-symbols-outlined">logout</span>
-        <input type="button" class="button" value="Log out">
       </div>
     </div>
       <br>
@@ -82,21 +89,36 @@
   </div>
   <div class="container">
     <div class = "navigation-bar">
-      <button class = "refresh-button" #refreshButton type = "button"><span class="material-symbols-outlined">refresh</span></button>
+      <button class = "refresh-button" #refreshButton type = "button" (click)="refreshEmails()"><span class="material-symbols-outlined">refresh</span></button>
       <div class = "search-container" [ngStyle]="{'background-color': searchColor}">
         <button class = "Search-button" type = "button"><span class="material-symbols-outlined">search</span></button>
         <input type = "text" id = "search_text" placeholder="Search in mail" #searchBar (focus)="whitenBar()" (clickOutside)="darkenBar()">
         <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
         <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : filterBoxVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
       </div>
-      <button class = "select-button" #selectButton type = "button"><span class="material-symbols-outlined" (click)="selectAll()">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
-      <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined" (click)="deleteEmail()">delete</span></button>
-      <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined" (click)="moveEmail()">drive_file_move</span></button>
+      <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : emailVisible? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
+      <button class = "select-button" #selectButton [ngStyle]="{'display' : !emailVisible? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
+      <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
+      <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="moveEmail()"><span class="material-symbols-outlined">drive_file_move</span></button>
+      <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>
+      <button class = "right-nav-button" #rightNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(true)"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
     </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : filterBoxVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
     <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : getcomposeVisible? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
     <div class="emails-container">
-      <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true">
+      <div class = "email-preview" [ngStyle]="{'display' : emailVisible? 'block':'none'}">
+        <div class = "email-pad">
+          <div>
+            <h2 class="email-subject">{{currentEmail.subject}}</h2>
+          </div>
+          <div>
+            <h4>{{currentEmail.sender}}</h4>  
+            <h5>{{currentEmail.recievers}}</h5>
+            <p>{{currentEmail.body}}</p>
+          </div>
+        </div>
+      </div>
+      <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !emailVisible? '':'none'}">
         <tbody>
             <tr class="table-headers">  
               <th class="check-column" >chk</th> 
@@ -106,7 +128,7 @@
               <th class="body-column">body</th>
               <th class="date-column">date</th>
             </tr>
-            <tr *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
+            <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
               <td><input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)"></td>  
               <td>{{email.value.sender}}</td>  
               <td>{{email.value.recievers}}</td>  
