@@ -1,25 +1,23 @@
 package com.email.EmailServer.commands.folderCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
 import com.email.EmailServer.commands.ICommand;
-import com.email.EmailServer.commands.ServerSystem;
 import org.json.JSONObject;
 
 public class RenameFolder implements ICommand {
 
-    private User user;
+    private String userAddress;
     private String oldName;
     private String newName;
     public RenameFolder(JSONObject Data){
-        this.user = ServerSystem.GetUserByAddress(Data.getString("username"));
+        this.userAddress = Data.getString("username");
         this.oldName = Data.getString("oldName");
         this.newName = Data.getString("newName");
     }
 
     @Override
     public JSONObject execute() {
-        UserFacade userFacade = new UserFacade(this.user);
+        UserFacade userFacade = new UserFacade(this.userAddress);
         boolean state =  userFacade.RenameFolder(this.oldName, this.newName);
         return CreateApi(state);
     }

@@ -2,12 +2,11 @@ package com.email.EmailServer.DatabaseModels.UserPackage;
 
 
 import com.email.EmailServer.DatabaseModels.Folder;
-import com.email.EmailServer.DatabaseModels.SystemPackage.EmailIterator;
-import com.email.EmailServer.commands.ServerSystem;
+import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
+import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.*;
 
@@ -42,7 +41,7 @@ public class User
     private List<Contact> contacts = new ArrayList<Contact>();
 
     @OneToMany(mappedBy = "user")
-    public Map<String, Folder> folders = new HashMap<String,Folder>();
+    private Map<String, Folder> folders = new HashMap<String,Folder>();
 
     final String InboxName = "Inbox";
     final String SentName = "Sent";
@@ -62,6 +61,8 @@ public class User
         this.password = Password;
         this.date = new Date();
         this.InitializeFolders();
+
+        ServerSystem.AddUserToDataBase(this);
     }
 
     private void InitializeFolders()
@@ -105,6 +106,16 @@ public class User
         folder.setName(newName);
 
         this.AddFolder(folder);
+    }
+
+    protected List<String> GetAllSecondaryFolderNames()
+    {
+        List<String> SecondaryFolderNames = new ArrayList<>();
+        this.folders.forEach((key, value)->{
+            if (!value.isPrimary())
+                SecondaryFolderNames.add(value.getName());
+        });
+        return SecondaryFolderNames;
     }
 
     protected boolean HasFolder(String FolderName)

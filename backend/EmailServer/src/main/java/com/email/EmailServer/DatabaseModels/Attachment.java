@@ -1,5 +1,6 @@
 package com.email.EmailServer.DatabaseModels;
 
+import com.email.EmailServer.DatabaseModels.Email.Email;
 import jakarta.persistence.*;
 import lombok.*;
 

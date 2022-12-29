@@ -1,10 +1,7 @@
 package com.email.EmailServer.commands.folderCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
 import com.email.EmailServer.commands.ICommand;
-import com.email.EmailServer.commands.ServerSystem;
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 public class AddFolder implements ICommand {

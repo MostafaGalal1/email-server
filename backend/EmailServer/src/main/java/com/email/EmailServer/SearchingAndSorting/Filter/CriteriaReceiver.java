@@ -1,6 +1,6 @@
-package com.email.EmailServer.Filter;
+package com.email.EmailServer.SearchingAndSorting.Filter;
 
-import com.email.EmailServer.DatabaseModels.Email;
+import com.email.EmailServer.DatabaseModels.Email.Email;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class CriteriaReceiver implements EmailCriteria
 
         for (Email email : list)
         {
-            for (String receiverHandle : email.getReceiversHandle())
+            for (String receiverHandle : email.getReceiversAdress())
                 if (receiverHandle.equals(this.ReceiverHandle))
                     newList.add(email);
         }

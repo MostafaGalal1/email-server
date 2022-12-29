@@ -1,11 +1,12 @@
 package com.email.EmailServer.DatabaseModels.UserPackage;
 
-import com.email.EmailServer.DatabaseModels.Email;
+import com.email.EmailServer.DatabaseModels.Email.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
-import com.email.EmailServer.DatabaseModels.SystemPackage.EmailIterator;
-import com.email.EmailServer.Filter.AndCriteria;
-import com.email.EmailServer.Filter.EmailCriteria;
-import com.email.EmailServer.commands.ServerSystem;
+import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
+import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
+import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
+import com.email.EmailServer.DatabaseModels.ServerSystem;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,9 @@ public class UserFacade
 {
     private User user;
 
-    public UserFacade(User user)
+    public UserFacade(String UserAddress)
     {
+        User user = ServerSystem.GetUserByAddress(UserAddress);
         this.user = user;
     }
 
@@ -31,14 +33,14 @@ public class UserFacade
 
     public void SendEmailToTrash(Email email)
     {
-        long EmailID = email.getEmailId();
+        long EmailID = email.getId();
         this.user.RemoveEmailFromAllFolders(EmailID);
         AddEmailToTrash(EmailID);
     }
 
     public boolean RestoreEmailFromTrash(Email email)
     {
-        long EmailID = email.getEmailId();
+        long EmailID = email.getId();
 
         if (user.TrashHasEmail(EmailID) == false) return false;
 
@@ -56,7 +58,7 @@ public class UserFacade
     {
         String UserHandle = user.getAddress();
 
-        return email.getSenderHandle().equals(UserHandle);
+        return email.getSenderAddress().equals(UserHandle);
     }
 
     // Still need to implement sorting the Emails/////////////////////
@@ -65,7 +67,20 @@ public class UserFacade
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
         this.FilterEmailsForSearch(Emails, AllCriteria);
-        return Emails;
+        // sorting not implemented yet
+
+        List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
+        return jsonList;
+    }
+
+    private List<JSONObject> ConvertEmailsToJsons(List<Email> Emails)
+    {
+        List<JSONObject> jsonList = new ArrayList<>();
+        Emails.forEach((email)->{
+            JSONObject EmailJson = email.getJsonOfHeader();
+            jsonList.add(EmailJson);
+        });
+        return jsonList;
     }
 
     private void FilterEmailsForSearch(List<Email> emails, List<EmailCriteria> AllCriteria)
@@ -102,10 +117,37 @@ public class UserFacade
         return true;
     }
 
+    public boolean DeleteFolder(String FolderName)
+    {
+        if (this.user.HasFolder(FolderName) == false) return false;
+        this.user.RemoveFolder(FolderName);
+        return true;
+    }
+
+    public boolean RenameFolder(String oldName, String newName)
+    {
+        if (this.user.HasFolder(oldName) == false) return false;
+        if (this.user.HasFolder(newName) == true) return false;
+        this.user.RenameFolder(oldName, newName);
+        return true;
+    }
+
+    public List<String> GetAllFolderNames()
+    {
+        List<String> SecondaryFolderNames = this.user.GetAllSecondaryFolderNames();
+        return SecondaryFolderNames;
+    }
+
     public void DeleteEmailPermanently(Email email)
     {
-        long EmailID = email.getEmailId();
+        long EmailID = email.getId();
         this.user.RemoveEmailFromAllFolders(EmailID);
+    }
+
+    public void AddEmailToDraft(Email email)
+    {
+        long EmailID = email.getId();
+        this.AddEmailToDraft(EmailID);
     }
 
     public static boolean CreateNewUser(String firstName, String lastName, String username, String password){
@@ -118,21 +160,6 @@ public class UserFacade
         User user = ServerSystem.GetUserByAddress(username);
         if(user == null) return false;
         if(!user.getPassword().equals(password)) return false;
-        return true;
-    }
-
-    public boolean RenameFolder(String oldName, String newName)
-    {
-        if (this.user.HasFolder(oldName) == false) return false;
-        if (this.user.HasFolder(newName) == true) return false;
-        this.user.RenameFolder(oldName, newName);
-        return true;
-    }
-
-    public boolean DeleteFolder(String FolderName)
-    {
-        if (this.user.HasFolder(FolderName) == false) return false;
-        this.user.RemoveFolder(FolderName);
         return true;
     }
 
