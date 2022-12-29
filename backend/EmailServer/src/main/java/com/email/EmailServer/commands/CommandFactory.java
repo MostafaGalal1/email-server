@@ -19,6 +19,7 @@ public class CommandFactory {
         switch (Command.toLowerCase()){
             case "signup"-> command = new SignUp();
             case "login"-> command = new LogIn();
+            case "addfolder"-> command = new AddFolder();
         }
         return command;
     }

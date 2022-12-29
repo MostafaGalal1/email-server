@@ -3,6 +3,7 @@ package com.email.EmailServer.Filter;
 import com.email.EmailServer.DatabaseModels.Email;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CriteriaContent implements EmailCriteria
 {
@@ -14,9 +15,9 @@ public class CriteriaContent implements EmailCriteria
     }
 
     @Override
-    public ArrayList<Email> MeetCriteria(ArrayList<Email> list)
+    public List<Email> MeetCriteria(List<Email> list)
     {
-        ArrayList<Email> newList = new ArrayList<>();
+        List<Email> newList = new ArrayList<>();
 
         for (Email email : list)
         {

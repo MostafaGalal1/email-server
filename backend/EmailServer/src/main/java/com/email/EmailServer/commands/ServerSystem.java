@@ -2,6 +2,7 @@ package com.email.EmailServer.commands;
 
 import com.email.EmailServer.DatabaseModels.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
 import com.email.EmailServer.DatabaseModels.UserPackage.User;
@@ -19,7 +20,8 @@ public class ServerSystem{
     private static UserRepo userRepo;
     @Autowired
     private static FolderRepo folderRepo;
-    //private User currentUser;
+    @Autowired
+    private static EmailRepo emailRepo;
 
     public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo)
     {
@@ -31,9 +33,8 @@ public class ServerSystem{
     public static JSONObject CreateNewUser(JSONObject UserInfo)
     {
         JSONObject Api = new JSONObject();
-        if(userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null)
-        {
-            return Api.put("state","Failed").put("data","").put("message","Username is used");
+        if (userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null) {
+            return Api.put("state", "Failed").put("data", "").put("message", "Username is used");
         }
         User user = new User(String.valueOf(UserInfo.get("first_name")),String.valueOf(UserInfo.get("last_name")),String.valueOf(UserInfo.get("username"))
                 ,String.valueOf(UserInfo.get("password")));
