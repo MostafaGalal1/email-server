@@ -1,5 +1,6 @@
 package com.email.EmailServer.commands;
 
+import com.email.EmailServer.DatabaseModels.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
@@ -20,15 +21,13 @@ public class ServerSystem{
     private static FolderRepo folderRepo;
     //private User currentUser;
 
-    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo) {
-        this.userRepo = UserRepo;
-        this.folderRepo = FolderRepo;
+    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo)
+    {
+        userRepo = UserRepo;
+        folderRepo = FolderRepo;
+        emailRepo = EmailRepo;
     }
 
-    /*public ServerSystem(UserRepo userRepo, Long UserId) {
-        this.userRepo = userRepo;
-        currentUser = userRepo.getById(UserId);
-    }*/
     public static JSONObject CreateNewUser(JSONObject UserInfo)
     {
         JSONObject Api = new JSONObject();
@@ -36,15 +35,9 @@ public class ServerSystem{
         {
             return Api.put("state","Failed").put("data","").put("message","Username is used");
         }
-        User user = new User();
-        user.setFirstName(String.valueOf(UserInfo.get("first_name")));
-        user.setLastName(String.valueOf(UserInfo.get("last_name")));
-        user.setAddress(String.valueOf(UserInfo.get("username")));
-        user.setPassword(String.valueOf(UserInfo.get("password")));
-        user.setDate(new Date());
-        userRepo.save(user);
-        // add folders
-        return Api.put("state","Success").put("data","").put("message","Created successfully");
+        User user = new User(String.valueOf(UserInfo.get("first_name")),String.valueOf(UserInfo.get("last_name")),String.valueOf(UserInfo.get("username"))
+                ,String.valueOf(UserInfo.get("password")));
+        return Api.put("state", "Success").put("data", "").put("message", "Created successfully");
     }
 
     public static JSONObject ValidateUser(JSONObject UserInfo)
@@ -59,5 +52,31 @@ public class ServerSystem{
         }
         return Api.put("state","Success").put("data","").put("message","LogeIn successfully");
     }
+
+    public static void AddFolderToDataBase(Folder folder)
+    {
+        folderRepo.save(folder);
+    }
+
+    public static void RemoveFolderFromDataBase(Folder folder)
+    {
+        folderRepo.delete(folder);
+    }
+
+    public static Email GetEmailByID(long EmailID)
+    {
+        Email email = emailRepo.getById(EmailID);
+        return  email;
+    }
+    public static User GetUserByAddress(String username)
+    {
+        User user = userRepo.getByAddress(username);
+        return user;
+    }
+    public static void AddUserToDataBase(User user)
+    {
+        userRepo.save(user);
+    }
+
 
 }
