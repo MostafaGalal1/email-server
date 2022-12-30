@@ -1,11 +1,8 @@
-package com.email.EmailServer.DatabaseModels.SystemPackage;
+package com.email.EmailServer.DatabaseModels.Email;
 
-import com.email.EmailServer.DatabaseModels.Email;
-import com.email.EmailServer.commands.ServerSystem;
-import org.hibernate.sql.Delete;
+import com.email.EmailServer.DatabaseModels.Email.Email;
+import com.email.EmailServer.DatabaseModels.ServerSystem;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 

@@ -12,7 +12,7 @@ public class Contact {
     @Id
     @Column(name = "contact_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contactID;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)

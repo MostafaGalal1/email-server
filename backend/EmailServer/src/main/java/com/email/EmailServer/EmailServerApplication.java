@@ -7,13 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@SpringBootApplication
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 	public class EmailServerApplication
 	{
 	public static void main(String[] args)
 	{
-
 		SpringApplication.run(EmailServerApplication.class, args);
 	}
 	@Bean

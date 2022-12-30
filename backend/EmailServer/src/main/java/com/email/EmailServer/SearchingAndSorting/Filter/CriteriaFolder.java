@@ -1,6 +1,6 @@
-package com.email.EmailServer.Filter;
+package com.email.EmailServer.SearchingAndSorting.Filter;
 
-import com.email.EmailServer.DatabaseModels.Email;
+import com.email.EmailServer.DatabaseModels.Email.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class CriteriaFolder implements EmailCriteria
 
         for (Email email : list)
         {
-            if (this.Folder.HasEmail(email.getEmailId()))
+            if (this.Folder.HasEmail(email.getId()))
                 newList.add(email);
         }
         return newList;

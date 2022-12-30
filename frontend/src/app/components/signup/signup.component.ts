@@ -24,11 +24,11 @@ export class SignupComponent implements OnInit {
     first_name: '',
     last_name: '',
     username: '',
-    enter_password: ''
+    password: ''
   });
 
   onSubmit(){
-    this.authService.signup(this.signupForm.value).subscribe(() => this.router.navigate(["/mail"]));
+    this.authService.signup(this.signupForm.value).subscribe(() => this.router.navigate(["/login"]));
   }
   
   togglePassword() {

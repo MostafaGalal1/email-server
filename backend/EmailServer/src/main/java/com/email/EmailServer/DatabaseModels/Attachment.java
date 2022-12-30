@@ -1,5 +1,6 @@
 package com.email.EmailServer.DatabaseModels;
 
+import com.email.EmailServer.DatabaseModels.Email.Email;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ public class Attachment {
     @Id
     @Column(name = "attachment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long attachmentID;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="email_id", nullable = false)
@@ -20,6 +21,5 @@ public class Attachment {
 
     @Column(name = "attachment_path", length = 512)
     private String path;
-
 
 }

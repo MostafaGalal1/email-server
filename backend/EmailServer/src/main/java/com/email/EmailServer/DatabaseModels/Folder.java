@@ -1,9 +1,8 @@
 package com.email.EmailServer.DatabaseModels;
 
 
-import com.email.EmailServer.DatabaseModels.SystemPackage.EmailIterator;
+import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.DatabaseModels.UserPackage.User;
-import com.email.EmailServer.commands.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -20,7 +19,7 @@ public class Folder{
     @Id
     @Column(name = "folder_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long folderId;
+    private Long id;
 
     @ManyToOne
     @Setter(AccessLevel.NONE)
@@ -69,6 +68,11 @@ public class Folder{
         ServerSystem.AddFolderToDataBase(this);
     }
 
+    public boolean isPrimary()
+    {
+        return (this.type == FolderType.primary);
+    }
+
     public boolean RemoveEmail(long EmailID)
     {
         if (this.HasEmail(EmailID) == false)
@@ -89,5 +93,4 @@ public class Folder{
         primary,
         Secondary
     }
-
 }

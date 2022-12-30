@@ -426,6 +426,23 @@ export class MailComponent implements OnInit{
     }
   }
 
+  async sortEmails(criteria : string){
+    this.apiService.sortEmails(this.currentFolder, criteria).subscribe(
+      (emails) => {
+        this.emails = emails;
+      }
+    );
+    this.checkAll = false;
+    this.buttonsVisible = false;
+    this.selectionQueue = {};
+    this.emailsQueue = {};
+    for (let i = 0 ; i < this.emails.length; i++){
+      this.emails[i].id = i.toString();
+      this.emailsQueue[i.toString()] = this.emails[i];
+    }
+    this.emailVisible = false;
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

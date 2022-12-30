@@ -1,8 +1,7 @@
-package com.email.EmailServer.Filter;
+package com.email.EmailServer.SearchingAndSorting.Filter;
 
-import com.email.EmailServer.DatabaseModels.Email;
+import com.email.EmailServer.DatabaseModels.Email.Email;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AndCriteria implements EmailCriteria

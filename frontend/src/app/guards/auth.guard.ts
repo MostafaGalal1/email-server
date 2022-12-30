@@ -12,11 +12,17 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (localStorage.getItem('currentUser')) {
+      console.log(route.routeConfig?.path);
+      console.log("adasdasdasd")
+      if (localStorage.getItem('currentUser') !== null) {
         return true;
     }
-
-    this.router.navigate(['/login'], { queryParams: { logged: 'fail' }});
+    
+    if(route.routeConfig?.path === "signup"){
+      this.router.navigate(['/signup'], { queryParams: { signed: 'fail' }});
+    }else{
+      this.router.navigate(['/login'], { queryParams: { logged: 'fail' }});
+    }
     return false;
   }
 }

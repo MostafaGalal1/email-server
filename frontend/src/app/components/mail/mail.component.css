@@ -108,7 +108,7 @@
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  margin: 12px;
+  margin-left: 12px;
   padding: 0;
   border: 1px;
 }
@@ -168,7 +168,6 @@
   width: 24px;
   height: 24px;
   border-radius: 100%;
-  margin: 12px;
   padding: 0;
   border: 1px;
 }
@@ -182,7 +181,6 @@
   height: 24px;
   border-radius: 100%;
   background: white;
-  margin: 12px;
   padding: 0;
   border: 1px;
 }
@@ -212,20 +210,18 @@
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  margin: 12px;
   margin-left: 52px;
   padding: 0;
   border: 1px;
 }
 
-.delete-button, .move-button, .left-nav-button, .right-nav-button {
+.delete-button, .move-button, .left-nav-button, .right-nav-button, .filter-button {
   display: inline-block;
   align-self: center;
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  margin: 12px;
-  margin-left: 0px;
+  margin-left: 12px;
   padding: 0;
   border: 1px;
 }
@@ -281,14 +277,6 @@
   background: var(--hover);
 }
 
-.delete-button:hover{
-  background: var(--hover);
-}
-
-.move-button:hover{
-  background: var(--hover);
-}
-
 .options{
   display: inline-block;
   border-radius: 30px;
@@ -315,6 +303,7 @@
   background-color: var(--primary);
   height: 60px;
   width: 100%;
+  z-index: 2;
 }
 
 .paging{
@@ -350,7 +339,6 @@
 
 .attach-preview {
   padding: 2px;
-  margin: 12px;
   border: 1px solid var(--hover);
   display: inline-block;
 }
@@ -371,7 +359,7 @@
   padding: 20px;
 }
 
-.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover{
+.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover, .filter-button:hover{
   background: var(--hover);
   background: white;
   color: var(--primary);
@@ -391,12 +379,38 @@
 }
 
 .emails-table th, td {
-  min-width: 120px;
-  max-width: 120px;
+  border-bottom: 1px solid #ddd;
+}
+
+.td-div{
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 42px;
-  border-bottom: 1px solid #ddd;
+  height: 22px;
+  text-align: center;
+}
+
+#table-check-div{
+  width: 40px;
+}
+
+#table-sender-div{
+  width: 140px;
+}
+
+#table-recievers-div{
+  width: 180px;
+}
+
+#table-subject-div{
+  width: 140px;
+}
+
+#table-body-div{
+  width: 380px;
+}
+
+#table-date-div{
+  width: 80px;
 }
 
 .emails-table input{
@@ -526,4 +540,41 @@ tr:hover:not(.table-headers){
 .folders-div ul, .contacts-div ul{
   padding-inline-start: 16px;
   padding-top: 4px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
+.dropdown-content {
+  margin-top: 40px;
+  display: none;
+  position: fixed;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow:
+        2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
+    ;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content:hover + .filter-button{
+  background: var(--hover);
+  background: white;
+  color: var(--primary);
 }

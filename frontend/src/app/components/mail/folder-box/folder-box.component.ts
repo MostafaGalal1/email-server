@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
@@ -11,20 +12,26 @@ import { MailComponent } from '../mail.component';
 
 export class FolderBoxComponent implements OnInit {
 
-  constructor(private apiService : ApiService, private formBuilder : FormBuilder) { }
+  constructor(private apiService : ApiService, private http : HttpClient, private formBuilder : FormBuilder) { }
 
   ngOnInit(): void {  }
-  
-  contactForm = this.formBuilder.group({
-    name: '',
+
+  folderForm = this.formBuilder.group({
+    username: localStorage.getItem("currentUser"),
+    folderName: ''
   });
 
   onSubmit(event:any){
-    if(event.target.name.value === "")
+    console.log("asdasda");
+    if(this.folderForm.value.folderName! === "")
       return;
-    console.log(event.target.name.value);
-    MailComponent.folders.push(event.target.name.value);
-    event.target.name.value = "";
-    MailComponent.folderBoxVisible = false;
+    this.apiService.createFolder(this.folderForm.value).subscribe((response:any) => {
+      if (response.state === "success"){
+        MailComponent.folders.push(this.folderForm.value.folderName!);
+        MailComponent.folderBoxVisible = false;
+      } else {
+        alert(response.message);
+      }
+    });
   }
-}
+}            

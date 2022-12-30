@@ -1,7 +1,6 @@
-package com.email.EmailServer.commands;
+package com.email.EmailServer.DatabaseModels;
 
-import com.email.EmailServer.DatabaseModels.Email;
-import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Email.Email;
 import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
@@ -9,9 +8,6 @@ import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-
-import java.util.Date;
 
 @Component
 public class ServerSystem{
@@ -57,6 +53,11 @@ public class ServerSystem{
     public static void AddFolderToDataBase(Folder folder)
     {
         folderRepo.save(folder);
+    }
+
+    public static void AddEmailToDatabase(Email email)
+    {
+        emailRepo.save(email);
     }
 
     public static void RemoveFolderFromDataBase(Folder folder)

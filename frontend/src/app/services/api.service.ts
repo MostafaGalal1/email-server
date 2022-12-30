@@ -15,7 +15,7 @@ export class ApiService {
   }
 
   createFolder(folderForm : object): Observable<object> {
-    return this.http.post<object>('http://localhost:8080/login', folderForm);
+    return this.http.post('http://localhost:8080/Email/AddFolder', folderForm);
   }
 
   createContact(contactForm : object): Observable<object> {
@@ -24,5 +24,9 @@ export class ApiService {
 
   requestEmails(folder : string): Observable<Email[]> {
     return this.http.get<Email[]>('http://localhost:8080/mail/' + folder);
+  }
+
+  sortEmails(folder : string, criteria : string): Observable<Email[]> {
+    return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
   }
 }

@@ -98,6 +98,13 @@
       </div>
       <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : emailVisible? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
       <button class = "select-button" #selectButton [ngStyle]="{'display' : !emailVisible? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
+      <div class="dropdown">
+        <div class="dropdown-content">
+          <a (click)="sortEmails('Date')">Date</a>
+          <a (click)="sortEmails('Priority')">Priority</a>
+        </div>
+        <button class = "filter-button" #filterButton [ngStyle]="{'display' : !emailVisible && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
+      </div>
       <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
       <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="moveEmail()"><span class="material-symbols-outlined">drive_file_move</span></button>
       <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>
@@ -129,21 +136,37 @@
       </div>
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !emailVisible? '':'none'}">
         <tbody>
-            <tr class="table-headers">  
-              <th class="check-column" >chk</th> 
-              <th class="sender-column" >sender</th>  
-              <th class="recievers-column">recievers</th>  
-              <th class="subject-column">subject</th>  
-              <th class="body-column">body</th>
-              <th class="date-column">date</th>
-            </tr>
             <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
-              <td><input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)"></td>  
-              <td>{{email.value.sender}}</td>  
-              <td>{{email.value.recievers}}</td>  
-              <td>{{email.value.subject}}</td>  
-              <td>{{email.value.body}}</td>  
-              <td>{{email.value.date | date: email.value.date.getDate() === nowDate.getDate()? 'h:mm a':'MMM d'}}</td>  
+              <td>
+                <div class = "td-div" id = "table-check-div">
+                  <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)">
+                </div>
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-sender-div">
+                  {{email.value.sender}} 
+                </div> 
+              </td>
+              <td>
+                <div class = "td-div" id = "table-recievers-div">
+                  {{email.value.recievers}} 
+                </div>
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-subject-div">
+                  {{email.value.subject}} 
+                </div> 
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-body-div">
+                  {{email.value.body}} 
+                </div> 
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-date-div">
+                  {{email.value.date | date: email.value.date.getDate() === nowDate.getDate()? 'h:mm a':'MMM d'}}
+                </div>
+              </td>  
             </tr>  
         </tbody>
       </table>
