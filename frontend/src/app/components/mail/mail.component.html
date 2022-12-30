@@ -52,7 +52,7 @@
         <div class="g-cl">
           <span class="material-symbols-outlined">folder</span>
           <label>Folders</label>
-          <button class = "add-folder-button" #folderButton type = "button" (click)="addFolder()"><span class="material-symbols-outlined">add</span></button>
+          <button class = "add-folder-button" #folderButton type = "button" (click)="addFolder(false , 0)"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="folders-list">
           <ul *ngFor="let list of getfolders ; let i=index">
@@ -64,8 +64,8 @@
                 </button>
                 <div class="edit-dropdown" id="folder{{i}}"  >
                   <div class="edit-content" id="edit{{i}}" >
-                    <a >edit</a>
-                    <a >remove</a>
+                    <a (click)="addFolder(true , i)">edit</a>
+                    <a (click)="remove_folders(i)">remove</a>
                   </div>
                 </div>
                 
@@ -79,7 +79,7 @@
         <div class="g-cl">
           <span class="material-symbols-outlined">contacts</span>
           <label>Contacts</label>
-          <button class = "add-contact-button" #contactButton type = "button" (click)="addContact()"><span class="material-symbols-outlined">add</span></button>
+          <button class = "add-contact-button" #contactButton type = "button" (click)="addContact(false , 0)"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="contacts-list">
           <ul *ngFor="let list of getcontacts; let i=index">
@@ -90,8 +90,8 @@
                 <button class = "edit-button" #editButton (click)="show_edit_contact(i)" type = "button"><span class="material-symbols-outlined">more_vert</span></button>
                 <div class="contact-dropdown" id="folder-contact{{i}}"  >
                   <div class="contact-content" id="edit-contact{{i}}" >
-                    <a >edit</a>
-                    <a >remove</a>
+                    <a (click)="addContact(true , i)">edit</a>
+                    <a (click)="remove_contacts(i)">remove</a>
                   </div>
                 </div>
               </div>
