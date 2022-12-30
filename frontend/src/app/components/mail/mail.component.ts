@@ -153,7 +153,7 @@ export class MailComponent implements OnInit{
 "https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg?w=1390&crop=1",
 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
   protected selectionQueue: {[id : string] : Email};  
-  static folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
+  static folders: string[] = [];
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
   constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router) {

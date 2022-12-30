@@ -27,11 +27,11 @@ export class ApiService {
   }
 
   getFolders(): Observable<string[]> {
-    return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', localStorage.getItem('currentUser'));
+    return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', {"username":localStorage.getItem('currentUser')});
   }
 
   deleteFolder() {
-    this.http.delete('http://localhost:8080/Email/DeleteFolder', {body: localStorage.getItem('currentUser')});
+    this.http.delete('http://localhost:8080/Email/DeleteFolder', {body: JSON.stringify(localStorage.getItem('currentUser'))});
   }
 
   sortEmails(folder : string, criteria : string): Observable<Email[]> {
