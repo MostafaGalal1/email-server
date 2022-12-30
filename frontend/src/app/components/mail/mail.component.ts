@@ -21,8 +21,13 @@ export class MailComponent implements OnInit{
 
   protected filterBoxVisible:boolean;
   protected buttonsVisible:boolean;
+  
   static folderBoxVisible:boolean;
   static contactBoxVisible:boolean;
+  static editOrCeate_folder : boolean;
+  static editOrCeate_contact : boolean;
+  static indexFolder : number;
+  static indexContact : number;
   protected edit_visible:boolean;
   protected emailVisible:boolean;
   protected currentEmail!:Email;
@@ -300,7 +305,12 @@ export class MailComponent implements OnInit{
     }
   }
 
-  async addFolder(){
+  async addFolder(i : boolean , index : any){
+    MailComponent.editOrCeate_folder = i;
+    if(i == true){
+      console.log(index);
+      MailComponent.indexFolder = index;
+    }
     if (MailComponent.folderBoxVisible)
       return;
     setTimeout(() => {
@@ -309,7 +319,12 @@ export class MailComponent implements OnInit{
     
   }
 
-  async addContact(){
+  async addContact(i : boolean , index : any){
+    MailComponent.editOrCeate_contact = i;
+    if(i == true){
+      console.log(index);
+      MailComponent.indexContact = index;
+    }
     if (MailComponent.contactBoxVisible)
       return;
     setTimeout(() => {
@@ -470,6 +485,17 @@ export class MailComponent implements OnInit{
     this.emailVisible = false;
   }
   
+  remove_folders(index : any){
+    MailComponent.folders.splice(index , 1);
+    console.log(MailComponent.folders);
+    // request the remove folders
+  }
+
+  remove_contacts(index : any){
+    MailComponent.contacts.splice(index , 1);
+    console.log(MailComponent.contacts);
+    // request the remove folders
+  }
 
   logout() {
     this.authService.logout();
