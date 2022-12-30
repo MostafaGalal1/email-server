@@ -17,7 +17,6 @@ export class FolderBoxComponent implements OnInit {
   ngOnInit(): void { 
     console.log("YES");
     if(MailComponent.editOrCeate_folder === true){
-      
       (document.getElementById("folderName")!.innerText) = MailComponent.folders[MailComponent.indexFolder];
     }
    }
@@ -44,6 +43,8 @@ export class FolderBoxComponent implements OnInit {
       console.log("hello");
       if(this.folderForm.value.folderName! === MailComponent.folders[MailComponent.indexFolder])
         return;
+      MailComponent.folders[MailComponent.indexFolder]=this.folderForm.value.folderName!;
+      MailComponent.folderBoxVisible = false;
       //request the edit folder by the new name and the old name 
     }
 

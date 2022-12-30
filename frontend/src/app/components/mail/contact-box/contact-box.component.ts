@@ -37,6 +37,9 @@ export class ContactBoxComponent implements OnInit {
       console.log("hello");
       if(this.contactForm.value.name! === MailComponent.contacts[MailComponent.indexContact] ) // compare the username also
         return;
+
+      MailComponent.contacts[MailComponent.indexContact] = this.contactForm.value.name!;
+      MailComponent.contactBoxVisible = false;
       console.log(this.contactForm.value);
       //request the edit folder by the new name and the old name 
     }
