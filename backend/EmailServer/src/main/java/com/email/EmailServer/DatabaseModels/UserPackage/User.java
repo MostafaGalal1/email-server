@@ -34,7 +34,7 @@ public class User
     @Column(name = "user_password")
     private String password;
 
-    @Column(name = "user_Date", updatable = false)
+    @Column(name = "user_Date")
     private Date date;
 
     @OneToMany(mappedBy = "user")
@@ -60,9 +60,11 @@ public class User
         this.address = UserName;
         this.password = Password;
         this.date = new Date();
-        this.InitializeFolders();
 
         ServerSystem.AddUserToDataBase(this);
+        this.InitializeFolders();
+
+        //ServerSystem.AddUserToDataBase(this);
     }
 
     private void InitializeFolders()
