@@ -57,6 +57,7 @@ public class ServerSystem{
 
     public static void AddEmailToDatabase(Email email)
     {
+        System.out.println(email);
         emailRepo.save(email);
     }
 
