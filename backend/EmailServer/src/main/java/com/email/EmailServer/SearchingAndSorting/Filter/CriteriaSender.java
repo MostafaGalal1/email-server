@@ -1,6 +1,7 @@
 package com.email.EmailServer.SearchingAndSorting.Filter;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +9,27 @@ import java.util.List;
 public class CriteriaSender implements EmailCriteria
 {
     private String SenderHandle;
+    private final String ObjectInJson = "sender";
+    private boolean CritiriaActive = true;
 
-    public CriteriaSender(String senderHandle)
+    public CriteriaSender(JSONObject jsonObject)
     {
-        this.SenderHandle = senderHandle;
+        if (jsonObject.has(this.ObjectInJson) == false)
+        {
+            this.CritiriaActive = false;
+            return;
+        }
+        this.SenderHandle = jsonObject.getString(this.ObjectInJson);
     }
 
     @Override
     public List<Email> MeetCriteria(List<Email> list)
     {
+        if (this.CritiriaActive == false)
+        {
+            return list;
+        }
+
         List<Email> newList = new ArrayList<>();
 
         for (Email email : list)

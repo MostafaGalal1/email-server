@@ -1,22 +1,35 @@
 package com.email.EmailServer.SearchingAndSorting.Filter;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CriteriaSubject implements EmailCriteria
 {
     private String Subject;
-
-    public CriteriaSubject(String subject)
+    private final String ObjectInJson = "date";
+    private boolean CritiriaActive = true;
+    public CriteriaSubject(JSONObject jsonObject)
     {
-        this.Subject = subject;
+        if (jsonObject.has(this.ObjectInJson) == false)
+        {
+            this.CritiriaActive = false;
+            return;
+        }
+        this.Subject = jsonObject.getString(this.ObjectInJson);
     }
 
     @Override
     public List<Email> MeetCriteria(List<Email> list)
     {
+        if (this.CritiriaActive == false)
+        {
+            return list;
+        }
+
         List<Email> newList = new ArrayList<>();
 
         for (Email email : list)

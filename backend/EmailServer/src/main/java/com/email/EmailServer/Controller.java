@@ -53,4 +53,10 @@ public class Controller {
     public String SendEmail(@RequestBody String data){
         return proxy.run("SendEmail",new JSONObject(data));
     }
+
+    @GetMapping("/GetFolderEmails")
+    @ResponseBody
+    public String GetFolderEmails(@RequestBody String data){
+        return proxy.run("GetFolderEmails",new JSONObject(data));
+    }
 }

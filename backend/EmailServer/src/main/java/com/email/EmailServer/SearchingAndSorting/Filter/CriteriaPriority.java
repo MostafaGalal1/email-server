@@ -4,22 +4,22 @@ import com.email.EmailServer.DatabaseModels.Email.Email;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class CriteriaDate implements EmailCriteria
+public class CriteriaPriority implements EmailCriteria
 {
-    private Date Date;
+    private int Priority;
     private final String ObjectInJson = "date";
     private boolean CritiriaActive = true;
-    public CriteriaDate(JSONObject jsonObject)
+
+    public CriteriaPriority(JSONObject jsonObject)
     {
         if (jsonObject.has(this.ObjectInJson) == false)
         {
             this.CritiriaActive = false;
             return;
         }
-        this.Date = (Date)jsonObject.get(this.ObjectInJson);
+        this.Priority = jsonObject.getInt(this.ObjectInJson);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CriteriaDate implements EmailCriteria
 
         for (Email email : list)
         {
-            if (email.getDateOfEmail().compareTo(this.Date) == 0)
+            if (this.Priority == email.getPriority())
                 newList.add(email);
         }
         return newList;

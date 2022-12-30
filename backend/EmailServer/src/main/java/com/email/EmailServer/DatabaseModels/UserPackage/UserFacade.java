@@ -6,6 +6,7 @@ import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.SearchingAndSorting.Filter.FiltersExtracter;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -53,11 +54,13 @@ public class UserFacade
     }
 
     // Still need to implement sorting the Emails/////////////////////
-    public List<JSONObject> GetAllFolderEmailsWithFilterAndSort
-            (String FolderName, List<EmailCriteria> AllCriteria)
+    public List<JSONObject> GetAllFolderEmailsWithFilterAndSort(String FolderName, JSONObject RequestJson)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
-        this.FilterEmailsForSearch(Emails, AllCriteria);
+
+        EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
+        this.FilterEmailsForSearch(Emails, filterCriteria);
+
         // sorting not implemented yet
 
         List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
@@ -74,10 +77,9 @@ public class UserFacade
         return jsonList;
     }
 
-    private void FilterEmailsForSearch(List<Email> emails, List<EmailCriteria> AllCriteria)
+    private void FilterEmailsForSearch(List<Email> emails, EmailCriteria criteria)
     {
-        AndCriteria andCriteria = new AndCriteria(AllCriteria);
-        emails = andCriteria.MeetCriteria(emails);
+        emails = criteria.MeetCriteria(emails);
     }
 
     private List<Email> GetAllFolderEmails(String FolderName)
@@ -234,7 +236,6 @@ public class UserFacade
         if(!user.getPassword().equals(password)) return false;
         return true;
     }
-
 
     private void MoveEmailToInbox(long EmailID)
     {
