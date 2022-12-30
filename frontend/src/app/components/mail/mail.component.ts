@@ -157,7 +157,6 @@ export class MailComponent implements OnInit{
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
   constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router) {
-
     this.emailsQueue = {};
     this.selectionQueue = {};
     this.nowDate = new Date();
@@ -175,6 +174,7 @@ export class MailComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
     for (let i = 0 ; i < this.emails.length; i++){
       this.emails[i].id = i.toString();
       this.emailsQueue[i.toString()] = this.emails[i];
@@ -364,7 +364,7 @@ export class MailComponent implements OnInit{
 
   async getEmails(folder : string){
     this.currentFolder = folder;
-    this.apiService.requestEmails(this.currentFolder).subscribe(
+    this.apiService.getEmails(this.currentFolder).subscribe(
       (emails) => {
         this.emails = emails;
       }
@@ -381,7 +381,7 @@ export class MailComponent implements OnInit{
   }
 
   async refreshEmails(){
-    this.apiService.requestEmails(this.currentFolder).subscribe(
+    this.apiService.getEmails(this.currentFolder).subscribe(
       (emails) => {
         this.emails = emails;
       }

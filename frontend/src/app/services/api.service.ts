@@ -22,8 +22,16 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/login', contactForm);
   }
 
-  requestEmails(folder : string): Observable<Email[]> {
+  getEmails(folder : string): Observable<Email[]> {
     return this.http.get<Email[]>('http://localhost:8080/mail/' + folder);
+  }
+
+  getFolders(): Observable<string[]> {
+    return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', localStorage.getItem('currentUser'));
+  }
+
+  deleteFolder() {
+    this.http.delete('http://localhost:8080/Email/DeleteFolder', {body: localStorage.getItem('currentUser')});
   }
 
   sortEmails(folder : string, criteria : string): Observable<Email[]> {
