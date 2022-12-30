@@ -578,3 +578,82 @@ tr:hover:not(.table-headers){
   background: white;
   color: var(--primary);
 }
+
+
+
+
+.edit-dropdown{
+  position: relative;
+  align-self: center;
+  z-index: 1;
+}
+
+.edit-content{
+  
+  margin-top: 0px;
+  position: fixed;
+  display: none;
+  background-color: #f1f1f1;
+  min-width: 80px;
+  margin-left: 30px;
+  box-shadow:
+        2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
+    ;
+}
+
+.edit-content a {
+  color: black;
+  width: 80px;
+  padding: 6px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.edit-content a:hover {background-color: #ddd;}
+
+
+.edit-content:hover {
+  background: var(--hover);
+  background: white;
+  color: var(--primary);
+}
+
+
+
+.contact-dropdown{
+  position: relative;
+  align-self: center;
+  z-index: 1;
+}
+
+.contact-content{
+  
+  margin-top: 0px;
+  position: fixed;
+  display: none;
+  background-color: #f1f1f1;
+  min-width: 80px;
+  margin-left: 30px;
+  box-shadow:
+        2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
+    ;
+}
+
+.contact-content a {
+  color: black;
+  width: 80px;
+  padding: 6px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.contact-content a:hover {background-color: #ddd;}
+
+
+.contact-content:hover {
+  background: var(--hover);
+  background: white;
+  color: var(--primary);
+}
