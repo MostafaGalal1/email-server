@@ -41,4 +41,16 @@ public class Controller {
     public String RenameFolder(@RequestBody String data){
         return proxy.run("RenameFolder",new JSONObject(data));
     }
+
+    @GetMapping("/GetAllFolders")
+    @ResponseBody
+    public String GetAllFolders(@RequestBody String data){
+        return proxy.run("GetAllFolders",new JSONObject(data));
+    }
+
+    @PostMapping("/SendEmail")
+    @ResponseBody
+    public String SendEmail(@RequestBody String data){
+        return proxy.run("SendEmail",new JSONObject(data));
+    }
 }

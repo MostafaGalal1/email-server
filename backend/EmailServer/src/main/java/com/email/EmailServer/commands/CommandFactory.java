@@ -1,7 +1,10 @@
 package com.email.EmailServer.commands;
 
+import com.email.EmailServer.commands.UserVerificationCommands.LogIn;
+import com.email.EmailServer.commands.UserVerificationCommands.SignUp;
 import com.email.EmailServer.commands.folderCommands.AddFolder;
 import com.email.EmailServer.commands.folderCommands.DeleteFolder;
+import com.email.EmailServer.commands.folderCommands.GetAllFolders;
 import com.email.EmailServer.commands.folderCommands.RenameFolder;
 import org.json.JSONObject;
 
@@ -25,6 +28,8 @@ public class CommandFactory {
             case "addfolder"-> command = new AddFolder(Data);
             case "renamefolder"-> command = new RenameFolder(Data);
             case "deletefolder"-> command = new DeleteFolder(Data);
+            case "getallfolders"-> command = new GetAllFolders(Data);
+            case "sendemail"-> command = new SendEmail(Data);
         }
         return command;
     }

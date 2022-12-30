@@ -21,7 +21,7 @@ public class CriteriaReceiver implements EmailCriteria
 
         for (Email email : list)
         {
-            for (String receiverHandle : email.getReceiversAdress())
+            for (String receiverHandle : email.getReceiversAddress())
                 if (receiverHandle.equals(this.ReceiverHandle))
                     newList.add(email);
         }

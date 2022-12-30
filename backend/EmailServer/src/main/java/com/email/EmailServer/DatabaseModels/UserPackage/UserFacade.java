@@ -21,21 +21,11 @@ public class UserFacade
         this.user = user;
     }
 
-    public void SaveEmailAsSender(long EmailID)
-    {
-        user.RemoveEmailFromAllFolders(EmailID);
-        AddEmailToSent(EmailID);
-    }
-    public void SaveEmailAsReceiver(long EmailID)
-    {
-        AddEmailToInbox(EmailID);
-    }
-
     public void SendEmailToTrash(Email email)
     {
         long EmailID = email.getId();
         this.user.RemoveEmailFromAllFolders(EmailID);
-        AddEmailToTrash(EmailID);
+        MoveEmailToTrash(EmailID);
     }
 
     public boolean RestoreEmailFromTrash(Email email)
@@ -47,9 +37,9 @@ public class UserFacade
         user.RemoveEmailFromAllFolders(EmailID);
 
         if (this.CheckUserAsEmailSender(email))
-            AddEmailToSent(EmailID);
+            MoveEmailToSent(EmailID);
         else
-            AddEmailToInbox(EmailID);
+            MoveEmailToInbox(EmailID);
 
         return true;
     }
@@ -108,6 +98,87 @@ public class UserFacade
         this.user.AddEmailToFolder(FolderName, EmailID);
     }
 
+    public void SaveEmailToDraftRequest(JSONObject EmailJson)
+    {
+        long EmailID = this.CheckAndCreateExistingEmailAndReturnID(EmailJson);
+        this.MoveEmailToDraft(EmailID);
+    }
+
+    public boolean SendEmailToSenderAndReceiversRequest(JSONObject EmailJson)
+    {
+        if (this.CheckSReceiverNotFoundInDatabase(EmailJson))
+            return false;
+
+        long EmailID = this.CheckAndCreateExistingEmailAndReturnID(EmailJson);
+
+        this.SendEmailToSender(EmailJson, EmailID);
+        this.SendEmailToReceivers(EmailJson, EmailID);
+
+        return true;
+    }
+
+    private boolean CheckSReceiverNotFoundInDatabase(JSONObject EmailJson)
+    {
+        List<String> ReceiversHandle = (List<String>) EmailJson.get("receivers");
+        for (String Receiver : ReceiversHandle)
+        {
+            if (this.CheckUserFoundInDataBase(Receiver) == false)
+                return true;
+        }
+        return false;
+    }
+
+    private void SendEmailToSender(JSONObject EmailJson, long EmailID)
+    {
+        String SenderAddress = EmailJson.getString("sender");
+        UserFacade SenderFacade = new UserFacade(SenderAddress);
+        SenderFacade.SaveEmailAsSender(EmailID);
+    }
+
+    private void SendEmailToReceivers(JSONObject EmailJson, long EmailID)
+    {
+        List<String> ReceiverAddresses = (List<String>)EmailJson.get("receivers");
+
+        ReceiverAddresses.forEach((address)->{
+            UserFacade ReceiverFacade = new UserFacade(address);
+            ReceiverFacade.SaveEmailAsReceiver(EmailID);
+        });
+    }
+
+    private void SaveEmailAsSender(long EmailID)
+    {
+        user.RemoveEmailFromAllFolders(EmailID);
+        MoveEmailToSent(EmailID);
+    }
+
+    private void SaveEmailAsReceiver(long EmailID)
+    {
+        MoveEmailToInbox(EmailID);
+    }
+
+    private long CheckAndCreateExistingEmailAndReturnID(JSONObject EmailJson)
+    {
+        long ID;
+        if (this.CheckIsNewEmail(EmailJson))
+        {
+            Email email = new Email(EmailJson);
+            ID = email.getId();
+        }
+        else
+        {
+            ID = this.ExtractIDFromEmailJson(EmailJson);
+        }
+        return ID;
+    }
+
+    private boolean CheckIsNewEmail(JSONObject EmailJson)
+    {
+        if (EmailJson.has("id"))
+            return false;
+        else
+            return true;
+    }
+
     public boolean AddFolder(String folderName)
     {
         if (this.user.HasFolder(folderName)) return false;
@@ -144,10 +215,10 @@ public class UserFacade
         this.user.RemoveEmailFromAllFolders(EmailID);
     }
 
-    public void AddEmailToDraft(Email email)
+    public void MoveEmailToDraft(Email email)
     {
         long EmailID = email.getId();
-        this.AddEmailToDraft(EmailID);
+        this.MoveEmailToDraft(EmailID);
     }
 
     public static boolean CreateNewUser(String firstName, String lastName, String username, String password){
@@ -164,20 +235,35 @@ public class UserFacade
     }
 
 
-    private void AddEmailToInbox(long EmailID)
+    private void MoveEmailToInbox(long EmailID)
     {
-        this.user.AddEmailToFolder(this.user.InboxName, EmailID);
+        this.MoveEmailToFolder(this.user.InboxName, EmailID);
     }
-    private void AddEmailToSent(long EmailID)
+    private void MoveEmailToSent(long EmailID)
     {
-        this.user.AddEmailToFolder(this.user.SentName, EmailID);
+        this.MoveEmailToFolder(this.user.SentName, EmailID);
     }
-    private void AddEmailToDraft(long EmailID)
+    private void MoveEmailToDraft(long EmailID)
     {
-        this.user.AddEmailToFolder(this.user.DraftName, EmailID);
+        this.MoveEmailToFolder(this.user.DraftName, EmailID);
     }
-    private void AddEmailToTrash(long EmailID)
+    private void MoveEmailToTrash(long EmailID)
     {
-        this.user.AddEmailToFolder(this.user.TrashName, EmailID);
+        this.MoveEmailToFolder(this.user.TrashName, EmailID);
+    }
+
+    private boolean CheckUserFoundInDataBase(String UserAdress)
+    {
+        User testUser = ServerSystem.GetUserByAddress(UserAdress);
+        if (testUser == null)
+            return false;
+        else
+            return true;
+    }
+
+    private long ExtractIDFromEmailJson(JSONObject jsonObject)
+    {
+        long ID = jsonObject.getLong("ID");
+        return ID;
     }
 }

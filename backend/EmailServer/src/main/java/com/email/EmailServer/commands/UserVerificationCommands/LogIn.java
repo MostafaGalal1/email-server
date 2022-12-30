@@ -1,9 +1,10 @@
-package com.email.EmailServer.commands;
+package com.email.EmailServer.commands.UserVerificationCommands;
 
 import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.commands.ICommand;
 import org.json.JSONObject;
 
-public class LogIn implements ICommand{
+public class LogIn implements ICommand {
 
     private String username;
     private String password;
