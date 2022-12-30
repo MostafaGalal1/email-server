@@ -28,4 +28,7 @@ export class ContactBoxComponent implements OnInit {
     event.target.username.value = "";
     MailComponent.contactBoxVisible = false;
   }
+
+
+  
 }

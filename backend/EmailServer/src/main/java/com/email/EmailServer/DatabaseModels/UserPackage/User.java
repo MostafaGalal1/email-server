@@ -170,6 +170,8 @@ public class User
         return this.folders.get(FolderName);
     }
 
+
+
     @Override
     public boolean equals(Object obj)
     {

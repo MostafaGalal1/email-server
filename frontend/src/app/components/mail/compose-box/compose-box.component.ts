@@ -10,8 +10,9 @@ import { MailComponent } from '../mail.component';
   styleUrls: ['./compose-box.component.css']
 })
 export class ComposeBoxComponent implements OnInit {
+  attachment : FormData = new FormData; 
   to : string ="";
-  subject : string ="fgtg";
+  subject : string ="";
   message : string ="";
   priority : string = '';
   file : File[] = [];
@@ -58,7 +59,6 @@ export class ComposeBoxComponent implements OnInit {
     this.email.body = this.message;
     this.email.recievers = this.to.split(", ");
     this.email.subject = this.subject;
-    this.email.file = this.file;
     console.log(this.email);
     MailComponent.compose = false;
     //request the save to draft  
@@ -67,6 +67,9 @@ export class ComposeBoxComponent implements OnInit {
   upload(file2 : any){
     console.log(file2.files);
     this.file = file2.files;
+    for(var i = 0 ;i < this.file.length ; i++){
+      this.attachment.append("file" , this.file[i]);
+    }
   }
 
 }

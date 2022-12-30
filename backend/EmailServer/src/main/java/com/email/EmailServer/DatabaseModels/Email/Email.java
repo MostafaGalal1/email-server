@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -79,9 +80,15 @@ public class Email{
         jsonObject.put("receivers", this.receiversAddress);
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
-        jsonObject.put("date", this.dateOfEmail.getTime());
+        jsonObject.put("date", this.dateOfEmail);////////////// needs linking with frontend way of storage
         return jsonObject;
     }
+
+    public static Email getExistingEmailByID(long ID)
+    {
+        return ServerSystem.GetEmailByID(ID);
+    }
+
 
     /////////////////////////////////////////////////////////////
     public void getJsonOfEmail() //Needs adding attachment to json ///////////////////////////////////////////////////
