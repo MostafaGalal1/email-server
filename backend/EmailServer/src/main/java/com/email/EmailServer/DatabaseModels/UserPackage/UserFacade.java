@@ -59,7 +59,7 @@ public class UserFacade
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
 
         EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
-        this.FilterEmailsForSearch(Emails, filterCriteria);
+        Emails = this.FilterEmailsForSearch(Emails, filterCriteria);
 
         // sorting not implemented yet
 
@@ -77,9 +77,10 @@ public class UserFacade
         return jsonList;
     }
 
-    private void FilterEmailsForSearch(List<Email> emails, EmailCriteria criteria)
+    private List<Email> FilterEmailsForSearch(List<Email> emails, EmailCriteria criteria)
     {
         emails = criteria.MeetCriteria(emails);
+        return emails;
     }
 
     private List<Email> GetAllFolderEmails(String FolderName)

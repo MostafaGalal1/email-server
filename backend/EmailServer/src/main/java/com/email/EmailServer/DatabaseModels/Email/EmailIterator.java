@@ -28,6 +28,7 @@ public class EmailIterator implements Iterator
     {
         long EmailId = (long)this.MyIterator.next();
         Email WantedEmail = ServerSystem.GetEmailByID(EmailId);
+        String wantedname = WantedEmail.getSenderAddress();
         return WantedEmail;
     }
 

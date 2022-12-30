@@ -34,7 +34,8 @@ public class CriteriaSender implements EmailCriteria
 
         for (Email email : list)
         {
-            if (email.getSenderAddress() != this.SenderHandle)
+            String senderadress = email.getSenderAddress();
+            if (email.getSenderAddress().equals(this.SenderHandle))
                 newList.add(email);
         }
 
