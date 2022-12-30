@@ -2,6 +2,7 @@ package com.email.EmailServer.DatabaseModels.Email;
 
 import com.email.EmailServer.DatabaseModels.Attachment;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
@@ -52,8 +53,6 @@ public class Email{
 
     public Email(JSONObject jsonObject)
     {
-        ServerSystem.AddEmailToDatabase(this);
-
         this.buildEmail(jsonObject);
 
         ServerSystem.AddEmailToDatabase(this);
@@ -62,7 +61,7 @@ public class Email{
     private void buildEmail(JSONObject jsonObject)
     {
         this.senderAddress = jsonObject.getString("sender");
-        this.receiversAddress = (List<String>) jsonObject.get("receivers");
+        this.receiversAddress = new Gson().fromJson(jsonObject.getJSONArray("receivers").toString(), List.class);
         this.subject = jsonObject.getString("subject");
         this.content = jsonObject.getString("body");
         this.dateOfEmail = new Date();

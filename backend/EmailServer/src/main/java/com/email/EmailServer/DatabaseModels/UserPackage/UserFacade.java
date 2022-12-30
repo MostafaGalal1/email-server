@@ -6,6 +6,7 @@ import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class UserFacade
 
     private boolean CheckSReceiverNotFoundInDatabase(JSONObject EmailJson)
     {
-        List<String> ReceiversHandle = (List<String>) EmailJson.get("receivers");
+        List<String> ReceiversHandle = new Gson().fromJson(EmailJson.getJSONArray("receivers").toString(), List.class);
         for (String Receiver : ReceiversHandle)
         {
             if (this.CheckUserFoundInDataBase(Receiver) == false)
@@ -137,7 +138,7 @@ public class UserFacade
 
     private void SendEmailToReceivers(JSONObject EmailJson, long EmailID)
     {
-        List<String> ReceiverAddresses = (List<String>)EmailJson.get("receivers");
+        List<String> ReceiverAddresses = new Gson().fromJson(EmailJson.getJSONArray("receivers").toString(), List.class);
 
         ReceiverAddresses.forEach((address)->{
             UserFacade ReceiverFacade = new UserFacade(address);
