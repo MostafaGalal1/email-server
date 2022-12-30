@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ConnectableObservable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-mail',
@@ -21,6 +23,7 @@ export class MailComponent implements OnInit{
   protected buttonsVisible:boolean;
   static folderBoxVisible:boolean;
   static contactBoxVisible:boolean;
+  protected edit_visible:boolean;
   protected emailVisible:boolean;
   protected currentEmail!:Email;
   protected currentFolder:string;
@@ -171,6 +174,7 @@ export class MailComponent implements OnInit{
     this.searchColor = "";
     this.currentFolder = "inbox";
     this.currentEmail = this.emails[0];
+    this.edit_visible = true;
   }
 
   ngOnInit(): void {
@@ -302,6 +306,7 @@ export class MailComponent implements OnInit{
     setTimeout(() => {
       MailComponent.folderBoxVisible = true;
     });
+    
   }
 
   async addContact(){
@@ -328,6 +333,28 @@ export class MailComponent implements OnInit{
     setTimeout(() => {
       MailComponent.contactBoxVisible = false;
     });
+  }
+
+  async show_edit_folder(i : any){
+    console.log(document.getElementById("edit"+i));
+    var temp = (<HTMLInputElement>document.getElementById("edit"+ i));
+    if(temp.style.display === 'block')
+      temp.style.display = 'none';
+    else{
+      temp.style.display = 'block'
+    }  
+
+  }
+
+  async show_edit_contact(i : any){
+    console.log(document.getElementById("edit-contact"+i));
+    var temp = (<HTMLInputElement>document.getElementById("edit-contact"+ i));
+    if(temp.style.display === 'block')
+      temp.style.display = 'none';
+    else{
+      temp.style.display = 'block'
+    }  
+
   }
 
   get getcomposeVisible() {
@@ -442,6 +469,7 @@ export class MailComponent implements OnInit{
     }
     this.emailVisible = false;
   }
+  
 
   logout() {
     this.authService.logout();
