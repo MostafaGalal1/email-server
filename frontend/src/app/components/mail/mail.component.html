@@ -1,8 +1,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  
 <div class = "dark-layout" [ngStyle]="{'display' : (getFolderVisible || getContactVisible)? 'block':'none'}">
-<app-folder-box class="folder-box" [ngStyle]="{'display' : getFolderVisible ? 'block':'none'}" (clickOutside)="hideFolder()"></app-folder-box>
-<app-contact-box class="contact-box" [ngStyle]="{'display' :  getContactVisible ? 'block':'none'}" (clickOutside)="hideContact()"></app-contact-box>
+<app-folder-box class="folder-box" [ngStyle]="{'display' : getFolderVisible ? 'block':'none'}"></app-folder-box>
+<app-contact-box class="contact-box" [ngStyle]="{'display' :  getContactVisible ? 'block':'none'}"></app-contact-box>
 </div>
 <div class = "layout">
   <div class = "main-bar">
@@ -17,7 +16,7 @@
         <button class = "state-button" #stateButton type = "button"><span class="material-symbols-outlined">radio_button_checked</span></button>
         <label class = "usermail">{{currentUser}}@pigeonon.com</label>
       </div>
-      <button class = "settings-button" #settingsButton type = "button"><span class="material-symbols-outlined">settings</span></button>
+      <button class = "settings-button" #settingsButton type = "button"><span class="material-symbols-outlined" (click)="darkModeToggle()">settings</span></button>
       <button class = "logout-button" #logoutButton type = "button" (click)="logout()"><span class="material-symbols-outlined">logout</span></button>
     </div>
   </div>
@@ -52,15 +51,22 @@
         <div class="g-cl">
           <span class="material-symbols-outlined">folder</span>
           <label>Folders</label>
-          <button class = "add-folder-button" #folderButton type = "button" (click)="addFolder()"><span class="material-symbols-outlined">add</span></button>
+          <button class = "add-folder-button" #folderButton type = "button" (click)="addFolder(false , 0)"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="folders-list">
           <ul *ngFor="let list of getfolders ; let i=index">
             <li>
-              <div class="fsublist-div">
+              <div class="fsublist-div" (clickOutside)="hideEditBox('edit-folder'+i)">
                 <span class="material-symbols-outlined">folder</span>
                 <input type="button" class="button" value={{list}}>
-                <button class = "edit-button" #editButton type = "button"><span class="material-symbols-outlined">more_vert</span></button>
+                <button class = "edit-button" #editButton (click)="showEditBox('edit-folder'+i)"  type = "button"><span class="material-symbols-outlined">more_vert</span>
+                </button>
+                <div class="edit-dropdown">
+                  <div class="edit-content" id="edit-folder{{i}}">
+                    <a (click)="addFolder(true , i)">Edit</a>
+                    <a (click)="removeFolder(i)">Remove</a>
+                  </div>
+                </div>
               </div>
             </li>
            </ul>
@@ -70,15 +76,21 @@
         <div class="g-cl">
           <span class="material-symbols-outlined">contacts</span>
           <label>Contacts</label>
-          <button class = "add-contact-button" #contactButton type = "button" (click)="addContact()"><span class="material-symbols-outlined">add</span></button>
+          <button class = "add-contact-button" #contactButton type = "button" (click)="addContact(false , 0)"><span class="material-symbols-outlined">add</span></button>
         </div>
         <div class="contacts-list">
           <ul *ngFor="let list of getcontacts; let i=index">
             <li>
-              <div class="fsublist-div" autofocus>
+              <div class="fsublist-div" (click)="previewContact()" (clickOutside)="hideEditBox('edit-contact'+i)">
                 <span class="material-symbols-outlined">account_circle</span>
                 <input type="button" class="button" value={{list}}>
-                <button class = "edit-button" #editButton type = "button"><span class="material-symbols-outlined">more_vert</span></button>
+                <button class = "edit-button" #editButton (click)="showEditBox('edit-contact'+i)" type = "button"><span class="material-symbols-outlined">more_vert</span></button>
+                <div class="edit-dropdown">
+                  <div class="edit-content" id="edit-contact{{i}}">
+                    <a (click)="addContact(true , i)">Edit</a>
+                    <a (click)="removeContact(i)">Remove</a>
+                  </div>
+                </div>
               </div>
             </li>
            </ul>
@@ -96,14 +108,14 @@
         <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
         <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : filterBoxVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
       </div>
-      <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : emailVisible? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
-      <button class = "select-button" #selectButton [ngStyle]="{'display' : !emailVisible? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
+      <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : (emailVisible||contactVisible)? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
+      <button class = "select-button" #selectButton [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
       <div class="dropdown">
         <div class="dropdown-content">
           <a (click)="sortEmails('Date')">Date</a>
           <a (click)="sortEmails('Priority')">Priority</a>
         </div>
-        <button class = "filter-button" #filterButton [ngStyle]="{'display' : !emailVisible && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
+        <button class = "filter-button" #filterButton [ngStyle]="{'display' : !(emailVisible||contactVisible) && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
       </div>
       <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
       <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="moveEmail()"><span class="material-symbols-outlined">drive_file_move</span></button>
@@ -134,7 +146,18 @@
           </div>
         </div>
       </div>
-      <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !emailVisible? '':'none'}">
+      <div class = "contact-preview" [ngStyle]="{'display' : contactVisible? 'block':'none'}">
+        <div class = "email-pad">
+          <div>
+            <h1 class="contact-name">{{currentContact.name}}</h1>
+          </div>
+          <br>
+          <div *ngFor="let mail of currentContact.mails">
+            <h4>mail: {{mail}}</h4>
+          </div>
+        </div>
+      </div>
+      <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}">
         <tbody>
             <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
               <td>

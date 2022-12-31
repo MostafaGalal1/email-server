@@ -54,6 +54,7 @@ public class Email{
     public Email(JSONObject jsonObject)
     {
         this.buildEmail(jsonObject);
+        this.SetContentSet();
 
         ServerSystem.AddEmailToDatabase(this);
     }

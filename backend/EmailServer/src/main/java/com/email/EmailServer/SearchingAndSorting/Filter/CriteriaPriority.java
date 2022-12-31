@@ -6,20 +6,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CriteriaSender implements EmailCriteria
+public class CriteriaPriority implements EmailCriteria
 {
-    private String SenderHandle;
-    private final String ObjectInJson = "sender";
+    private int Priority;
+    private final String ObjectInJson = "date";
     private boolean CritiriaActive = true;
 
-    public CriteriaSender(JSONObject jsonObject)
+    public CriteriaPriority(JSONObject jsonObject)
     {
         if (jsonObject.has(this.ObjectInJson) == false)
         {
             this.CritiriaActive = false;
             return;
         }
-        this.SenderHandle = jsonObject.getString(this.ObjectInJson);
+        this.Priority = jsonObject.getInt(this.ObjectInJson);
     }
 
     @Override
@@ -34,11 +34,9 @@ public class CriteriaSender implements EmailCriteria
 
         for (Email email : list)
         {
-            String senderadress = email.getSenderAddress();
-            if (email.getSenderAddress().equals(this.SenderHandle))
+            if (this.Priority == email.getPriority())
                 newList.add(email);
         }
-
         return newList;
     }
 }

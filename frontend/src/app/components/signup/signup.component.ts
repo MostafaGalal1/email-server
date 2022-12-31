@@ -30,6 +30,10 @@ export class SignupComponent implements OnInit {
   onSubmit(){
     this.authService.signup(this.signupForm.value).subscribe(() => this.router.navigate(["/login"]));
   }
+
+  loginRedirct() {
+    this.router.navigate(["/login"]);
+  }
   
   togglePassword() {
     if (this.visibility === "password") {

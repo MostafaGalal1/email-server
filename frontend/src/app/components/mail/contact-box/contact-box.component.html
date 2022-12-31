@@ -1,7 +1,7 @@
 <div class="contact-box">
     <div class="info-div">
         <span class="info-slabel"><label>New Contact</label></span>
-        <button class = "close-button" type = "button"><span class="material-symbols-outlined"></span></button>
+        <button class = "close-button" type = "button" (click)="closeContactBox()"><span class="material-symbols-outlined">close</span></button>
     </div>
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit($event)">
         <div class="name-div">

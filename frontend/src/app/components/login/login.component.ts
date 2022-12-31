@@ -28,6 +28,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe(() => this.router.navigate(['/mail']));
   }
 
+  signupRedirct() {
+    this.router.navigate(["/signup"]);
+  }
+
   togglePassword() {
     if (this.visibility === "password") {
       this.visibility = "text";

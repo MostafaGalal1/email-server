@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpInterceptor } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
@@ -12,9 +12,13 @@ import { MailComponent } from '../mail.component';
 
 export class FolderBoxComponent implements OnInit {
 
-  constructor(private apiService : ApiService, private http : HttpClient, private formBuilder : FormBuilder) { }
+  constructor(private apiService : ApiService, private http : HttpClient, private formBuilder : FormBuilder, private mail:MailComponent) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { 
+    if(MailComponent.editOrCeate_folder === true){
+      document.getElementById("folderName")!.innerText = MailComponent.folders[MailComponent.indexFolder];
+    }
+   }
 
   folderForm = this.formBuilder.group({
     username: localStorage.getItem("currentUser"),
@@ -23,15 +27,29 @@ export class FolderBoxComponent implements OnInit {
 
   onSubmit(event:any){
     console.log("asdasda");
-    if(this.folderForm.value.folderName! === "")
-      return;
-    this.apiService.createFolder(this.folderForm.value).subscribe((response:any) => {
-      if (response.state === "success"){
-        MailComponent.folders.push(this.folderForm.value.folderName!);
-        MailComponent.folderBoxVisible = false;
-      } else {
-        alert(response.message);
-      }
-    });
+    if(MailComponent.editOrCeate_folder== false){  
+      if(this.folderForm.value.folderName! === "")
+        return;
+      this.apiService.createFolder(this.folderForm.value).subscribe((response:any) => {
+        if (response.state === "success"){
+          MailComponent.folders.push(this.folderForm.value.folderName!);
+          MailComponent.folderBoxVisible = false;
+        } else {
+          alert(response.message);
+        }
+      });
+    }else{
+      console.log("hello");
+      if(this.folderForm.value.folderName! === MailComponent.folders[MailComponent.indexFolder])
+        return;
+      MailComponent.folders[MailComponent.indexFolder]=this.folderForm.value.folderName!;
+      MailComponent.folderBoxVisible = false;
+      //request the edit folder by the new name and the old name 
+    }
+
   }
-}            
+
+  closeFolderBox(){
+    this.mail.hideFolder();
+  }
+}           

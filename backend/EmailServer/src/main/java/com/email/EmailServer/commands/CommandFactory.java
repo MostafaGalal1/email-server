@@ -2,6 +2,7 @@ package com.email.EmailServer.commands;
 
 import com.email.EmailServer.commands.UserVerificationCommands.LogIn;
 import com.email.EmailServer.commands.UserVerificationCommands.SignUp;
+import com.email.EmailServer.commands.emailCommands.GetFolderEmails;
 import com.email.EmailServer.commands.folderCommands.AddFolder;
 import com.email.EmailServer.commands.folderCommands.DeleteFolder;
 import com.email.EmailServer.commands.folderCommands.GetAllFolders;
@@ -30,6 +31,7 @@ public class CommandFactory {
             case "deletefolder"-> command = new DeleteFolder(Data);
             case "getallfolders"-> command = new GetAllFolders(Data);
             case "sendemail"-> command = new SendEmail(Data);
+            case "getfolderemails"-> command = new GetFolderEmails(Data);
         }
         return command;
     }

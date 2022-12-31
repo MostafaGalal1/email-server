@@ -32,10 +32,16 @@
     border: 1px;
   }
 
+  .info-div label{
+    font-size: large;
+    color:var(--secondary);
+    }
+
   .close-button:hover{
     background: var(--hover);
     background: white;
     color: var(--primary);
+    border: 1px solid var(--hover) !important;
   }
 
 .folder-box div{
@@ -55,7 +61,11 @@
     width: 100%;
 }
 
-.folder-box span{
+.material-symbols-outlined{
+    opacity: 0.6;
+}
+
+.folder-box span:not(.material-symbols-outlined){
     visibility: visible;
     -webkit-font-smoothing: antialiased;
     font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;

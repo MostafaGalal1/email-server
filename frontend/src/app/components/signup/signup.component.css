@@ -104,6 +104,17 @@
     margin: auto;
 }
 
+#link{
+    font-size: 14px;
+    text-align: left;
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+#link:hover{
+    color: var(--primary);
+}
+
 #ppassword{
     display: inline-block;
     width: 200px;

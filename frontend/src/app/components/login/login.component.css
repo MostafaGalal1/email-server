@@ -34,6 +34,17 @@
     transition: 0.3s;
 }
 
+#link{
+    font-size: 14px;
+    text-align: left;
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+#link:hover{
+    color: var(--primary);
+}
+
 .form-container{
     box-sizing: border-box;
     width: 100%;

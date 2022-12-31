@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-	public class EmailServerApplication
-	{
+public class EmailServerApplication
+{
 	public static void main(String[] args)
 	{
 		SpringApplication.run(EmailServerApplication.class, args);

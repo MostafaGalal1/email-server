@@ -4,6 +4,9 @@ import { Location } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DarkModeService } from 'angular-dark-mode';
+import { Observable } from 'rxjs';
+import { Contact } from 'src/app/shared/contact';
 
 @Component({
   selector: 'app-mail',
@@ -19,9 +22,16 @@ export class MailComponent implements OnInit{
 
   protected filterBoxVisible:boolean;
   protected buttonsVisible:boolean;
+  
   static folderBoxVisible:boolean;
   static contactBoxVisible:boolean;
+  static editOrCeate_folder : boolean;
+  static editOrCeate_contact : boolean;
+  static indexFolder : number;
+  static indexContact : number;
+  protected edit_visible:boolean;
   protected emailVisible:boolean;
+  protected contactVisible:boolean;
   protected currentEmail!:Email;
   protected currentFolder:string;
   protected checkAll:boolean;
@@ -31,6 +41,7 @@ export class MailComponent implements OnInit{
   protected searchReset:boolean;
   protected searchColor:string;
   protected nowDate:Date;
+  protected currentContact:Contact = {name:"FGfdggfgdffg", mails:["FGfdfdgfgfdgdfgfgd", "tjthhtrhtrhtrthtrrtrhrth", "ykujrthetrtjhgrfed"]};
   protected emails:Email[] = [{id:"", sender:"SFghfg", recievers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
@@ -154,10 +165,10 @@ export class MailComponent implements OnInit{
 "https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg?w=1390&crop=1",
 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
   protected selectionQueue: {[id : string] : Email};  
-  static folders: string[] = ['ghthr', 'tgthtrhhr' ,'thhtrthhrtrht', 'trhhtthr', 'ejowpgo', 'kpwekotero'];
+  static folders: string[] = [];
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
-  constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router) {
+  constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router, private darkModeService: DarkModeService) {
     this.currentUser = localStorage.getItem('currentUser');
     this.emailsQueue = {};
     this.selectionQueue = {};
@@ -166,6 +177,7 @@ export class MailComponent implements OnInit{
     this.emailVisible = false;
     this.buttonsVisible = false;
     this.searchReset = true;
+    this.contactVisible = false;
     MailComponent.compose = false;
     this.filterBoxVisible = false;
     MailComponent.folderBoxVisible = false;
@@ -173,6 +185,7 @@ export class MailComponent implements OnInit{
     this.searchColor = "";
     this.currentFolder = "inbox";
     this.currentEmail = this.emails[0];
+    this.edit_visible = true;
   }
 
   ngOnInit(): void {
@@ -298,7 +311,12 @@ export class MailComponent implements OnInit{
     }
   }
 
-  async addFolder(){
+  async addFolder(i : boolean , index : any){
+    MailComponent.editOrCeate_folder = i;
+    if(i == true){
+      console.log(index);
+      MailComponent.indexFolder = index;
+    }
     if (MailComponent.folderBoxVisible)
       return;
     setTimeout(() => {
@@ -306,7 +324,12 @@ export class MailComponent implements OnInit{
     });
   }
 
-  async addContact(){
+  async addContact(i : boolean , index : any){
+    MailComponent.editOrCeate_contact = i;
+    if(i == true){
+      console.log(index);
+      MailComponent.indexContact = index;
+    }
     if (MailComponent.contactBoxVisible)
       return;
     setTimeout(() => {
@@ -315,21 +338,32 @@ export class MailComponent implements OnInit{
     
   }
   async hideFolder(){
-    if(!MailComponent.folderBoxVisible ){
-      return ;
-    }
     setTimeout(() => {
       MailComponent.folderBoxVisible = false;
     });
   }
 
   async hideContact(){
-    if(!MailComponent.contactBoxVisible ){
-      return ;
-    }
     setTimeout(() => {
       MailComponent.contactBoxVisible = false;
     });
+  }
+
+  async showEditBox(boxID : string){
+    var temp = <HTMLInputElement>document.getElementById(boxID);
+    setTimeout(() => {
+      if(temp.style.display === 'block')
+        temp.style.display = 'none';
+      else{
+        temp.style.display = 'block'
+      }
+    }, 5);
+  }
+
+  async hideEditBox(boxID : string){
+    var temp = <HTMLInputElement>document.getElementById(boxID);
+    if(temp.style.display === 'block')
+      temp.style.display = 'none';
   }
 
   get getcomposeVisible() {
@@ -407,8 +441,14 @@ export class MailComponent implements OnInit{
     this.currentEmail = this.emailsQueue[emailID];
   }
 
+  async previewContact(){
+    this.contactVisible = true;
+    this.buttonsVisible = true;
+  }
+
   async backToFolder(){
     this.emailVisible = false;
+    this.contactVisible = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
   }
@@ -444,9 +484,26 @@ export class MailComponent implements OnInit{
     }
     this.emailVisible = false;
   }
+  
+  removeFolder(index : any){
+    MailComponent.folders.splice(index , 1);
+    console.log(MailComponent.folders);
+    // request the remove folders
+  }
+
+  removeContact(index : any){
+    MailComponent.contacts.splice(index , 1);
+    console.log(MailComponent.contacts);
+    // request the remove folders
+  }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  darkModeToggle(): void {
+    alert('sfsgg');
+    this.darkModeService.toggle();
   }
 }

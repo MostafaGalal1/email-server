@@ -15,7 +15,8 @@ public class SendEmail implements ICommand
     }
 
     @Override
-    public JSONObject execute() {
+    public JSONObject execute()
+    {
         UserFacade userFacade = new UserFacade(this.userAddress);
         boolean State = userFacade.SendEmailToSenderAndReceiversRequest(this.email);
         return CreateApi(State);

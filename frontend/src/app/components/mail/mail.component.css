@@ -337,6 +337,12 @@
   width: 100%;
 }
 
+.contact-preview {
+  display: none;
+  position: relative;
+  width: 100%;
+}
+
 .attach-preview {
   padding: 2px;
   border: 1px solid var(--hover);
@@ -360,7 +366,6 @@
 }
 
 .refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover, .filter-button:hover{
-  background: var(--hover);
   background: white;
   color: var(--primary);
 }
@@ -451,7 +456,6 @@ tr:hover:not(.table-headers){
 .edit-button span{
   position: relative;
   opacity: 0.6!important;
-  z-index: 1;
 }
 
 .fsublist-div span{
@@ -574,7 +578,38 @@ tr:hover:not(.table-headers){
 }
 
 .dropdown-content:hover + .filter-button{
-  background: var(--hover);
+  background: white;
+  color: var(--primary);
+}
+
+.edit-dropdown{
+  position: relative;
+  align-self: center;
+  z-index: 1;
+}
+
+.edit-content{
+  display: none;
+  color: black;
+  background-color: var(--hover);
+  margin-top: 0px;
+  position: fixed;
+  margin-left: 64px;
+  box-shadow:
+    2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028)
+  ;
+}
+
+.edit-content a{
+  width: 60px;
+  font-size: small;
+  padding: 4px 6px;
+  text-decoration: none;
+  display: block;
+}
+
+.edit-content a:hover {
   background: white;
   color: var(--primary);
 }

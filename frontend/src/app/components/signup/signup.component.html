@@ -22,7 +22,6 @@
                     <label for="password">Password</label><br>
                     <input type={{visibility}} id="password" formControlName="password"><br><br>
                 </div>
-                
                 <div class="show-password">
                     <label>
                         <input type="checkbox" (change)="togglePassword()">
@@ -30,6 +29,7 @@
                     </label>
                     <label id="show-password">Show password</label>
                 </div>
+                <label id="link" (click)="loginRedirct()">Log in</label>
                 <div class="form-submit">
                     <input class="form-submit" type="submit" value="Submit">
                 </div>
