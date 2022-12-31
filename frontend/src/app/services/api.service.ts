@@ -27,7 +27,7 @@ export class ApiService {
   }
 
   getFolders(): Observable<string[]> {
-    return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', localStorage.getItem('currentUser'));
+    return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', JSON.stringify(localStorage.getItem('currentUser')));
   }
 
   deleteFolder() {

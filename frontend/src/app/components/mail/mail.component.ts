@@ -27,6 +27,7 @@ export class MailComponent implements OnInit{
   protected checkAll:boolean;
   protected page:number = 0;
   static compose:boolean;
+  protected currentUser:string|null;
   protected searchReset:boolean;
   protected searchColor:string;
   protected nowDate:Date;
@@ -157,6 +158,7 @@ export class MailComponent implements OnInit{
   static contacts: string[] = ['aaewwazf', 'lstkhdfg' ,'piouiuykt', 'cxvcvxcv', 'tyryrro'];
 
   constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router) {
+    this.currentUser = localStorage.getItem('currentUser');
     this.emailsQueue = {};
     this.selectionQueue = {};
     this.nowDate = new Date();
