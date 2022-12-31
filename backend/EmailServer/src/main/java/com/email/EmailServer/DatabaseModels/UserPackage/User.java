@@ -38,10 +38,10 @@ public class User
     private Date date;
 
     @OneToMany(mappedBy = "user")
-    private List<Contact> contacts = new ArrayList<Contact>();
+    private Map<String, Contact> contacts = new HashMap<>();
 
     @OneToMany(mappedBy = "user")
-    private Map<String, Folder> folders = new HashMap<String,Folder>();
+    private Map<String, Folder> folders = new HashMap<>();
 
     final String InboxName = "Inbox";
     final String SentName = "Sent";
@@ -82,7 +82,7 @@ public class User
         this.AddFolder(Trash);
     }
 
-    public void AddFolder(Folder folder)
+    protected void AddFolder(Folder folder)
     {
         this.folders.put(folder.getName(), folder);
         ServerSystem.AddUserToDataBase(this);
