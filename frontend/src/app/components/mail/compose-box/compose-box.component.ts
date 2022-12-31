@@ -16,13 +16,15 @@ export class ComposeBoxComponent implements OnInit {
   message : string ="";
   priority : string = '';
   file : File[] = [];
-  email : Email = {id:"",
+  email : Email = {
+    sender :"",
+    id:"",
     recievers:[],
-    sender:"",
     date:new Date(),
     body:"",
     subject:"",
-    file :[]
+    file :[], 
+    priority : 2
   };
 
   constructor() { }
@@ -43,6 +45,8 @@ export class ComposeBoxComponent implements OnInit {
     this.email.recievers = this.to.split(", ");
     this.email.subject = this.subject;
     this.email.file = this.file;
+    this.email.priority = parseInt( this.priority);
+    this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     MailComponent.compose = false;
     //request the send 
@@ -59,8 +63,11 @@ export class ComposeBoxComponent implements OnInit {
     this.email.body = this.message;
     this.email.recievers = this.to.split(", ");
     this.email.subject = this.subject;
+    this.email.priority = parseInt( this.priority);
+    this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     MailComponent.compose = false;
+    
     //request the save to draft  
   }
 
