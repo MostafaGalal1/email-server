@@ -1,6 +1,7 @@
-package com.email.EmailServer.commands;
+package com.email.EmailServer.commands.emailCommands;
 
 import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.commands.ICommand;
 import org.json.JSONObject;
 
 public class SendEmail implements ICommand
