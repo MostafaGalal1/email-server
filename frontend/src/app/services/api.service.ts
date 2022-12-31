@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Email } from '../shared/email';
+import { Email, emailToSend } from '../shared/email';
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +41,9 @@ export class ApiService {
   sortEmails(folder : string, criteria : string): Observable<Email[]> {
     return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
   }
+
+  sendEmail(email:emailToSend): Observable<Object> {
+    return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
+  }
+
 }

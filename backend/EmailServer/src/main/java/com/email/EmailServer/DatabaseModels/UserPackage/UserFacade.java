@@ -266,7 +266,7 @@ public class UserFacade
 
     private long ExtractIDFromEmailJson(JSONObject jsonObject)
     {
-        long ID = jsonObject.getLong("ID");
+        long ID = jsonObject.getLong("id");
         return ID;
     }
 }
