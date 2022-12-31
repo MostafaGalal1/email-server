@@ -6,4 +6,5 @@ export interface Email {
     subject : string;
     body : string;
     file : File[];
+    priority : number,
 }
