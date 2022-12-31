@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DarkModeService } from 'angular-dark-mode';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Contact } from 'src/app/shared/contact';
 
 @Component({
@@ -406,11 +406,7 @@ export class MailComponent implements OnInit{
 
   async getEmails(folder : string){
     this.currentFolder = folder;
-    this.apiService.getEmails(this.currentFolder).subscribe(
-      (emails) => {
-        this.emails = emails;
-      }
-    );
+    this.apiService.getEmails(this.currentFolder).subscribe();
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
@@ -424,10 +420,10 @@ export class MailComponent implements OnInit{
 
   async refreshEmails(){
     this.apiService.getEmails(this.currentFolder).subscribe(
-      (emails) => {
-        this.emails = emails;
-      }
-    );
+      (emails)=>{
+          var response = JSON.parse(emails.toString());
+          this.emails = response["data"];
+    });
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};

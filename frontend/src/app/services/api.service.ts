@@ -22,8 +22,8 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/login', contactForm);
   }
 
-  getEmails(folder : string): Observable<Email[]> {
-    return this.http.get<Email[]>('http://localhost:8080/mail/' + folder);
+  getEmails(folder : string): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder,"sortOption": "byDate"});
   }
 
   getFolders(): Observable<string[]> {
