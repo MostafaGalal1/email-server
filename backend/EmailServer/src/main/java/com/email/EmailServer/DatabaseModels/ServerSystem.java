@@ -65,4 +65,8 @@ public class ServerSystem{
     public static void AddContactToDataBase(Contact contact){
         contactRepo.save(contact);
     }
+
+    public static void RemoveContactFromDataBase(Contact contact){
+        contactRepo.delete(contact);
+    }
 }

@@ -122,13 +122,6 @@ public class User
 
     protected boolean HasFolder(String FolderName)
     {
-        System.out.println(this.folders.containsKey(FolderName));
-        System.out.println(this.folders.containsKey(FolderName));
-
-        this.folders.forEach((key, value)->{
-            System.out.println(key);
-            System.out.println(value);
-        });
         return this.folders.containsKey(FolderName);
     }
 
@@ -167,12 +160,45 @@ public class User
         return folder.HasEmail(EmailID);
     }
 
+    protected void AddContact(Contact contact){
+        this.contacts.put(contact.getName(),contact);
+        ServerSystem.AddUserToDataBase(this);
+    }
+
+    protected void EditContact(String oldName, String newName, List<String> Addresses)
+    {
+        Contact contact = this.getContactByName(oldName);
+        this.RemoveContactFromHashMap(oldName);
+        contact.EditContact(newName, Addresses);
+        this.AddContact(contact);
+    }
+
+    protected void RemoveContact(String ContactName)
+    {
+        Contact contact = this.getContactByName(ContactName);
+        this.RemoveContact(ContactName);
+        contact.DestroyContact();
+    }
+
+    private void RemoveContactFromHashMap(String ContactName)
+    {
+        this.contacts.remove(ContactName);
+        ServerSystem.AddUserToDataBase(this);
+    }
+
+    protected boolean HasContact(String ContactName)
+    {
+        return this.contacts.containsKey(ContactName);
+    }
+
+    protected Contact getContactByName(String ContactName)
+    {
+        return this.contacts.get(ContactName);
+    }
     private Folder getFolderByName(String FolderName)
     {
         return this.folders.get(FolderName);
     }
-
-
 
     @Override
     public boolean equals(Object obj)

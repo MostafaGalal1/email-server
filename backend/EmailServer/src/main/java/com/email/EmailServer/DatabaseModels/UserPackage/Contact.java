@@ -3,6 +3,7 @@ package com.email.EmailServer.DatabaseModels.UserPackage;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -39,5 +40,22 @@ public class Contact {
         this.user = User;
         ServerSystem.AddContactToDataBase(this);
     }
-    
+    public void EditContact(String Name, List<String> Addresses){
+        this.setName(Name);
+        this.setAddresses(Addresses);
+        ServerSystem.AddContactToDataBase(this);
+    }
+
+    public void DestroyContact()
+    {
+        ServerSystem.RemoveContactFromDataBase(this);
+    }
+
+    public JSONObject getJsonOfContact(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", this.name);
+        jsonObject.put("addresses", this.addresses);
+        return jsonObject;
+    }
+
 }

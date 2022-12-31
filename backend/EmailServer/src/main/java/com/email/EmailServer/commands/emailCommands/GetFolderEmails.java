@@ -31,7 +31,7 @@ public class GetFolderEmails implements ICommand
     private JSONObject CreateApi(List<JSONObject> emailHeaders)
     {
         JSONObject Api = new JSONObject();
-        return Api.put("state","success").put("data",emailHeaders).put("message","Folder renamed successfully");
+        return Api.put("state","success").put("data",emailHeaders).put("message","Data found");
     }
 }
 

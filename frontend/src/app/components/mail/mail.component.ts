@@ -486,9 +486,10 @@ export class MailComponent implements OnInit{
   }
   
   removeFolder(index : any){
+    var folderName = MailComponent.folders[index]; 
     MailComponent.folders.splice(index , 1);
     console.log(MailComponent.folders);
-    // request the remove folders
+    this.apiService.deleteFolder(folderName).subscribe();
   }
 
   removeContact(index : any){
