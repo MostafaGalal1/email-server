@@ -60,4 +60,11 @@ public class Controller {
         System.out.println(data);
         return proxy.run("GetFolderEmails",new JSONObject(data));
     }
+
+    @PostMapping("/SearchInFolder")
+    @ResponseBody
+    public String SearchInFolder(@RequestBody String data){
+        System.out.println(data);
+        return proxy.run("SearchInFolder",new JSONObject(data));
+    }
 }

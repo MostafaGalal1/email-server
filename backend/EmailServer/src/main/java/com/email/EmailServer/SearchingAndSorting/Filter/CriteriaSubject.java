@@ -14,7 +14,7 @@ public class CriteriaSubject implements EmailCriteria
     private boolean CritiriaActive = true;
     public CriteriaSubject(JSONObject jsonObject)
     {
-        if (jsonObject.has(this.ObjectInJson) == false)
+        if (jsonObject.getString(this.ObjectInJson).equals(""))
         {
             this.CritiriaActive = false;
             return;
