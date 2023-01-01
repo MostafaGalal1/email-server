@@ -196,7 +196,6 @@ public class UserFacade
         if (this.user.HasFolder(folderName)) return false;
         Folder folder = new Folder(Folder.FolderType.Secondary, folderName, this.user);
         this.user.AddFolder(folder);
-//        ServerSystem.AddUserToDataBase(this.user);
         return true;
     }
 
@@ -244,6 +243,41 @@ public class UserFacade
         if(user == null) return false;
         if(!user.getPassword().equals(password)) return false;
         return true;
+    }
+
+    public boolean AddContact(String contactName, List<String> Addresses)
+    {
+        if (this.user.HasContact(contactName)) return false;
+        Contact contact = new Contact(contactName, Addresses, this.user);
+        this.user.AddContact(contact);
+        return true;
+    }
+
+    public boolean DeleteContact(String ContactName)
+    {
+        if (this.user.HasContact(ContactName) == false) return false;
+        this.user.RemoveContact(ContactName);
+        return true;
+    }
+
+    public boolean EditeContact(String oldName, String newName, List<String> Addresses)
+    {
+        if (this.user.HasContact(oldName) == false) return false;
+        if (this.user.HasContact(newName) == true) return false;
+        this.user.EditContact(oldName, newName, Addresses);
+        return true;
+    }
+
+    public List<String> GetAllContactNames()
+    {
+        List<String> contactNames = this.user.GetContactNames().stream().toList();
+        return contactNames;
+    }
+
+    public JSONObject GetContactByName(String ContactName){
+        if (this.user.HasContact(ContactName) == false) return null;
+        JSONObject contact = this.user.GetContact(ContactName);
+        return contact;
     }
 
     private void MoveEmailToInbox(long EmailID)

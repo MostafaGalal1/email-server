@@ -57,14 +57,43 @@ public class Controller {
     @PostMapping("/GetFolderEmails")
     @ResponseBody
     public String GetFolderEmails(@RequestBody String data){
-        System.out.println(data);
         return proxy.run("GetFolderEmails",new JSONObject(data));
     }
 
     @PostMapping("/SearchInFolder")
     @ResponseBody
     public String SearchInFolder(@RequestBody String data){
-        System.out.println(data);
         return proxy.run("SearchInFolder",new JSONObject(data));
     }
+
+    @PostMapping("/AddContact")
+    @ResponseBody
+    public String AddContact(@RequestBody String data){
+        return proxy.run("AddContact", new JSONObject(data));
+    }
+
+    @PostMapping("/GetAllContacts")
+    @ResponseBody
+    public String GetAllContacts(@RequestBody String data){
+        return proxy.run("GetAllContacts", new JSONObject(data));
+    }
+
+    @PostMapping("/GetContact")
+    @ResponseBody
+    public String GetContact(@RequestBody String data){
+        return proxy.run("GetContact", new JSONObject(data));
+    }
+
+    @PostMapping("/EditeContact")
+    @ResponseBody
+    public String EditeContact(@RequestBody String data){
+        return proxy.run("EditeContact", new JSONObject(data));
+    }
+
+    @PostMapping("/DeleteContact")
+    @ResponseBody
+    public String DeleteContact(@RequestBody String data){
+        return proxy.run("DeleteContact", new JSONObject(data));
+    }
+
 }

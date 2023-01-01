@@ -7,6 +7,7 @@ import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -185,13 +186,23 @@ public class User
         this.contacts.remove(ContactName);
         ServerSystem.AddUserToDataBase(this);
     }
+    protected Set<String> GetContactNames(){
+        Set<String> names = this.contacts.keySet();
+        return names;
+    }
+
+    protected JSONObject GetContact(String ContactName){
+        Contact contact = this.contacts.get(ContactName);
+        JSONObject contactJson = contact.getJsonOfContact();
+        return contactJson;
+    }
 
     protected boolean HasContact(String ContactName)
     {
         return this.contacts.containsKey(ContactName);
     }
 
-    protected Contact getContactByName(String ContactName)
+    private Contact getContactByName(String ContactName)
     {
         return this.contacts.get(ContactName);
     }
