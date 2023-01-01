@@ -3,7 +3,6 @@ package com.email.EmailServer.DatabaseModels.UserPackage;
 import com.email.EmailServer.DatabaseModels.Email.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
-import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
 import com.email.EmailServer.SearchingAndSorting.Filter.FiltersExtracter;
@@ -54,8 +53,18 @@ public class UserFacade
     }
 
     // Still need to implement sorting the Emails/////////////////////
-    public List<JSONObject> GetAllFolderEmailsWithFilterAndSort(String FolderName, JSONObject RequestJson)
+    public List<JSONObject> GetAllFolderEmailsSorted(String FolderName, String SortOption)
     {
+        List<Email> Emails = this.GetAllFolderEmails(FolderName);
+
+        // sorting not implemented yet
+
+        List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
+        return jsonList;
+    }
+
+    // Still need to implement sorting the Emails/////////////////////
+    public List<JSONObject> SearchAndSortEmailsInFolder(String FolderName, JSONObject RequestJson, String SortOption){
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
 
         EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
@@ -66,7 +75,6 @@ public class UserFacade
         List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
         return jsonList;
     }
-
     private List<JSONObject> ConvertEmailsToJsons(List<Email> Emails)
     {
         List<JSONObject> jsonList = new ArrayList<>();

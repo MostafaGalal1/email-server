@@ -6,25 +6,25 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class GetFolderEmails implements ICommand
-{
+public class SearchInFolder implements ICommand {
+
     private String userAddress;
+    private JSONObject formJson;
     private String folderName;
     private String sortOption;
 
-    public GetFolderEmails(JSONObject Data)
+    public SearchInFolder(JSONObject Data)
     {
         this.userAddress = Data.getString("username");
+        this.formJson = Data.getJSONObject("searchForm");
         this.folderName = Data.getString("folderName");
         this.sortOption = Data.getString("sortOption");
     }
 
     @Override
-    public JSONObject execute()
-    {
+    public JSONObject execute() {
         UserFacade userFacade = new UserFacade(this.userAddress);
-
-        List<JSONObject> emailHeaders = userFacade.GetAllFolderEmailsSorted(folderName, this.sortOption);
+        List<JSONObject> emailHeaders = userFacade.SearchAndSortEmailsInFolder(this.folderName, this.formJson, this.sortOption);
         return CreateApi(emailHeaders);
     }
 
@@ -34,17 +34,3 @@ public class GetFolderEmails implements ICommand
         return Api.put("state","success").put("data",emailHeaders).put("message","Data found");
     }
 }
-
-
-/*
-
-{"userName":"fgdgdfgdfdg", "currentFolder"
-:"" "sender":"rgrergegr", "recievers":"["dgre","gergrege","gregreg","regrgerge"]", "priority":3, "attachment":false, "subject":"", "Date":"dfddd"
-"body": "anyword"
- "sortOption": "byDate"}
-
-{"userName":"fgdgdfgdfdg", "currentFolder":"",
-
-
-
- */

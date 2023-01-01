@@ -9,12 +9,12 @@ import java.util.List;
 public class CriteriaPriority implements EmailCriteria
 {
     private int Priority;
-    private final String ObjectInJson = "date";
+    private final String ObjectInJson = "priority";
     private boolean CritiriaActive = true;
 
     public CriteriaPriority(JSONObject jsonObject)
     {
-        if (jsonObject.has(this.ObjectInJson) == false)
+        if (jsonObject.getInt(this.ObjectInJson) == -1)
         {
             this.CritiriaActive = false;
             return;

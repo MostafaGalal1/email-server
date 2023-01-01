@@ -14,7 +14,7 @@ public class CriteriaDate implements EmailCriteria
     private boolean CritiriaActive = true;
     public CriteriaDate(JSONObject jsonObject)
     {
-        if (jsonObject.has(this.ObjectInJson) == false)
+        if (jsonObject.getString(this.ObjectInJson).equals(""))
         {
             this.CritiriaActive = false;
             return;

@@ -14,7 +14,7 @@ public class CriteriaSender implements EmailCriteria
 
     public CriteriaSender(JSONObject jsonObject)
     {
-        if (jsonObject.has(this.ObjectInJson) == false)
+        if (jsonObject.getString(this.ObjectInJson).equals(""))
         {
             this.CritiriaActive = false;
             return;

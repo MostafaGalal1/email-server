@@ -3,7 +3,8 @@ package com.email.EmailServer;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:53844"})
+
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:49473"})
 @RestController
 @RequestMapping("/Email")
 public class Controller {
@@ -14,7 +15,6 @@ public class Controller {
     @PutMapping("/SignUp")
     @ResponseBody
     public String SignUp(@RequestBody String data){
-        System.out.println(data);
         return proxy.run("SignUp", new JSONObject(data));
     }
 
@@ -59,5 +59,12 @@ public class Controller {
     public String GetFolderEmails(@RequestBody String data){
         System.out.println(data);
         return proxy.run("GetFolderEmails",new JSONObject(data));
+    }
+
+    @PostMapping("/SearchInFolder")
+    @ResponseBody
+    public String SearchInFolder(@RequestBody String data){
+        System.out.println(data);
+        return proxy.run("SearchInFolder",new JSONObject(data));
     }
 }
