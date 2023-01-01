@@ -5,8 +5,6 @@ export interface Email {
     date : Date;
     subject : string;
     body : string;
-    file : File[];
-    priority : number,
 }
 export interface emailToSend {
     sender : string;

@@ -10,7 +10,7 @@ import java.util.List;
 public class CriteriaSubject implements EmailCriteria
 {
     private String Subject;
-    private final String ObjectInJson = "date";
+    private final String ObjectInJson = "subject";
     private boolean CritiriaActive = true;
     public CriteriaSubject(JSONObject jsonObject)
     {

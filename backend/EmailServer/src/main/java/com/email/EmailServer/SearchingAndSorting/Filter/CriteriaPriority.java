@@ -9,7 +9,7 @@ import java.util.List;
 public class CriteriaPriority implements EmailCriteria
 {
     private int Priority;
-    private final String ObjectInJson = "date";
+    private final String ObjectInJson = "priority";
     private boolean CritiriaActive = true;
 
     public CriteriaPriority(JSONObject jsonObject)

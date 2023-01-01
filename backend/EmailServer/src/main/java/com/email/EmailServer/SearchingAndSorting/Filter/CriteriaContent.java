@@ -11,7 +11,7 @@ public class CriteriaContent implements EmailCriteria
     private String[] Words;
 
     private String Content;
-    private final String ObjectInJson = "date";
+    private final String ObjectInJson = "body";
     private boolean CritiriaActive = true;
 
     public CriteriaContent(JSONObject jsonObject)
