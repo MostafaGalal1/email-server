@@ -42,9 +42,10 @@ export class FolderBoxComponent implements OnInit {
       console.log("hello");
       if(this.folderForm.value.folderName! === MailComponent.folders[MailComponent.indexFolder])
         return;
+      var oldName = MailComponent.folders[MailComponent.indexFolder];
       MailComponent.folders[MailComponent.indexFolder]=this.folderForm.value.folderName!;
       MailComponent.folderBoxVisible = false;
-      //request the edit folder by the new name and the old name 
+      this.apiService.editFolder(oldName,MailComponent.folders[MailComponent.indexFolder]).subscribe();
     }
 
   }

@@ -3,7 +3,7 @@ package com.email.EmailServer;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:53844"})
 @RestController
 @RequestMapping("/Email")
 public class Controller {
@@ -54,9 +54,10 @@ public class Controller {
         return proxy.run("SendEmail",new JSONObject(data));
     }
 
-    @GetMapping("/GetFolderEmails")
+    @PostMapping("/GetFolderEmails")
     @ResponseBody
     public String GetFolderEmails(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("GetFolderEmails",new JSONObject(data));
     }
 }

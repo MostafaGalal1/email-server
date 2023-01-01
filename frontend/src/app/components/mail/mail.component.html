@@ -29,19 +29,19 @@
         <span class="material-symbols-outlined">edit</span>
         <input type="button" class="button" value="Compose">
       </div>
-      <div class="options-div" (click)="getEmails('inbox')">
+      <div class="options-div" (click)="getEmails('Inbox')">
         <span class="material-symbols-outlined">inbox</span>
         <input type="button" class="button" value="Inbox">
       </div>
-      <div class="options-div" (click)="getEmails('sent')">
+      <div class="options-div" (click)="getEmails('Sent')">
         <span class="material-symbols-outlined">send</span>
         <input type="button" class="button" value="Sent">
       </div>
-      <div class="options-div" (click)="getEmails('draft')">
+      <div class="options-div" (click)="getEmails('Draft')">
         <span class="material-symbols-outlined">draft</span>
         <input type="button" class="button" value="Draft">
       </div>
-      <div class="options-div" (click)="getEmails('trash')">
+      <div class="options-div" (click)="getEmails('Trash')">
         <span class="material-symbols-outlined">delete</span>
         <input type="button" class="button" value="Trash">
       </div>
@@ -133,7 +133,7 @@
           <br>
           <div>
             <h4>From: {{currentEmail.sender}}</h4>  
-            <h5>To: {{currentEmail.recievers}}</h5>
+            <h5>To: {{currentEmail.receivers}}</h5>
             <br>
             <p>{{currentEmail.body}}</p>
           </div>
@@ -159,38 +159,38 @@
       </div>
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}">
         <tbody>
-          <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
-            <td>
-              <div class = "td-div" id = "table-check-div">
-                <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)">
-              </div>
-            </td>  
-            <td>
-              <div class = "td-div" id = "table-sender-div">
-                {{email.value.sender}} 
-              </div> 
-            </td>
-            <td>
-              <div class = "td-div" id = "table-recievers-div">
-                {{email.value.recievers}} 
-              </div>
-            </td>  
-            <td>
-              <div class = "td-div" id = "table-subject-div">
-                {{email.value.subject}} 
-              </div> 
-            </td>  
-            <td>
-              <div class = "td-div" id = "table-body-div">
-                {{email.value.body}} 
-              </div> 
-            </td>  
-            <td>
-              <div class = "td-div" id = "table-date-div">
-                {{email.value.date | date: email.value.date.getDate() === nowDate.getDate()? 'h:mm a':'MMM d'}}
-              </div>
-            </td>  
-          </tr>  
+            <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
+              <td>
+                <div class = "td-div" id = "table-check-div">
+                  <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)">
+                </div>
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-sender-div">
+                  {{email.value.sender}} 
+                </div> 
+              </td>
+              <td>
+                <div class = "td-div" id = "table-receivers-div">
+                  {{email.value.receivers}} 
+                </div>
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-subject-div">
+                  {{email.value.subject}} 
+                </div> 
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-body-div">
+                  {{email.value.body}} 
+                </div> 
+              </td>  
+              <td>
+                <div class = "td-div" id = "table-date-div">
+                  {{email.value.date | date: (email.value.date.getDate() === nowDate.getDate())? 'h:mm a':'MMM d'}}
+                </div>
+              </td>  
+            </tr>  
         </tbody>
       </table>
     </div>

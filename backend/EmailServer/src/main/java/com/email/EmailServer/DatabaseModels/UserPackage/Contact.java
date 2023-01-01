@@ -1,7 +1,11 @@
 package com.email.EmailServer.DatabaseModels.UserPackage;
 
+import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;
 import lombok.*;
+import org.json.JSONObject;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,7 +15,7 @@ public class Contact {
 
     @Id
     @Column(name = "contact_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -19,9 +23,39 @@ public class Contact {
     private User user;
 
     @Column(name = "addresses")
-    private String addresses;
+    private List<String> addresses;
 
     @Column(name = "contact_name")
-    private String contactName;
+    private String name;
+
+    private Contact()
+    {
+
+    }
+
+    public Contact(String Name, List<String> Addresses, User User)
+    {
+        this.name = Name;
+        this.addresses = Addresses;
+        this.user = User;
+        ServerSystem.AddContactToDataBase(this);
+    }
+    public void EditContact(String Name, List<String> Addresses){
+        this.setName(Name);
+        this.setAddresses(Addresses);
+        ServerSystem.AddContactToDataBase(this);
+    }
+
+    public void DestroyContact()
+    {
+        ServerSystem.RemoveContactFromDataBase(this);
+    }
+
+    public JSONObject getJsonOfContact(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", this.name);
+        jsonObject.put("addresses", this.addresses);
+        return jsonObject;
+    }
 
 }

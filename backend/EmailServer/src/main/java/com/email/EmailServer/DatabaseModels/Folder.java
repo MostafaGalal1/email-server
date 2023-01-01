@@ -39,10 +39,10 @@ public class Folder{
     {
 
     }
-    public Folder(FolderType Type, String Name, User user){
+    public Folder(FolderType Type, String Name, User User){
         this.name = Name;
         this.type = Type;
-        this.user = user;
+        this.user = User;
         ServerSystem.AddFolderToDataBase(this);
     }
 

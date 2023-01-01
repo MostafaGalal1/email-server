@@ -1,8 +1,11 @@
 import { DomElementSchemaRegistry } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { EmailValidator } from '@angular/forms';
-import { Email } from 'src/app/shared/email';
+import { Email, emailToSend } from 'src/app/shared/email';
 import { MailComponent } from '../mail.component';
+import { ApiService } from 'src/app/services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-compose-box',
@@ -16,16 +19,15 @@ export class ComposeBoxComponent implements OnInit {
   message : string ="";
   priority : string = '';
   file : File[] = [];
-  email : Email = {id:"",
-    recievers:[],
-    sender:"",
-    date:new Date(),
+  email : emailToSend = {
+    sender :"",
+    receivers:[],
     body:"",
     subject:"",
-    file :[]
+    priority : 2
   };
 
-  constructor() { }
+  constructor(private apiService : ApiService, private http : HttpClient) { }
   
   ngOnInit(): void {
     console.log(this.subject);
@@ -40,12 +42,13 @@ export class ComposeBoxComponent implements OnInit {
       this.priority = "2";
     }
     this.email.body = this.message;
-    this.email.recievers = this.to.split(", ");
+    this.email.receivers = this.to.split(", ");
     this.email.subject = this.subject;
-    this.email.file = this.file;
+    this.email.priority = parseInt( this.priority);
+    this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
+    this.apiService.sendEmail(this.email).subscribe({});
     MailComponent.compose = false;
-    //request the send 
   } 
 
   saveToDraft(){
@@ -57,10 +60,13 @@ export class ComposeBoxComponent implements OnInit {
       this.priority = "2";
     }
     this.email.body = this.message;
-    this.email.recievers = this.to.split(", ");
+    this.email.receivers = this.to.split(", ");
     this.email.subject = this.subject;
+    this.email.priority = parseInt( this.priority);
+    this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     MailComponent.compose = false;
+    
     //request the save to draft  
   }
 

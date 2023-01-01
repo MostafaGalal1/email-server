@@ -80,7 +80,7 @@ public class Email{
         jsonObject.put("receivers", this.receiversAddress);
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
-        jsonObject.put("date", this.dateOfEmail);////////////// needs linking with frontend way of storage
+        jsonObject.put("date", this.dateOfEmail.toInstant());////////////// needs linking with frontend way of storage
         return jsonObject;
     }
 

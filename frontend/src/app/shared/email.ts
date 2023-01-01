@@ -1,9 +1,16 @@
 export interface Email {
-    id : string;
+    id : number;
     sender : string;
-    recievers : string[];
+    receivers : string[];
     date : Date;
     subject : string;
     body : string;
-    file : File[];
+}
+
+export interface emailToSend {
+    sender : string;
+    receivers : string[];
+    subject : string;
+    body : string;
+    priority : number,
 }

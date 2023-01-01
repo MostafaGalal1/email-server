@@ -1,9 +1,11 @@
 package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+import com.email.EmailServer.DatabaseModels.Repos.ContactRepo;
 import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
+import com.email.EmailServer.DatabaseModels.UserPackage.Contact;
 import com.email.EmailServer.DatabaseModels.UserPackage.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,36 +20,15 @@ public class ServerSystem{
     private static FolderRepo folderRepo;
     @Autowired
     private static EmailRepo emailRepo;
+    @Autowired
+    private static ContactRepo contactRepo;
 
-    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo)
+    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo, ContactRepo ContactRepo)
     {
         userRepo = UserRepo;
         folderRepo = FolderRepo;
         emailRepo = EmailRepo;
-    }
-
-    public static JSONObject CreateNewUser(JSONObject UserInfo)
-    {
-        JSONObject Api = new JSONObject();
-        if (userRepo.getByAddress(String.valueOf(UserInfo.get("username"))) != null) {
-            return Api.put("state", "Failed").put("data", "").put("message", "Username is used");
-        }
-        User user = new User(String.valueOf(UserInfo.get("first_name")),String.valueOf(UserInfo.get("last_name")),String.valueOf(UserInfo.get("username"))
-                ,String.valueOf(UserInfo.get("password")));
-        return Api.put("state", "Success").put("data", "").put("message", "Created successfully");
-    }
-
-    public static JSONObject ValidateUser(JSONObject UserInfo)
-    {
-        JSONObject Api = new JSONObject();
-        User user = userRepo.getByAddress(String.valueOf(UserInfo.get("username")));
-        if(user == null){
-            return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
-        }
-        if(!user.getPassword().equals(String.valueOf(UserInfo.get("password")))){
-            return Api.put("state","Failed").put("data","").put("message","Wrong username or wrong password");
-        }
-        return Api.put("state","Success").put("data","").put("message","LogeIn successfully");
+        contactRepo = ContactRepo;
     }
 
     public static void AddFolderToDataBase(Folder folder)
@@ -55,15 +36,15 @@ public class ServerSystem{
         folderRepo.save(folder);
     }
 
+    public static void RemoveFolderFromDataBase(Folder folder)
+    {
+        folderRepo.delete(folder);
+    }
+
     public static void AddEmailToDatabase(Email email)
     {
         System.out.println(email);
         emailRepo.save(email);
-    }
-
-    public static void RemoveFolderFromDataBase(Folder folder)
-    {
-        folderRepo.delete(folder);
     }
 
     public static Email GetEmailByID(long EmailID)
@@ -79,5 +60,13 @@ public class ServerSystem{
     public static void AddUserToDataBase(User user)
     {
         userRepo.save(user);
+    }
+
+    public static void AddContactToDataBase(Contact contact){
+        contactRepo.save(contact);
+    }
+
+    public static void RemoveContactFromDataBase(Contact contact){
+        contactRepo.delete(contact);
     }
 }
