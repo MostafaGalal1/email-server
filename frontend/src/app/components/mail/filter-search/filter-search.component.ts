@@ -18,7 +18,7 @@ export class FilterSearchComponent implements OnInit {
 
   searchForm = this.formBuilder.group({
     sender: '',
-    recievers: '',
+    receivers: '',
     subject: '',
     body: ''
   });

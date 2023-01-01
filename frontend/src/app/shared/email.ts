@@ -6,6 +6,7 @@ export interface Email {
     subject : string;
     body : string;
 }
+
 export interface emailToSend {
     sender : string;
     receivers : string[];

@@ -171,7 +171,7 @@
                 </div> 
               </td>
               <td>
-                <div class = "td-div" id = "table-recievers-div">
+                <div class = "td-div" id = "table-receivers-div">
                   {{email.value.receivers}} 
                 </div>
               </td>  
@@ -187,7 +187,7 @@
               </td>  
               <td>
                 <div class = "td-div" id = "table-date-div">
-                  {{email.value.date | date: email.value.date.getDate() === nowDate.getDate()? 'h:mm a':'MMM d'}}
+                  {{email.value.date | date: (email.value.date.getDate() === nowDate.getDate())? 'h:mm a':'MMM d'}}
                 </div>
               </td>  
             </tr>  

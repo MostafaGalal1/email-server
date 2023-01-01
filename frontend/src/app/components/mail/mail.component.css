@@ -39,7 +39,7 @@
 .emails-container{
   position: sticky;
   overflow-y: auto;
-  max-height: 544px;
+  max-height: 516px;
 }
 
 .emails-container::-webkit-scrollbar {
@@ -402,7 +402,7 @@
   width: 140px;
 }
 
-#table-recievers-div{
+#table-receivers-div{
   width: 180px;
 }
 

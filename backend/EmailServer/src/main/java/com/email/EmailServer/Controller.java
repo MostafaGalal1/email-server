@@ -3,7 +3,6 @@ package com.email.EmailServer;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:49473"})
 @RestController
