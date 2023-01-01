@@ -13,6 +13,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ContactBoxComponent } from './components/mail/contact-box/contact-box.component';
 import { FolderBoxComponent } from './components/mail/folder-box/folder-box.component';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter'
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FolderBoxComponent } from './components/mail/folder-box/folder-box.comp
     AppRoutingModule,
     HttpClientModule,
     ClickOutsideModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    PasswordStrengthMeterModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

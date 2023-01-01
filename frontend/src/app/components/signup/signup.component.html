@@ -7,20 +7,28 @@
         <div class = "form-container">
             <form class = "form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                 <div id="name" class="form-input">
-                    <label for="first_name">First name</label><br>
-                    <input type="text" id="first_name" formControlName="first_name"><br><br>
+                    <label for="firstName">First name</label><br>
+                    <input type="text" id="first-name" formControlName="firstName">
+                    <label id="name-error" class = "error-label"></label>
                 </div>
                 <div id="name" class="form-input">
-                    <label for="last_name">Last name</label><br>
-                    <input type="text" id="last_name" formControlName="last_name"><br><br>
+                    <label for="lastName">Last name</label><br>
+                    <input type="text" id="last-name" formControlName="lastName">
                 </div>
                 <div class="form-input">
                     <label for="username">Username</label><br>
-                    <input type="text" id="username" formControlName="username"><br><br>
+                    <input type="text" id="username" formControlName="username">
+                    <label id="username-error" class = "error-label"></label>
                 </div>
                 <div id="ppassword" class="form-input">
                     <label for="password">Password</label><br>
-                    <input type={{visibility}} id="password" formControlName="password"><br><br>
+                    <input type={{visibility}} id="password" formControlName="password">
+                    <label id="password-error" class = "error-label"></label>
+                </div>
+                <div id="ppassword" class="form-input">
+                    <label>Confirm</label><br>
+                    <input type={{visibility}} id="confirm-password">
+                    <password-strength-meter *ngIf="signupForm.value.password!.length > 0" class = "password-strength" [password]="signupForm.value.password"></password-strength-meter>
                 </div>
                 <div class="show-password">
                     <label>
@@ -28,8 +36,8 @@
                         <span class="show-password-target"></span>
                     </label>
                     <label id="show-password">Show password</label>
+                    <label id="link" (click)="loginRedirct()">Log in</label>
                 </div>
-                <label id="link" (click)="loginRedirct()">Log in</label>
                 <div class="form-submit">
                     <input class="form-submit" type="submit" value="Submit">
                 </div>

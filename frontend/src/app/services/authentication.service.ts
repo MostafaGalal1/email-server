@@ -17,6 +17,7 @@ export class AuthenticationService {
         if (user.state === "success") {
           localStorage.setItem('currentUser', user["data"]);
         }
+        return user;
       }));
   }
 
@@ -25,9 +26,8 @@ export class AuthenticationService {
       map((user:any) => {
         if (user.state === "success") {
           localStorage.setItem('currentUser', user["data"]);
-        }else{
-          alert(user.message)
         }
+        return user;
       }));
   }
 

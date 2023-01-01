@@ -9,6 +9,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private username:any;
+  private password:any;
+  private error:any;
   protected visibility:string;
 
   constructor(private authService: AuthenticationService, private formBuilder : FormBuilder, private router:Router) { 
@@ -16,7 +19,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.username = document.getElementById("username");
+    this.password = document.getElementById("password");
+    this.error = document.getElementById("error");
   }
 
   loginForm = this.formBuilder.group({
@@ -25,7 +30,34 @@ export class LoginComponent implements OnInit {
   });
 
   onSubmit(){
-    this.authService.login(this.loginForm.value).subscribe(() => this.router.navigate(['/mail']));
+    if (!this.validateData())
+      return;
+    this.authService.login(this.loginForm.value).subscribe((response) => {
+      if (response.state === "failed"){
+        this.error!.innerText = "Username or password is incorrect";
+        return;
+      }
+      this.router.navigate(['/mail']);
+    });
+  }
+
+  
+  validateData():boolean{
+    let valid = true;
+    console.log(this.username);
+    if (this.username.value === "" && this.password.value === ""){
+      this.error.innerText = "Enter username and password";
+      valid = false;
+    } else if (this.username.value === "") {
+      this.error.innerText = "Enter username";
+      valid = false;
+    } else if (this.password.value === "") {
+      this.error.innerText = "Enter password";
+      valid = false;
+    } else {
+      this.error.innerText = "";
+    }
+    return valid;
   }
 
   signupRedirct() {

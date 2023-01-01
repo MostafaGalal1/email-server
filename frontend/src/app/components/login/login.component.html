@@ -8,11 +8,12 @@
             <form class = "form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-input">
                     <label for="username">Email or phone</label><br>
-                    <input type="text" id="username" formControlName="username"><br><br>
+                    <input type="text" id="username" formControlName="username">
+                    <label id="error" class = "error-label"></label>
                 </div>
                 <div class="form-input">
                     <label for="password">Password</label><br>
-                    <input type={{visibility}} id="password" formControlName="password"><br><br>
+                    <input type={{visibility}} id="password" formControlName="password">
                 </div>
                 <div class="show-password">
                     <label>
@@ -20,8 +21,8 @@
                         <span class="show-password-target"></span>
                     </label>
                     <label id="show-password">Show password</label>
+                    <label id="link" (click)="signupRedirct()">Sign up</label>
                 </div>
-                <label id="link" (click)="signupRedirct()">Sign up</label>
                 <div class="form-submit">
                     <input class="form-submit" type="submit" value="Submit">
                 </div>

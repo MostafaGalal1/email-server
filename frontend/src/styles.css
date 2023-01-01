@@ -62,3 +62,7 @@
 .ngx-pagination .pagination-next.disabled::after {
     content: "▷" !important;
 }
+
+.psm__progress-bar{
+    width: 160px;
+}

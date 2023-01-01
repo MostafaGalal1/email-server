@@ -35,8 +35,9 @@
 }
 
 #link{
-    font-size: 14px;
-    text-align: left;
+    position: absolute;
+    font-size: 16px;
+    right: 0px;
     color: var(--secondary);
     text-decoration: underline;
 }
@@ -107,11 +108,16 @@
     outline-color: var(--primary);
 }
 
+.error-label{
+    color: red;
+    font-size: small!important;
+}
 
 .show-password{
+    position: relative;
     text-align: left;
-    margin: auto;
-    margin-left: 50px;
+    margin: auto 50px;
+    margin-right: 70px;
     color: var(--secondary);
 }
 

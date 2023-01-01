@@ -12,8 +12,8 @@ public class SignUp implements ICommand {
     private String password;
 
     public SignUp(JSONObject Data){
-        this.firstName = Data.getString("first_name");
-        this.lastName = Data.getString("last_name");
+        this.firstName = Data.getString("firstName");
+        this.lastName = Data.getString("lastName");
         this.username = Data.getString("username");
         this.password = Data.getString("password");
     }
