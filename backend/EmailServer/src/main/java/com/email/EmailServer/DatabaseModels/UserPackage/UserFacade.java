@@ -268,16 +268,10 @@ public class UserFacade
         return true;
     }
 
-    public List<String> GetAllContactNames()
+    public List<JSONObject> GetAllContacts()
     {
-        List<String> contactNames = this.user.GetContactNames().stream().toList();
+        List<JSONObject> contactNames = this.user.GetAllContactsJson();
         return contactNames;
-    }
-
-    public JSONObject GetContactByName(String ContactName){
-        if (this.user.HasContact(ContactName) == false) return null;
-        JSONObject contact = this.user.GetContact(ContactName);
-        return contact;
     }
 
     private void MoveEmailToInbox(long EmailID)

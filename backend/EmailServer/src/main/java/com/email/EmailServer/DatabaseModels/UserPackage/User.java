@@ -186,12 +186,17 @@ public class User
         this.contacts.remove(ContactName);
         ServerSystem.AddUserToDataBase(this);
     }
-    protected Set<String> GetContactNames(){
+    protected List<JSONObject> GetAllContactsJson(){
         Set<String> names = this.contacts.keySet();
-        return names;
+        List<JSONObject> contactJsons = new ArrayList<>();
+        for(String contactName : names ) {
+            JSONObject contactJson = this.GetContactJson(contactName);
+            contactJsons.add(contactJson);
+        }
+        return contactJsons;
     }
 
-    protected JSONObject GetContact(String ContactName){
+    private JSONObject GetContactJson(String ContactName){
         Contact contact = this.contacts.get(ContactName);
         JSONObject contactJson = contact.getJsonOfContact();
         return contactJson;

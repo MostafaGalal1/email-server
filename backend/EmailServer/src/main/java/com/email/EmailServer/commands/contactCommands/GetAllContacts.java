@@ -16,10 +16,10 @@ public class GetAllContacts implements ICommand {
     @Override
     public JSONObject execute() {
         UserFacade userFacade = new UserFacade(this.userAddress);
-        List<String> contactNames= userFacade.GetAllContactNames();
+        List<JSONObject> contactNames= userFacade.GetAllContacts();
         return CreateApi(contactNames);
     }
-    private JSONObject CreateApi(List<String> contactNames){
+    private JSONObject CreateApi(List<JSONObject> contactNames){
         JSONObject Api = new JSONObject();
         return Api.put("state","success").put("data",contactNames).put("message","All contacts");
     }
