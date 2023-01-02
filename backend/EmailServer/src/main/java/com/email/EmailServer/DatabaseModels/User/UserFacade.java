@@ -34,20 +34,24 @@ public class UserFacade
         return true;
     }
 
-    public boolean RestoreEmailFromTrash(Email email)
+    public boolean RestoreEmailFromTrash(long EmailID)
     {
-        long EmailID = email.getId();
-
-        if (user.TrashHasEmail(EmailID) == false) return false;
+        if (user.TrashHasEmail(EmailID) == false)
+            return false;
 
         user.RemoveEmailFromAllFolders(EmailID);
-
-        if (this.CheckUserAsEmailSender(email))
-            MoveEmailToSent(EmailID);
-        else
-            MoveEmailToInbox(EmailID);
+        this.RestoreEmailToInboxOrSent(EmailID);
 
         return true;
+    }
+
+    private void RestoreEmailToInboxOrSent(long EmailID)
+    {
+        Email email = Email.getExistingEmailByID(EmailID);
+        if (this.CheckUserAsEmailSender(email))
+            this.MoveEmailToSent(EmailID);
+        else
+            this.MoveEmailToInbox(EmailID);
     }
 
     private boolean CheckUserAsEmailSender(Email email)
@@ -239,10 +243,12 @@ public class UserFacade
         return SecondaryFolderNames;
     }
 
-    public void DeleteEmailPermanently(Email email)
+    public boolean DeleteEmailPermanently(long EmailID)
     {
-        long EmailID = email.getId();
+        if (this.user.TrashHasEmail(EmailID) == false)
+            return false;
         this.user.RemoveEmailFromAllFolders(EmailID);
+        return true;
     }
 
     public void MoveEmailToDraft(Email email)
