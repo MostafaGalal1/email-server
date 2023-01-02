@@ -22,7 +22,7 @@ public class Contact {
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
-    @Column(name = "addresses")
+    @Column(name = "addresses" , length = 100000)
     private List<String> addresses;
 
     @Column(name = "contact_name")
@@ -54,7 +54,7 @@ public class Contact {
     public JSONObject getJsonOfContact(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", this.name);
-        jsonObject.put("emails", this.addresses);
+        jsonObject.put("mails", this.addresses);
         return jsonObject;
     }
 
