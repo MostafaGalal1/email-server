@@ -6,7 +6,7 @@
     <form [formGroup]="folderForm" (ngSubmit)="onSubmit($event)">
         <div class="name-div">
             <span class="name-slabel"><label for="folderName">Folder Name</label></span>
-            <span class="name-sinput"><input type="text" class="name" formControlName="folderName" id="folderName"></span>
+            <span class="name-sinput"><input type="text" class="name" formControlName="folderName" id="folderName" value={{getname}}></span>
         </div>
         <div class="form-submit">
             <input class="form-submit" id="ceate_edit" type="submit" value="Create">

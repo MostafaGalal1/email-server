@@ -6,11 +6,11 @@
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit($event)">
         <div class="name-div">
             <span class="contactName-slabel"><label for="contactName">Name</label></span>
-            <span class="contactName-sinput"><input type="text" name="contactName" class="contactName" formControlName="contactName" value="" id="contactName"></span>
+            <span class="contactName-sinput"><input type="text" name="contactName" class="contactName" formControlName="contactName" value="" id="contactName" value={{getname}}></span>
         </div>
         <div class="addresses-div">
             <span class="addresses-slabel"><label for="addresses">Mail</label></span>
-            <span class="addresses-sinput"><input type="text" name="addresses" class="addresses" formControlName="addresses" value="" id="addresses"></span>
+            <span class="addresses-sinput"><input type="text" name="addresses" class="addresses" formControlName="addresses" value="" id="addresses" value={{getmails}}></span>
         </div>
         <div class="form-submit">
             <input class="form-submit" type="submit" value="Create">

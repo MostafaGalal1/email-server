@@ -20,7 +20,8 @@ export class ContactBoxComponent implements OnInit {
     addresses: '',
     oldName : ''
   });
-
+  static namee : string = "";
+  static mailss : string = "";
   ngOnInit(): void {
   }
 
@@ -60,5 +61,11 @@ export class ContactBoxComponent implements OnInit {
 
   closeContactBox(){
     this.mail.hideContact();
+  }
+  get getname(){
+    return ContactBoxComponent.namee;
+  }
+  get getmails(){
+    return ContactBoxComponent.mailss;
   }
 }
