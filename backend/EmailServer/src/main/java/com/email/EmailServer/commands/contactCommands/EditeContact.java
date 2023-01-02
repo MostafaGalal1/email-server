@@ -1,6 +1,6 @@
 package com.email.EmailServer.commands.contactCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.DatabaseModels.User.UserFacade;
 import com.email.EmailServer.commands.ICommand;
 import com.google.gson.Gson;
 import org.json.JSONObject;

@@ -1,6 +1,6 @@
 package com.email.EmailServer.commands.emailCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.DatabaseModels.User.UserFacade;
 import com.email.EmailServer.commands.ICommand;
 import org.json.JSONObject;
 
@@ -24,7 +24,7 @@ public class SearchInFolder implements ICommand {
     @Override
     public JSONObject execute() {
         UserFacade userFacade = new UserFacade(this.userAddress);
-        List<JSONObject> emailHeaders = userFacade.SearchAndSortEmailsInFolder(this.folderName, this.formJson, this.sortOption);
+        List<JSONObject> emailHeaders = userFacade.SearchFoldersRequest(this.folderName, this.formJson, this.sortOption);
         return CreateApi(emailHeaders);
     }
 
