@@ -44,18 +44,20 @@ export class ContactBoxComponent implements OnInit {
       });
     }else{
       console.log("hello");
-      if(this.contactForm.value.contactName! === MailComponent.contacts[MailComponent.indexContact].name ) // compare the usercontactName also
+      if(this.contactForm.value.contactName! === MailComponent.contacts[MailComponent.indexContact].name && this.contactForm.value.addresses! === MailComponent.contacts[MailComponent.indexContact].name ) // compare the usercontactName also
         return;
-
+      
       let tmp = {} as Contact
+      console.log("hello2")
       tmp.name = this.contactForm.value.contactName!;
       let tmpAddresses = <string>this.contactForm.value.addresses!; 
-      tmp.mails = tmpAddresses.split(", ");
-      MailComponent.contacts[MailComponent.indexContact].name = tmp.name;
-      MailComponent.contacts[MailComponent.indexContact].mails = tmp.mails;
+      this.contactForm.value.oldName = MailComponent.contacts[MailComponent.indexContact].name;
+      //tmp.mails = tmpAddresses.split(", ");
+      //MailComponent.contacts[MailComponent.indexContact].name = tmp.name;
+      //MailComponent.contacts[MailComponent.indexContact].mails = tmp.mails;
       MailComponent.contactBoxVisible = false;
       console.log(this.contactForm.value);
-      //request the edit folder by the new name and the old name 
+      this.apiService.editContact(this.contactForm.value).subscribe();
     }
   }
 

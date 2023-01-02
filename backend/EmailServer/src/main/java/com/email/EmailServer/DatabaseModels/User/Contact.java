@@ -54,7 +54,7 @@ public class Contact {
     public JSONObject getJsonOfContact(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", this.name);
-        jsonObject.put("emails", this.addresses);
+        jsonObject.put("mails", this.addresses);
         return jsonObject;
     }
 

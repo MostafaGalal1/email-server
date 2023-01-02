@@ -105,7 +105,9 @@ export class MailComponent implements OnInit{
 
   ngOnInit(): void {
     this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
-    this.apiService.getContacts().subscribe((response:any) => MailComponent.contacts = response.data);
+    this.apiService.getContacts().subscribe((response:any) => {MailComponent.contacts = response.data
+      console.log(MailComponent.contacts);}
+    );
     for (let i = 0 ; i < this.emails.length; i++){
       this.emails[i].id = i;
       this.emailsQueue[i.toString()] = this.emails[i];
@@ -291,17 +293,17 @@ export class MailComponent implements OnInit{
   }
 
   get getcomposeVisible() {
-    console.log( MailComponent.compose) ; 
+
     return MailComponent.compose;
   }
 
   get getFolderVisible() {
-    console.log( MailComponent.folderBoxVisible) ; 
+
     return MailComponent.folderBoxVisible;
   }
   
   get getContactVisible() {
-    console.log( MailComponent.contactBoxVisible) ; 
+
     return MailComponent.contactBoxVisible;
   }
   get getfolders(){
@@ -354,6 +356,10 @@ export class MailComponent implements OnInit{
   }
 
   async refreshEmails(){
+    this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
+    this.apiService.getContacts().subscribe((response:any) => {MailComponent.contacts = response.data
+      console.log(MailComponent.contacts);
+    });
     this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (this.emails = response.data));
     this.checkAll = false;
     this.buttonsVisible = false;
