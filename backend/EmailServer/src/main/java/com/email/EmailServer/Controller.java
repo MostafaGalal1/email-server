@@ -96,4 +96,23 @@ public class Controller {
         return proxy.run("MoveEmail", new JSONObject(data));
     }
 
+    @PostMapping("/SaveToDraft")
+    @ResponseBody
+    public String SaveToDraft(@RequestBody String data){
+        return proxy.run("SaveToDraft", new JSONObject(data));
+    }
+
+    @DeleteMapping("/DeleteEmail")
+    @ResponseBody
+    public String DeleteEmail(@RequestBody String data){
+        return proxy.run("DeleteEmail", new JSONObject(data));
+    }
+
+    @PostMapping("/RestoreEmail")
+    @ResponseBody
+    public String RestoreEmail(@RequestBody String data){
+        return proxy.run("RestoreEmail", new JSONObject(data));
+    }
+
+
 }

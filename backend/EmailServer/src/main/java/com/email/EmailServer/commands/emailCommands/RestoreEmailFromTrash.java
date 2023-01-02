@@ -9,10 +9,10 @@ public class RestoreEmailFromTrash implements ICommand
     private String userAddress;
     private long emailID;
 
-    public RestoreEmailFromTrash(String userAddress, long EmailID)
+    public RestoreEmailFromTrash(JSONObject Data)
     {
-        this.userAddress = userAddress;
-        this.emailID = EmailID;
+        this.userAddress = Data.getString("username");
+        this.emailID = Data.getLong("id");
     }
 
     @Override

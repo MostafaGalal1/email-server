@@ -36,13 +36,14 @@ export class ComposeBoxComponent implements OnInit {
   
   send(){
 
-    if(ComposeBoxComponent.priority == "choose priority" ){
-      ComposeBoxComponent.priority = "2";
+    this.email.priority = parseInt( (<HTMLInputElement>document.getElementById("priority")).value);
+    if((<HTMLInputElement>document.getElementById("priority")).value == "choose priority" ){
+      this.email.priority = 2;
     }
-    this.email.body = ComposeBoxComponent.message;
-    this.email.receivers = ComposeBoxComponent.to.split(", ");
-    this.email.subject = ComposeBoxComponent.subject;
-    this.email.priority = parseInt( ComposeBoxComponent.priority);
+    this.email.body = (<HTMLInputElement>document.getElementById("message")).value;
+    this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
+    this.email.subject = (<HTMLInputElement>document.getElementById("subject-message")).value;
+
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     this.apiService.sendEmail(this.email).subscribe({});
@@ -51,20 +52,20 @@ export class ComposeBoxComponent implements OnInit {
 
   saveToDraft(){
 
-    if(ComposeBoxComponent.priority == "choose priority" ){
-      ComposeBoxComponent.priority = "2";
+    this.email.priority = parseInt( (<HTMLInputElement>document.getElementById("priority")).value);
+    if((<HTMLInputElement>document.getElementById("priority")).value == "choose priority" ){
+      this.email.priority = 2;
     }
-    this.email.body = ComposeBoxComponent.message;
-    this.email.receivers = ComposeBoxComponent.to.split(", ");
-    this.email.subject = ComposeBoxComponent.subject;
-    this.email.priority = parseInt( ComposeBoxComponent.priority);
+    this.email.body = (<HTMLInputElement>document.getElementById("message")).value;
+    this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
+    this.email.subject = (<HTMLInputElement>document.getElementById("subject")).value;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     MailComponent.compose = false;
-    
-    //request the save to draft  
-  }
 
+    //request the save to draft
+  }
+  
   upload(file2 : any){
     console.log(file2.files);
     this.file = file2.files;

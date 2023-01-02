@@ -3,10 +3,7 @@ package com.email.EmailServer.commands;
 import com.email.EmailServer.commands.UserVerificationCommands.LogIn;
 import com.email.EmailServer.commands.UserVerificationCommands.SignUp;
 import com.email.EmailServer.commands.contactCommands.*;
-import com.email.EmailServer.commands.emailCommands.GetFolderEmails;
-import com.email.EmailServer.commands.emailCommands.MoveEmailToFolder;
-import com.email.EmailServer.commands.emailCommands.SearchInFolder;
-import com.email.EmailServer.commands.emailCommands.SendEmail;
+import com.email.EmailServer.commands.emailCommands.*;
 import com.email.EmailServer.commands.folderCommands.AddFolder;
 import com.email.EmailServer.commands.folderCommands.DeleteFolder;
 import com.email.EmailServer.commands.folderCommands.GetAllFolders;
@@ -42,9 +39,9 @@ public class CommandFactory {
             case "deletecontact"-> command = new DeleteContact(Data);
             case "editcontact"-> command = new EditeContact(Data);
             case "moveemail"-> command = new MoveEmailToFolder(Data);
-
-
-
+            case "savetodraft"-> command = new SendEmailToDraft(Data);
+            case "deleteemail"-> command = new DeleteEmailPermanently(Data);
+            case "restoreemail"-> command = new RestoreEmailFromTrash(Data);
         }
         return command;
     }
