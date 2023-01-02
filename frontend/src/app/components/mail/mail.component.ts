@@ -98,7 +98,7 @@ export class MailComponent implements OnInit{
     this.searchColor = "";
     this.currentFolder = "Inbox";
     this.currentEmail = this.emails[0];
-    this.currentContact = MailComponent.contacts[0];
+    this.currentContact = {name : "" , mails :[]};
     this.edit_visible = true;
     this.tempEmail = this.emails[0];
   }
@@ -376,6 +376,7 @@ export class MailComponent implements OnInit{
       for(var i = 0 ; i< this.emails.length;i++){
         if(this.emails[i]['id'] == parseInt(emailID)){
           this.tempEmail = this.emails[i]
+          ComposeBoxComponent.id = Number(emailID)
         }
       }
       ComposeBoxComponent.to = ""; 

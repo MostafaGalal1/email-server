@@ -208,7 +208,7 @@ public class UserFacade
 
     private boolean CheckIsNewEmail(JSONObject EmailJson)
     {
-        if (EmailJson.has("id"))
+        if (EmailJson.getLong("id") != -1)
             return false;
         else
             return true;

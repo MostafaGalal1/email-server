@@ -24,10 +24,11 @@ export class ComposeBoxComponent implements OnInit {
     receivers:[],
     body:"",
     subject:"",
-    priority : 2
+    priority : 2,
+    id : -1,
   };
   static to : string = "" ;
-
+  static id :number = -1;
   constructor(private apiService : ApiService, private http : HttpClient) { }
   
   ngOnInit(): void {
@@ -42,11 +43,12 @@ export class ComposeBoxComponent implements OnInit {
     }
     this.email.body = (<HTMLInputElement>document.getElementById("message")).value;
     this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
-    this.email.subject = (<HTMLInputElement>document.getElementById("subject-message")).value;
-
+    this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
+    this.email.id = ComposeBoxComponent.id;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     this.apiService.sendEmail(this.email).subscribe({});
+    ComposeBoxComponent.id = -1;
     MailComponent.compose = false;
   } 
 
@@ -58,12 +60,13 @@ export class ComposeBoxComponent implements OnInit {
     }
     this.email.body = (<HTMLInputElement>document.getElementById("message")).value;
     this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
-    this.email.subject = (<HTMLInputElement>document.getElementById("subject")).value;
+    this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
+    this.email.id = ComposeBoxComponent.id;
     console.log(this.email);
     MailComponent.compose = false;
-
-    //request the save to draft
+    this.apiService.saveToDraft(this.email).subscribe({});
+    ComposeBoxComponent.id = -1;
   }
   
   upload(file2 : any){
