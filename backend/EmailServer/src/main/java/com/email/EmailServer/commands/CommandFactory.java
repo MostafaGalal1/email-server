@@ -39,7 +39,7 @@ public class CommandFactory {
             case "addcontact"-> command = new AddContact(Data);
             case "getallcontacts"-> command =new GetAllContacts(Data);
             case "deletecontact"-> command = new DeleteContact(Data);
-            case "editecontact"-> command = new EditeContact(Data);
+            case "editcontact"-> command = new EditeContact(Data);
         }
         return command;
     }

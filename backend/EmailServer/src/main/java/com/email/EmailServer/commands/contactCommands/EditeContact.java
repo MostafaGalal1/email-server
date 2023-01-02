@@ -17,8 +17,8 @@ public class EditeContact implements ICommand {
     public EditeContact(JSONObject Data){
         this.userAddress = Data.getString("username");
         this.oldName = Data.getString("oldName");
-        this.newName = Data.getString("newName");
-        this.addresses = new Gson().fromJson(Data.getJSONArray("addresses").toString(), List.class);
+        this.newName = Data.getString("contactName");
+        this.addresses = List.of(Data.getString("addresses").split(", "));
     }
 
     @Override

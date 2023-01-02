@@ -16,7 +16,7 @@ public class AddContact implements ICommand {
     public AddContact(JSONObject Data){
         this.userAddress = Data.getString("username");
         this.contactName = Data.getString("contactName");
-        this.addresses = new Gson().fromJson(Data.getJSONArray("addresses").toString(), List.class);
+        this.addresses = List.of(Data.getString("addresses").split(", "));
     }
 
     @Override
