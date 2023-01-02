@@ -4,6 +4,7 @@ import com.email.EmailServer.commands.UserVerificationCommands.LogIn;
 import com.email.EmailServer.commands.UserVerificationCommands.SignUp;
 import com.email.EmailServer.commands.contactCommands.*;
 import com.email.EmailServer.commands.emailCommands.GetFolderEmails;
+import com.email.EmailServer.commands.emailCommands.MoveEmailToFolder;
 import com.email.EmailServer.commands.emailCommands.SearchInFolder;
 import com.email.EmailServer.commands.emailCommands.SendEmail;
 import com.email.EmailServer.commands.folderCommands.AddFolder;
@@ -40,6 +41,10 @@ public class CommandFactory {
             case "getallcontacts"-> command =new GetAllContacts(Data);
             case "deletecontact"-> command = new DeleteContact(Data);
             case "editcontact"-> command = new EditeContact(Data);
+            case "moveemail"-> command = new MoveEmailToFolder(Data);
+
+
+
         }
         return command;
     }

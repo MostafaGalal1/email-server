@@ -10,11 +10,11 @@ public class MoveEmailToFolder implements ICommand
     private long emailID;
     private String newFolder;
 
-    public MoveEmailToFolder(String userAdress, long emailID, String NewFolder)
+    public MoveEmailToFolder(JSONObject Data)
     {
-        this.userAddress = userAdress;
-        this.emailID = emailID;
-        this.newFolder = NewFolder;
+        this.userAddress = Data.getString("username");
+        this.emailID  =Data.getLong("id");
+        this.newFolder = Data.getString("folderName");
     }
 
     @Override

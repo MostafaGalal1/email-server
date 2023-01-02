@@ -90,4 +90,10 @@ public class Controller {
         return proxy.run("DeleteContact", new JSONObject(data));
     }
 
+    @PostMapping("/MoveEmail")
+    @ResponseBody
+    public String MoveEmail(@RequestBody String data){
+        return proxy.run("MoveEmail", new JSONObject(data));
+    }
+
 }
