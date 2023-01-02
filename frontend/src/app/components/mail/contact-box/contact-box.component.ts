@@ -15,7 +15,7 @@ export class ContactBoxComponent implements OnInit {
   contactForm = this.formBuilder.group({
     username: localStorage.getItem("currentUser"),
     contactName: '',
-    addresses: []
+    addresses: ''
   });
 
   ngOnInit(): void {
@@ -25,6 +25,8 @@ export class ContactBoxComponent implements OnInit {
     if(MailComponent.editOrCeate_contact== false){  
       if(this.contactForm.value.contactName! === "")
         return;
+      this.contactForm.controls['addresses'].updateValueAndValidity(this.contactForm.get(['addressses'])?.value.contactName)
+      console.log(this.contactForm.get(['addressses'])?.value);
       this.apiService.createContact(this.contactForm.value).subscribe((response:any) => {
         if (response.state === "success"){
           MailComponent.contacts.push(this.contactForm.value.contactName!);
