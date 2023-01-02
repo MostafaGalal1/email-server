@@ -95,7 +95,7 @@ export class MailComponent implements OnInit{
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
-    this.currentFolder = "Draft";
+    this.currentFolder = "Inbox";
     this.currentEmail = this.emails[0];
     this.currentContact = MailComponent.contacts[0];
     this.edit_visible = true;
@@ -367,7 +367,7 @@ export class MailComponent implements OnInit{
   }
 
   async previewEmail(emailID : string){
-    if(this.currentFolder == "Draft"){
+    if(this.currentFolder === "Draft"){
       this.composeIt();
       ComposeBoxComponent.to = ""; 
       for(var i = 0 ; i < this.emails[Number(emailID)]["receivers"].length;i++){

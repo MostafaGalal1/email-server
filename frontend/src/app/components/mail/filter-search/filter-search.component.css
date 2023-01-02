@@ -1,7 +1,6 @@
 .filter-search{
     position: absolute;
     width: 500px;
-    height: 420px;
     background-color: white;
     visibility: visible;
     color: #202124;
@@ -59,7 +58,12 @@ datalist {
     display: flex;
     justify-content: space-between;
     writing-mode: horizontal-tb;
-    width: 200px;
+    width: 360px;
+    color: #5f6368;
+}
+
+.priority-div div{
+    display: block;
 }
 
 option {
