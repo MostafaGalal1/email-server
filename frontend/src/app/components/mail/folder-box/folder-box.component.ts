@@ -24,7 +24,7 @@ export class FolderBoxComponent implements OnInit {
     username: localStorage.getItem("currentUser"),
     folderName: ''
   });
-
+  static namee : string = "";
   onSubmit(event:any){
     console.log("asdasda");
     if(MailComponent.editOrCeate_folder== false){  
@@ -52,5 +52,8 @@ export class FolderBoxComponent implements OnInit {
 
   closeFolderBox(){
     this.mail.hideFolder();
+  }
+  get getname(){
+    return FolderBoxComponent.namee
   }
 }           

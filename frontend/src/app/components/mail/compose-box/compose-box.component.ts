@@ -14,10 +14,10 @@ import { map } from 'rxjs';
 })
 export class ComposeBoxComponent implements OnInit {
   attachment : FormData = new FormData; 
-  to : string ="";
-  subject : string ="";
-  message : string ="";
-  priority : string = '';
+
+  static subject : string ="";
+  static message : string ="";
+  static priority : string = '';
   file : File[] = [];
   email : emailToSend = {
     sender :"",
@@ -26,25 +26,23 @@ export class ComposeBoxComponent implements OnInit {
     subject:"",
     priority : 2
   };
+  static to : string = "" ;
 
   constructor(private apiService : ApiService, private http : HttpClient) { }
   
   ngOnInit(): void {
-    console.log(this.subject);
+    console.log(ComposeBoxComponent.subject);
   }
   
   send(){
-    this.to = (<HTMLInputElement>document.getElementById("to")).value;
-    this.subject = (<HTMLInputElement>document.getElementById("subject-message")).value;
-    this.message = (<HTMLInputElement>document.getElementById("message")).value;
-    this.priority = (<HTMLInputElement>document.getElementById("priority")).value
-    if(this.priority == "choose priority" ){
-      this.priority = "2";
+
+    if(ComposeBoxComponent.priority == "choose priority" ){
+      ComposeBoxComponent.priority = "2";
     }
-    this.email.body = this.message;
-    this.email.receivers = this.to.split(", ");
-    this.email.subject = this.subject;
-    this.email.priority = parseInt( this.priority);
+    this.email.body = ComposeBoxComponent.message;
+    this.email.receivers = ComposeBoxComponent.to.split(", ");
+    this.email.subject = ComposeBoxComponent.subject;
+    this.email.priority = parseInt( ComposeBoxComponent.priority);
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     this.apiService.sendEmail(this.email).subscribe({});
@@ -52,17 +50,14 @@ export class ComposeBoxComponent implements OnInit {
   } 
 
   saveToDraft(){
-    this.to = (<HTMLInputElement>document.getElementById("to")).value;
-    this.subject = (<HTMLInputElement>document.getElementById("subject-message")).value;
-    this.message = (<HTMLInputElement>document.getElementById("message")).value;
-    this.priority = (<HTMLInputElement>document.getElementById("priority")).value
-    if(this.priority == "choose priority" ){
-      this.priority = "2";
+
+    if(ComposeBoxComponent.priority == "choose priority" ){
+      ComposeBoxComponent.priority = "2";
     }
-    this.email.body = this.message;
-    this.email.receivers = this.to.split(", ");
-    this.email.subject = this.subject;
-    this.email.priority = parseInt( this.priority);
+    this.email.body = ComposeBoxComponent.message;
+    this.email.receivers = ComposeBoxComponent.to.split(", ");
+    this.email.subject = ComposeBoxComponent.subject;
+    this.email.priority = parseInt( ComposeBoxComponent.priority);
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
     MailComponent.compose = false;
@@ -77,5 +72,19 @@ export class ComposeBoxComponent implements OnInit {
       this.attachment.append("file" , this.file[i]);
     }
   }
+  get getto(){
+    return ComposeBoxComponent.to;
+  }
 
+  get getpriority(){
+    return ComposeBoxComponent.priority;
+  }
+
+  get getsubject(){
+    return ComposeBoxComponent.subject;
+  }
+
+  get getmessage(){
+    return ComposeBoxComponent.message;
+  }
 }

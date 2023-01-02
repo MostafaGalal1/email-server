@@ -7,6 +7,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DarkModeService } from 'angular-dark-mode';
 import { map, Observable, timeout } from 'rxjs';
 import { Contact } from 'src/app/shared/contact';
+import { ComposeBoxComponent } from './compose-box/compose-box.component';
+import { FolderBoxComponent } from './folder-box/folder-box.component';
+import { ContactBoxComponent } from './contact-box/contact-box.component';
 
 @Component({
   selector: 'app-mail',
@@ -92,7 +95,7 @@ export class MailComponent implements OnInit{
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
-    this.currentFolder = "Inbox";
+    this.currentFolder = "Draft";
     this.currentEmail = this.emails[0];
     this.currentContact = MailComponent.contacts[0];
     this.edit_visible = true;
@@ -226,6 +229,7 @@ export class MailComponent implements OnInit{
     MailComponent.editOrCeate_folder = i;
     if(i == true){
       MailComponent.indexFolder = index;
+      FolderBoxComponent.namee = MailComponent.folders[index]
     }
     if (MailComponent.folderBoxVisible)
       return;
@@ -238,6 +242,15 @@ export class MailComponent implements OnInit{
     MailComponent.editOrCeate_contact = i;
     if(i == true){
       MailComponent.indexContact = index;
+      ContactBoxComponent.namee = MailComponent.contacts[index].name
+      ContactBoxComponent.mailss = ""; 
+      for(var ii = 0 ; ii < MailComponent.contacts[Number(index)].mails?.length;ii++){
+        if(ii != MailComponent.contacts[Number(index)].mails[ii]?.length-1)
+        ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] + ", ";
+        else{
+          ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] ;
+        }  
+      }  
     }
     if (MailComponent.contactBoxVisible)
       return;
@@ -354,6 +367,21 @@ export class MailComponent implements OnInit{
   }
 
   async previewEmail(emailID : string){
+    if(this.currentFolder == "Draft"){
+      this.composeIt();
+      ComposeBoxComponent.to = ""; 
+      for(var i = 0 ; i < this.emails[Number(emailID)]["receivers"].length;i++){
+        if(i != this.emails[Number(emailID)]["receivers"].length-1)
+          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] + ", ";
+        else{
+          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] ;
+        }  
+      }  
+      ComposeBoxComponent.message = this.emails[Number(emailID)]['body'];
+      ComposeBoxComponent.subject = this.emails[Number(emailID)]["subject"];
+      ComposeBoxComponent.priority = "3"
+      return;
+    }
     this.emailVisible = true;
     this.buttonsVisible = true;
     this.selectionQueue = {};
