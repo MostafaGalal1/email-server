@@ -22,7 +22,7 @@ public class Contact {
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
-    @Column(name = "addresses")
+    @Column(name = "addresses" , length = 100000)
     private List<String> addresses;
 
     @Column(name = "contact_name")

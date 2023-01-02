@@ -26,12 +26,12 @@ public class Email{
     @Column(name = "email_sender_address", nullable = false)
     private String senderAddress;
 
-    @Column(name = "email_receivers_address")
+    @Column(name = "email_receivers_address" , length = 100000)
     private List<String> receiversAddress = new ArrayList<>();
 
     @Column(name = "email_subject")
     private String subject;
-    @Column(name = "email_content")
+    @Column(name = "email_content" , length = 100000)
     private String content;
 
     @Column(name = "email_date")
@@ -39,7 +39,7 @@ public class Email{
 
     @Column(name = "email_priority")
     private int priority;
-    @Column(name = "email_content_set")
+    @Column(name = "email_content_set" , length = 100000)
     private HashSet<String> contentSet;
 
     @OneToMany(mappedBy = "email")
