@@ -70,6 +70,10 @@ public class Email{
         ////////////////////// attachment//////////////////////////////////
     }
 
+    public void UpdateEmail(JSONObject jsonObject){
+        this.buildEmail(jsonObject);
+        ServerSystem.AddEmailToDatabase(this);
+    }
 
     public JSONObject getJsonOfHeader()
     {
@@ -88,7 +92,6 @@ public class Email{
     {
         return ServerSystem.GetEmailByID(ID);
     }
-
 
     /////////////////////////////////////////////////////////////
     public void getJsonOfEmail() //Needs adding attachment to json ///////////////////////////////////////////////////

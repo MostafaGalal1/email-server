@@ -202,6 +202,8 @@ public class UserFacade
         else
         {
             ID = this.ExtractIDFromEmailJson(EmailJson);
+            Email email = Email.getExistingEmailByID(ID);
+            email.UpdateEmail(EmailJson);
         }
         return ID;
     }
@@ -330,4 +332,6 @@ public class UserFacade
         long ID = jsonObject.getLong("id");
         return ID;
     }
+
+
 }

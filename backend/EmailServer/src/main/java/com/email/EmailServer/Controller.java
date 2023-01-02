@@ -51,6 +51,7 @@ public class Controller {
     @PostMapping("/SendEmail")
     @ResponseBody
     public String SendEmail(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("SendEmail",new JSONObject(data));
     }
 
@@ -99,6 +100,8 @@ public class Controller {
     @PostMapping("/SaveToDraft")
     @ResponseBody
     public String SaveToDraft(@RequestBody String data){
+
+        System.out.println(data);
         return proxy.run("SaveToDraft", new JSONObject(data));
     }
 
