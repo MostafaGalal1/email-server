@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:49580"})
+@CrossOrigin(origins = {})
 @RestController
 @RequestMapping("/Email")
 public class Controller {

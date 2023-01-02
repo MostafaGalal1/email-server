@@ -45,6 +45,7 @@ export class MailComponent implements OnInit{
   protected searchColor:string;
   protected nowDate:Date;
   protected currentContact:Contact;
+  protected tempEmail : Email;
   protected emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
@@ -99,6 +100,7 @@ export class MailComponent implements OnInit{
     this.currentEmail = this.emails[0];
     this.currentContact = MailComponent.contacts[0];
     this.edit_visible = true;
+    this.tempEmail = this.emails[0];
   }
 
   ngOnInit(): void {
@@ -369,16 +371,23 @@ export class MailComponent implements OnInit{
   async previewEmail(emailID : string){
     if(this.currentFolder === "Draft"){
       this.composeIt();
+      
+      console.log(this.emails , emailID);
+      for(var i = 0 ; i< this.emails.length;i++){
+        if(this.emails[i]['id'] == parseInt(emailID)){
+          this.tempEmail = this.emails[i]
+        }
+      }
       ComposeBoxComponent.to = ""; 
-      for(var i = 0 ; i < this.emails[Number(emailID)]["receivers"].length;i++){
-        if(i != this.emails[Number(emailID)]["receivers"].length-1)
-          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] + ", ";
+      for(var i = 0 ; i < this.tempEmail["receivers"].length;i++){
+        if(i != this.tempEmail["receivers"]?.length-1)
+          ComposeBoxComponent.to += this.tempEmail["receivers"][i] + ", ";
         else{
-          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] ;
+          ComposeBoxComponent.to += this.tempEmail["receivers"][i] ;
         }  
       }  
-      ComposeBoxComponent.message = this.emails[Number(emailID)]['body'];
-      ComposeBoxComponent.subject = this.emails[Number(emailID)]["subject"];
+      ComposeBoxComponent.message = this.tempEmail['body'];
+      ComposeBoxComponent.subject = this.tempEmail["subject"];
       ComposeBoxComponent.priority = "3"
       return;
     }
