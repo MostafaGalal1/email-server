@@ -19,7 +19,7 @@ export class ApiService {
   }
 
   createContact(contactForm : object): Observable<object> {
-    return this.http.post<object>('http://localhost:8080/login', contactForm);
+    return this.http.post<object>('http://localhost:8080/Email/AddContact', contactForm);
   }
 
   getEmails(folder : string, criterion : string): Observable<object> {
@@ -28,6 +28,18 @@ export class ApiService {
 
   getFolders(): Observable<string[]> {
     return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', {"username":localStorage.getItem('currentUser')});
+  }
+
+  getContacts(): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetAllContacts', {"username":localStorage.getItem('currentUser')});
+  }
+
+  deleteContact(contactName:String): Observable<Object> {
+    return this.http.delete<Object>('http://localhost:8080/Email/DeleteFolder', {body: {"username":localStorage.getItem('currentUser'),"contactName":contactName}});
+  }
+
+  editContact(oldName:String, newName:String, mails:string[]): Observable<Object> {
+    return this.http.post<Object>('http://localhost:8080/Email/RenameFolder', {"username":localStorage.getItem('currentUser'),"oldName":oldName,"newName":newName, "addresses":mails});
   }
 
   deleteFolder(folderName:String): Observable<Object> {

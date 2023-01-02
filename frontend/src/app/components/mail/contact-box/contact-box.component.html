@@ -5,12 +5,12 @@
     </div>
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit($event)">
         <div class="name-div">
-            <span class="name-slabel"><label for="name">Name</label></span>
-            <span class="name-sinput"><input type="text" name="name" class="name" formControlName="name" value="" id="name"></span>
+            <span class="contactName-slabel"><label for="contactName">Name</label></span>
+            <span class="contactName-sinput"><input type="text" name="contactName" class="contactName" formControlName="contactName" value="" id="contactName"></span>
         </div>
-        <div class="username-div">
-            <span class="username-slabel"><label for="username">Mail</label></span>
-            <span class="username-sinput"><input type="text" name="username" class="username" formControlName="username" value="" id="username"></span>
+        <div class="addresses-div">
+            <span class="addresses-slabel"><label for="addresses">Mail</label></span>
+            <span class="addresses-sinput"><input type="text" name="addresses" class="addresses" formControlName="addresses" value="" id="addresses"></span>
         </div>
         <div class="form-submit">
             <input class="form-submit" type="submit" value="Create">
