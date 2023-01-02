@@ -5,7 +5,10 @@ export interface Email {
     date : Date;
     subject : string;
     body : string;
+    attachments : Attachment[]
+
 }
+
 
 export interface emailToSend {
     sender : string;
@@ -14,3 +17,11 @@ export interface emailToSend {
     body : string;
     priority : number,
 }
+
+export interface Attachment {
+    link : string,
+    name : string,
+    type : string
+}
+
+

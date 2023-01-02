@@ -11,17 +11,21 @@ public class SortingEmails
 {
     private List<Email> Emails;
     private Comparator<Email> comparator;
-    private AscendingOrDescending ascendingOrDescending;
 
-
-    public SortingEmails(List<Email> emails)
+    public static List<Email> SortEmails(List<Email> emails, String sortOption)
     {
-        this.Emails = emails;
-
-
+        SortingEmails sortingEmails = new SortingEmails(emails, sortOption);
+        sortingEmails.Execute();
+        return sortingEmails.Emails;
     }
 
-    public void Execute()
+    private SortingEmails(List<Email> emails, String sortOption)
+    {
+        this.Emails = emails;
+        this.setComparator(sortOption);
+    }
+
+    private void Execute()
     {
         PriorityQueue<Email> queue = new PriorityQueue<>(this.comparator);
         for (Email emails : this.Emails)
@@ -38,27 +42,23 @@ public class SortingEmails
         this.Emails = newList;
     }
 
-    public Comparator<Email> GetDateComparator()
+    private void setComparator(String SortOption)
+    {
+        if (SortOption == "date")
+            this.comparator = this.GetDateComparator();
+        else
+            this.comparator = this.GetPriorityComparator();
+    }
+
+    private Comparator<Email> GetDateComparator()
     {
         Comparator<Email> DateComparator = Comparator.comparing(email->email.getDateOfEmail());
         return DateComparator;
     }
 
-    public Comparator<Email> GetPriorityComparator()
+    private Comparator<Email> GetPriorityComparator()
     {
         Comparator<Email> PriorityComparator = Comparator.comparing(email->email.getPriority());
         return PriorityComparator;
-    }
-
-    enum SortBasedOn
-    {
-        Priority,
-        Date
-    }
-
-    enum AscendingOrDescending
-    {
-        Ascending,
-        DESCENDING
     }
 }

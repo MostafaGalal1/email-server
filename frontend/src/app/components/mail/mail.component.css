@@ -215,7 +215,7 @@
   border: 1px;
 }
 
-.delete-button, .move-button, .left-nav-button, .right-nav-button, .filter-button {
+.delete-button, .move-button, .left-nav-button, .right-nav-button, .filter-button{
   display: inline-block;
   align-self: center;
   width: 40px;
@@ -328,7 +328,7 @@
   position: relative;
   visibility: hidden;
   top:-8px;
-  left: 84px;
+  left: 72px;
 }
 
 .email-preview {
@@ -365,7 +365,7 @@
   padding: 20px;
 }
 
-.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover, .filter-button:hover{
+.refresh-button:hover, .add-contact-button:hover, .add-folder-button:hover, .select-button:hover, .delete-button:hover, .move-button:hover, .settings-button:hover, .logout-button:hover, .return-button:hover, .right-nav-button:hover, .left-nav-button:hover, .filter-button:hover,.search-button:hover{
   background: white;
   color: var(--primary);
 }
@@ -392,6 +392,11 @@
   text-overflow: ellipsis;
   height: 22px;
   text-align: center;
+}
+
+#table-check-div input{
+  top: calc(50% - 6px);
+  position: relative;
 }
 
 #table-check-div{
@@ -577,7 +582,7 @@ tr:hover:not(.table-headers){
   display: block;
 }
 
-.dropdown-content:hover + .filter-button{
+.dropdown-content:hover + .filter-button + .move-button{
   background: white;
   color: var(--primary);
 }
@@ -610,6 +615,11 @@ tr:hover:not(.table-headers){
 }
 
 .edit-content a:hover {
+  background: white;
+  color: var(--primary);
+}
+
+.dropdown-content a:hover {
   background: white;
   color: var(--primary);
 }

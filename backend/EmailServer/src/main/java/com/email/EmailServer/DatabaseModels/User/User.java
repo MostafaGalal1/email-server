@@ -1,4 +1,4 @@
-package com.email.EmailServer.DatabaseModels.UserPackage;
+package com.email.EmailServer.DatabaseModels.User;
 
 
 import com.email.EmailServer.DatabaseModels.Folder;
@@ -126,6 +126,16 @@ public class User
         return this.folders.containsKey(FolderName);
     }
 
+    protected boolean HasFolderSecondary(String FolderName)
+    {
+        if (this.folders.containsKey(FolderName) == false)
+            return false;
+        Folder folder = this.folders.get(FolderName);
+        if (folder.isPrimary()) return false;
+        return true;
+    }
+
+
     protected void RemoveEmailFromAllFolders(long EmailID)
     {
         this.folders.forEach((folderName, folder) ->
@@ -177,7 +187,7 @@ public class User
     protected void RemoveContact(String ContactName)
     {
         Contact contact = this.getContactByName(ContactName);
-        this.RemoveContact(ContactName);
+        this.RemoveContactFromHashMap(ContactName);
         contact.DestroyContact();
     }
 

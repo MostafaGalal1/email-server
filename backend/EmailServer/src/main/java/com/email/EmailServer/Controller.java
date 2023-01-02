@@ -78,10 +78,10 @@ public class Controller {
         return proxy.run("GetAllContacts", new JSONObject(data));
     }
 
-    @PostMapping("/EditeContact")
+    @PostMapping("/EditContact")
     @ResponseBody
-    public String EditeContact(@RequestBody String data){
-        return proxy.run("EditeContact", new JSONObject(data));
+    public String EditContact(@RequestBody String data){
+        return proxy.run("EditContact", new JSONObject(data));
     }
 
     @DeleteMapping("/DeleteContact")

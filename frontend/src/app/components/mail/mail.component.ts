@@ -5,8 +5,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DarkModeService } from 'angular-dark-mode';
-import { map, Observable } from 'rxjs';
+import { map, Observable, timeout } from 'rxjs';
 import { Contact } from 'src/app/shared/contact';
+import { ComposeBoxComponent } from './compose-box/compose-box.component';
+import { FolderBoxComponent } from './folder-box/folder-box.component';
+import { ContactBoxComponent } from './contact-box/contact-box.component';
 
 @Component({
   selector: 'app-mail',
@@ -41,7 +44,7 @@ export class MailComponent implements OnInit{
   protected searchReset:boolean;
   protected searchColor:string;
   protected nowDate:Date;
-  protected currentContact:Contact = {name:"FGfdggfgdffg", mails:["FGfdfdgfgfdgdfgfgd", "tjthhtrhtrhtrthtrrtrhrth", "ykujrthetrtjhgrfed"]};
+  protected currentContact:Contact;
   protected emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
@@ -58,24 +61,24 @@ export class MailComponent implements OnInit{
   If you have any questions, please feel free to ask me on the pages of Codeforces. If you no longer wish to receive these emails, click https://codeforces.com/unsubscribe/contests/efa30bad32b237fb5d0a0a309237837163a097b8/ to unsubscribe.
   
   Wish you high rating,
-  MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57") },
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date()},
-  {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date()}];
+  MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57")  , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
+  {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), attachments:[]} ];
   protected emailsQueue: {[id : string] : Email};
   protected attachs : string[] = ["https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920-800x450.jpg",
 "https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg?w=1390&crop=1",
 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
   protected selectionQueue: {[id : string] : Email};  
   static folders: string[] = [];
-  static contacts: string[] = [];
+  static contacts: Contact[] = [{name:"", mails:[""]}];
 
   constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router, private darkModeService: DarkModeService) {
     this.currentUser = localStorage.getItem('currentUser');
@@ -92,8 +95,9 @@ export class MailComponent implements OnInit{
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
-    this.currentFolder = "inbox";
+    this.currentFolder = "Inbox";
     this.currentEmail = this.emails[0];
+    this.currentContact = MailComponent.contacts[0];
     this.edit_visible = true;
   }
 
@@ -225,6 +229,7 @@ export class MailComponent implements OnInit{
     MailComponent.editOrCeate_folder = i;
     if(i == true){
       MailComponent.indexFolder = index;
+      FolderBoxComponent.namee = MailComponent.folders[index]
     }
     if (MailComponent.folderBoxVisible)
       return;
@@ -237,6 +242,15 @@ export class MailComponent implements OnInit{
     MailComponent.editOrCeate_contact = i;
     if(i == true){
       MailComponent.indexContact = index;
+      ContactBoxComponent.namee = MailComponent.contacts[index].name
+      ContactBoxComponent.mailss = ""; 
+      for(var ii = 0 ; ii < MailComponent.contacts[Number(index)].mails?.length;ii++){
+        if(ii != MailComponent.contacts[Number(index)].mails[ii]?.length-1)
+        ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] + ", ";
+        else{
+          ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] ;
+        }  
+      }  
     }
     if (MailComponent.contactBoxVisible)
       return;
@@ -296,7 +310,21 @@ export class MailComponent implements OnInit{
     return MailComponent.contacts;
   }
 
-  async moveEmail(){
+  async moveEmails(folder : string){
+    let emailIDs = [];
+    for(const emailID in this.selectionQueue){
+      emailIDs.push(emailID);
+      delete this.emailsQueue[emailID];
+      delete this.selectionQueue[emailID];
+    }
+    this.apiService.moveEmails(this.currentFolder, emailIDs).subscribe();
+    this.checkAll = false;
+    this.emailVisible = false;
+    this.buttonsVisible = false;
+  }
+
+  async restoreEmails(){
+    this.apiService.restoreEmails().subscribe();
     for(const emailID in this.selectionQueue){
       delete this.emailsQueue[emailID];
       delete this.selectionQueue[emailID];
@@ -309,16 +337,17 @@ export class MailComponent implements OnInit{
   async getEmails(folder : string){
     this.currentFolder = folder;
     this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (this.emails = response.data));
-    console.log(this.emails[0]);
+
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
 
@@ -328,23 +357,41 @@ export class MailComponent implements OnInit{
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
 
   async previewEmail(emailID : string){
+    if(this.currentFolder === "Draft"){
+      this.composeIt();
+      ComposeBoxComponent.to = ""; 
+      for(var i = 0 ; i < this.emails[Number(emailID)]["receivers"].length;i++){
+        if(i != this.emails[Number(emailID)]["receivers"].length-1)
+          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] + ", ";
+        else{
+          ComposeBoxComponent.to += this.emails[Number(emailID)]["receivers"][i] ;
+        }  
+      }  
+      ComposeBoxComponent.message = this.emails[Number(emailID)]['body'];
+      ComposeBoxComponent.subject = this.emails[Number(emailID)]["subject"];
+      ComposeBoxComponent.priority = "3"
+      return;
+    }
     this.emailVisible = true;
     this.buttonsVisible = true;
     this.selectionQueue = {};
     this.selectionQueue[emailID] = this.emailsQueue[emailID];
     this.currentEmail = this.emailsQueue[emailID];
+
   }
 
-  async previewContact(){
+  async previewContact(index : number){
+    this.currentContact = MailComponent.contacts[index];
     this.contactVisible = true;
     this.buttonsVisible = true;
   }
@@ -378,11 +425,12 @@ export class MailComponent implements OnInit{
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
   
@@ -393,9 +441,9 @@ export class MailComponent implements OnInit{
   }
 
   removeContact(index : any){
-    var contactName = MailComponent.contacts[index]; 
+    var contactName = MailComponent.contacts[index].name; 
     MailComponent.contacts.splice(index , 1);
-    this.apiService.deleteFolder(contactName).subscribe();
+    this.apiService.deleteContact(contactName).subscribe();
   }
 
   logout() {
@@ -406,5 +454,13 @@ export class MailComponent implements OnInit{
   darkModeToggle(): void {
     alert('sfsgg');
     this.darkModeService.toggle();
+  }
+
+  addAttachments(email : Email){
+    var destinationNode = document.getElementById("attachments");
+    for(var i = 0 ;i < email.attachments.length ; i++){
+      this.attachs[i] =  "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].link);
+    }
+
   }
 }

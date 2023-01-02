@@ -5,9 +5,8 @@ import com.email.EmailServer.DatabaseModels.Repos.ContactRepo;
 import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
 import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
-import com.email.EmailServer.DatabaseModels.UserPackage.Contact;
-import com.email.EmailServer.DatabaseModels.UserPackage.User;
-import org.json.JSONObject;
+import com.email.EmailServer.DatabaseModels.User.Contact;
+import com.email.EmailServer.DatabaseModels.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

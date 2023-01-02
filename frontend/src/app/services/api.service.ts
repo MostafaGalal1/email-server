@@ -22,8 +22,20 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/Email/AddContact', contactForm);
   }
 
+  editContact(contactForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/EditContact', contactForm);
+  }
+
   getEmails(folder : string, criterion : string): Observable<object> {
     return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion});
+  }
+
+  moveEmails(folder : string, emails : string[]): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "mails": emails});
+  }
+
+  restoreEmails(): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser')});
   }
 
   getFolders(): Observable<string[]> {
@@ -35,12 +47,12 @@ export class ApiService {
   }
 
   deleteContact(contactName:String): Observable<Object> {
-    return this.http.delete<Object>('http://localhost:8080/Email/DeleteFolder', {body: {"username":localStorage.getItem('currentUser'),"contactName":contactName}});
+    return this.http.delete<Object>('http://localhost:8080/Email/DeleteContact', {body: {"username":localStorage.getItem('currentUser'),"contactName":contactName}});
   }
 
-  editContact(oldName:String, newName:String, mails:string[]): Observable<Object> {
-    return this.http.post<Object>('http://localhost:8080/Email/RenameFolder', {"username":localStorage.getItem('currentUser'),"oldName":oldName,"newName":newName, "addresses":mails});
-  }
+  //editContact(oldName:String, newName:String, mails:string[]): Observable<Object> {
+  //  return this.http.post<Object>('http://localhost:8080/Email/RenameFolder', {"username":localStorage.getItem('currentUser'),"oldName":oldName,"newName":newName, "addresses":mails});
+  //}
 
   deleteFolder(folderName:String): Observable<Object> {
     return this.http.delete<Object>('http://localhost:8080/Email/DeleteFolder', {body: {"username":localStorage.getItem('currentUser'),"folderName":folderName}});

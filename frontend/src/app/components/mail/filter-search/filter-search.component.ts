@@ -20,7 +20,11 @@ export class FilterSearchComponent implements OnInit {
     sender: '',
     receivers: '',
     subject: '',
-    body: ''
+    body: '',
+    priority: '',
+    rangeDate: '1 day',
+    startDate: '',
+    attachment: ''
   });
 
   onSubmit(){

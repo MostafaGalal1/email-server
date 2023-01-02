@@ -1,11 +1,13 @@
-package com.email.EmailServer.DatabaseModels.UserPackage;
+package com.email.EmailServer.DatabaseModels.User;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
 import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
+import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
 import com.email.EmailServer.SearchingAndSorting.Filter.FiltersExtracter;
+import com.email.EmailServer.SearchingAndSorting.SortingEmails;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -22,27 +24,34 @@ public class UserFacade
         this.user = user;
     }
 
-    public void SendEmailToTrash(Email email)
+    public boolean SendEmailToTrash(long EmailID)
     {
-        long EmailID = email.getId();
+        if (this.user.TrashHasEmail(EmailID))
+            return false;
+
         this.user.RemoveEmailFromAllFolders(EmailID);
         MoveEmailToTrash(EmailID);
+        return true;
     }
 
-    public boolean RestoreEmailFromTrash(Email email)
+    public boolean RestoreEmailFromTrash(long EmailID)
     {
-        long EmailID = email.getId();
-
-        if (user.TrashHasEmail(EmailID) == false) return false;
+        if (user.TrashHasEmail(EmailID) == false)
+            return false;
 
         user.RemoveEmailFromAllFolders(EmailID);
-
-        if (this.CheckUserAsEmailSender(email))
-            MoveEmailToSent(EmailID);
-        else
-            MoveEmailToInbox(EmailID);
+        this.RestoreEmailToInboxOrSent(EmailID);
 
         return true;
+    }
+
+    private void RestoreEmailToInboxOrSent(long EmailID)
+    {
+        Email email = Email.getExistingEmailByID(EmailID);
+        if (this.CheckUserAsEmailSender(email))
+            this.MoveEmailToSent(EmailID);
+        else
+            this.MoveEmailToInbox(EmailID);
     }
 
     private boolean CheckUserAsEmailSender(Email email)
@@ -52,29 +61,30 @@ public class UserFacade
         return email.getSenderAddress().equals(UserHandle);
     }
 
-    // Still need to implement sorting the Emails/////////////////////
-    public List<JSONObject> GetAllFolderEmailsSorted(String FolderName, String SortOption)
+    public List<JSONObject> SearchFoldersRequest(String FolderName, JSONObject RequestJson, String SortOption)
+    {
+        EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
+        return this.SearchandSortEmails(FolderName, filterCriteria, SortOption);
+    }
+
+    public List<JSONObject> GetFoldersRequest(String FolderName, String SortOption)
+    {
+        AndCriteria andCriteria = new AndCriteria(new ArrayList<>());
+        return this.SearchandSortEmails(FolderName, andCriteria, SortOption);
+    }
+
+    private List<JSONObject> SearchandSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
 
-        // sorting not implemented yet
-
-        List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
-        return jsonList;
-    }
-
-    // Still need to implement sorting the Emails/////////////////////
-    public List<JSONObject> SearchAndSortEmailsInFolder(String FolderName, JSONObject RequestJson, String SortOption){
-        List<Email> Emails = this.GetAllFolderEmails(FolderName);
-
-        EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
         Emails = this.FilterEmailsForSearch(Emails, filterCriteria);
 
-        // sorting not implemented yet
+        Emails = SortingEmails.SortEmails(Emails, SortOption);
 
         List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
         return jsonList;
     }
+
     private List<JSONObject> ConvertEmailsToJsons(List<Email> Emails)
     {
         List<JSONObject> jsonList = new ArrayList<>();
@@ -104,16 +114,29 @@ public class UserFacade
         return AllEmails;
     }
 
-    public void MoveEmailToFolder(String FolderName, long EmailID)
+    public boolean MoveEmailToFolderRequest(String FolderName, long EmailID)
+    {
+        if (this.user.HasFolderSecondary(FolderName) == false)
+            return false;
+        this.MoveEmailToFolder(FolderName, EmailID);
+        return true;
+    }
+
+    private void MoveEmailToFolder(String FolderName, long EmailID)
     {
         this.user.RemoveEmailFromAllFolders(EmailID);
         this.user.AddEmailToFolder(FolderName, EmailID);
     }
 
-    public void SaveEmailToDraftRequest(JSONObject EmailJson)
+    public boolean SendEmailToDraftRequest(JSONObject EmailJson)
     {
+        if (this.CheckSReceiverNotFoundInDatabase(EmailJson))
+            return false;
+
         long EmailID = this.CheckAndCreateExistingEmailAndReturnID(EmailJson);
         this.MoveEmailToDraft(EmailID);
+
+        return true;
     }
 
     public boolean SendEmailToSenderAndReceiversRequest(JSONObject EmailJson)
@@ -220,10 +243,12 @@ public class UserFacade
         return SecondaryFolderNames;
     }
 
-    public void DeleteEmailPermanently(Email email)
+    public boolean DeleteEmailPermanently(long EmailID)
     {
-        long EmailID = email.getId();
+        if (this.user.TrashHasEmail(EmailID) == false)
+            return false;
         this.user.RemoveEmailFromAllFolders(EmailID);
+        return true;
     }
 
     public void MoveEmailToDraft(Email email)
