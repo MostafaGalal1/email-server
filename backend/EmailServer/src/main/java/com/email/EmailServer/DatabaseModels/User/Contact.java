@@ -1,4 +1,4 @@
-package com.email.EmailServer.DatabaseModels.UserPackage;
+package com.email.EmailServer.DatabaseModels.User;
 
 import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;

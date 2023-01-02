@@ -1,4 +1,4 @@
-package com.email.EmailServer.DatabaseModels.UserPackage;
+package com.email.EmailServer.DatabaseModels.User;
 
 
 import com.email.EmailServer.DatabaseModels.Folder;
@@ -125,6 +125,16 @@ public class User
     {
         return this.folders.containsKey(FolderName);
     }
+
+    protected boolean HasFolderSecondary(String FolderName)
+    {
+        if (this.folders.containsKey(FolderName) == false)
+            return false;
+        Folder folder = this.folders.get(FolderName);
+        if (folder.isPrimary()) return false;
+        return true;
+    }
+
 
     protected void RemoveEmailFromAllFolders(long EmailID)
     {

@@ -1,6 +1,6 @@
 package com.email.EmailServer.commands.folderCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.DatabaseModels.User.UserFacade;
 import com.email.EmailServer.commands.ICommand;
 import org.json.JSONObject;
 
