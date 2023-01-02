@@ -177,7 +177,7 @@ public class User
     protected void RemoveContact(String ContactName)
     {
         Contact contact = this.getContactByName(ContactName);
-        this.RemoveContact(ContactName);
+        this.RemoveContactFromHashMap(ContactName);
         contact.DestroyContact();
     }
 

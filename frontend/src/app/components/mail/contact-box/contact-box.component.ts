@@ -15,7 +15,12 @@ export class ContactBoxComponent implements OnInit {
   contactForm = this.formBuilder.group({
     username: localStorage.getItem("currentUser"),
     contactName: '',
+<<<<<<< HEAD
     addresses: ''
+=======
+    addresses: [] , 
+    oldName : ''
+>>>>>>> e59cd85bb665c7ee0ef474a3622c8c94511078d3
   });
 
   ngOnInit(): void {
@@ -39,11 +44,18 @@ export class ContactBoxComponent implements OnInit {
       console.log("hello");
       if(this.contactForm.value.contactName! === MailComponent.contacts[MailComponent.indexContact] ) // compare the usercontactName also
         return;
-
-      MailComponent.contacts[MailComponent.indexContact] = this.contactForm.value.contactName!;
+        this.contactForm.value.oldName = MailComponent.contacts[MailComponent.indexContact];
+        this.apiService.editContact(this.contactForm.value).subscribe((response:any) => {
+          if (response.state === "success"){
+            MailComponent.contacts[MailComponent.indexContact] = this.contactForm.value.contactName!;
+            MailComponent.contactBoxVisible = false;
+          } else {
+            alert(response.message);
+          }
+        });
+      
       MailComponent.contactBoxVisible = false;
-      console.log(this.contactForm.value);
-      //request the edit folder by the new name and the old name 
+      console.log(this.contactForm.value); 
     }
   }
 
