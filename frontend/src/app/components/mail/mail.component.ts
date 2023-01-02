@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DarkModeService } from 'angular-dark-mode';
-import { map, Observable } from 'rxjs';
+import { map, Observable, timeout } from 'rxjs';
 import { Contact } from 'src/app/shared/contact';
 
 @Component({
@@ -41,7 +41,7 @@ export class MailComponent implements OnInit{
   protected searchReset:boolean;
   protected searchColor:string;
   protected nowDate:Date;
-  protected currentContact:Contact = {name:"FGfdggfgdffg", mails:["FGfdfdgfgfdgdfgfgd", "tjthhtrhtrhtrthtrrtrhrth", "ykujrthetrtjhgrfed"]};
+  protected currentContact:Contact;
   protected emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
@@ -75,7 +75,7 @@ export class MailComponent implements OnInit{
 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
   protected selectionQueue: {[id : string] : Email};  
   static folders: string[] = [];
-  static contacts: string[] = [];
+  static contacts: Contact[] = [{name:"", mails:[""]}];
 
   constructor(private authService : AuthenticationService, private apiService : ApiService, private location: Location, private router : Router, private darkModeService: DarkModeService) {
     this.currentUser = localStorage.getItem('currentUser');
@@ -94,18 +94,13 @@ export class MailComponent implements OnInit{
     this.searchColor = "";
     this.currentFolder = "Inbox";
     this.currentEmail = this.emails[0];
+    this.currentContact = MailComponent.contacts[0];
     this.edit_visible = true;
   }
 
   ngOnInit(): void {
     this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
-    this.apiService.getContacts().subscribe((response:any) => 
-    {
-      for(var i = 0; i< response.data.length; i++)
-      MailComponent.contacts[i] = response.data[i]["name"];
-      console.log(response.data);
-    }
-    );
+    this.apiService.getContacts().subscribe((response:any) => MailComponent.contacts = response.data);
     for (let i = 0 ; i < this.emails.length; i++){
       this.emails[i].id = i;
       this.emailsQueue[i.toString()] = this.emails[i];
@@ -302,7 +297,21 @@ export class MailComponent implements OnInit{
     return MailComponent.contacts;
   }
 
-  async moveEmail(){
+  async moveEmails(folder : string){
+    let emailIDs = [];
+    for(const emailID in this.selectionQueue){
+      emailIDs.push(emailID);
+      delete this.emailsQueue[emailID];
+      delete this.selectionQueue[emailID];
+    }
+    this.apiService.moveEmails(this.currentFolder, emailIDs).subscribe();
+    this.checkAll = false;
+    this.emailVisible = false;
+    this.buttonsVisible = false;
+  }
+
+  async restoreEmails(){
+    this.apiService.restoreEmails().subscribe();
     for(const emailID in this.selectionQueue){
       delete this.emailsQueue[emailID];
       delete this.selectionQueue[emailID];
@@ -315,16 +324,17 @@ export class MailComponent implements OnInit{
   async getEmails(folder : string){
     this.currentFolder = folder;
     this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (this.emails = response.data));
-    console.log(this.emails[0]);
+
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
 
@@ -334,11 +344,12 @@ export class MailComponent implements OnInit{
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
 
@@ -351,7 +362,8 @@ export class MailComponent implements OnInit{
 
   }
 
-  async previewContact(){
+  async previewContact(index : number){
+    this.currentContact = MailComponent.contacts[index];
     this.contactVisible = true;
     this.buttonsVisible = true;
   }
@@ -385,11 +397,12 @@ export class MailComponent implements OnInit{
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    for (let i = 0 ; i < this.emails.length; i++){
-      this.emails[i].id = i;
-      this.emails[i].date = new Date(this.emails[i].date);
-      this.emailsQueue[i.toString()] = this.emails[i];
-    }
+    setTimeout(() => {
+      for (let i = 0 ; i < this.emails.length; i++){
+        this.emails[i].date = new Date(this.emails[i].date);
+        this.emailsQueue[this.emails[i].id] = this.emails[i];
+      }
+    }, 200);
     this.emailVisible = false;
   }
   
@@ -400,7 +413,7 @@ export class MailComponent implements OnInit{
   }
 
   removeContact(index : any){
-    var contactName = MailComponent.contacts[index]; 
+    var contactName = MailComponent.contacts[index].name; 
     MailComponent.contacts.splice(index , 1);
     this.apiService.deleteContact(contactName).subscribe();
   }

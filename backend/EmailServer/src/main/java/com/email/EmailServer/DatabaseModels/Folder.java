@@ -2,7 +2,7 @@ package com.email.EmailServer.DatabaseModels;
 
 
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
-import com.email.EmailServer.DatabaseModels.UserPackage.User;
+import com.email.EmailServer.DatabaseModels.User.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;

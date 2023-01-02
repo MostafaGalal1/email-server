@@ -1,6 +1,6 @@
 package com.email.EmailServer.commands.contactCommands;
 
-import com.email.EmailServer.DatabaseModels.UserPackage.UserFacade;
+import com.email.EmailServer.DatabaseModels.User.UserFacade;
 import com.email.EmailServer.commands.ICommand;
 import com.google.gson.Gson;
 import org.json.JSONObject;
@@ -14,6 +14,7 @@ public class AddContact implements ICommand {
     private List<String> addresses;
 
     public AddContact(JSONObject Data){
+        System.out.println(Data.getString("addresses"));
         this.userAddress = Data.getString("username");
         this.contactName = Data.getString("contactName");
         this.addresses = List.of(Data.getString("addresses").split(", "));

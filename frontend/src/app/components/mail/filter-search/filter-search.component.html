@@ -17,15 +17,16 @@
             <span class="body-sinput"><input type="text" class="body" formControlName="body" value="" id="body"></span>
         </div>
         <div class="priority-div">
-            <input type="range" list="tickmarks" step="25">
+            <span class="priority-slabel"><label for="priority">Priority</label></span>
+            <input type="range" list="tickmarks" step="1" formControlName="priority">
+            <datalist id="tickmarks">
+                <option value="0" label="very cold!"></option>
+                <option value="1" label="cool"></option>
+                <option value="2" label="medium"></option>
+                <option value="3" label="getting warm!"></option>
+                <option value="4" label="Very"></option>
+            </datalist>
         </div>
-        <datalist id="tickmarks">
-            <option value="0" label="very cold!"></option>
-            <option value="25" label="cool"></option>
-            <option value="50" label="medium"></option>
-            <option value="75" label="getting warm!"></option>
-            <option value="100" label="Very"></option>
-        </datalist>
         <div class="date-div">
             <span class="date-slabel"><label for="date">Date</label></span>
             <select class="data-within-list" name="data-within-list">
