@@ -30,6 +30,14 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion});
   }
 
+  moveEmails(folder : string, emails : string[]): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "mails": emails});
+  }
+
+  restoreEmails(): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser')});
+  }
+
   getFolders(): Observable<string[]> {
     return this.http.post<string[]>('http://localhost:8080/Email/GetAllFolders', {"username":localStorage.getItem('currentUser')});
   }

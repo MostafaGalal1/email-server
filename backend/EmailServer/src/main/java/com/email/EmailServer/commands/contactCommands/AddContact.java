@@ -14,6 +14,7 @@ public class AddContact implements ICommand {
     private List<String> addresses;
 
     public AddContact(JSONObject Data){
+        System.out.println(Data.getString("addresses"));
         this.userAddress = Data.getString("username");
         this.contactName = Data.getString("contactName");
         this.addresses = List.of(Data.getString("addresses").split(", "));

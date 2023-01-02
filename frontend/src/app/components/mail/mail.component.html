@@ -58,7 +58,7 @@
             <li>
               <div class="fsublist-div" (clickOutside)="hideEditBox('edit-folder'+i)">
                 <span class="material-symbols-outlined">folder</span>
-                <input type="button" class="button" value={{list}}>
+                <input type="button" class="button" value={{list}} (click)="getEmails(list)">
                 <button class = "edit-button" #editButton (click)="showEditBox('edit-folder'+i)"  type = "button"><span class="material-symbols-outlined">more_vert</span>
                 </button>
                 <div class="edit-dropdown">
@@ -81,9 +81,9 @@
         <div class="contacts-list">
           <ul *ngFor="let list of getcontacts; let i=index">
             <li>
-              <div class="fsublist-div" (click)="previewContact()" (clickOutside)="hideEditBox('edit-contact'+i)">
+              <div class="fsublist-div" (clickOutside)="hideEditBox('edit-contact'+i)">
                 <span class="material-symbols-outlined">account_circle</span>
-                <input type="button" class="button" value={{list}}>
+                <input type="button" class="button" value={{list.name}} (click)="previewContact(i)">
                 <button class = "edit-button" #editButton (click)="showEditBox('edit-contact'+i)" type = "button"><span class="material-symbols-outlined">more_vert</span></button>
                 <div class="edit-dropdown">
                   <div class="edit-content" id="edit-contact{{i}}">
@@ -118,7 +118,12 @@
         <button class = "filter-button" #filterButton [ngStyle]="{'display' : !(emailVisible||contactVisible) && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
       </div>
       <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
-      <button class = "move-button" #moveButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="moveEmail()"><span class="material-symbols-outlined">drive_file_move</span></button>
+      <div class="dropdown">
+        <div class="dropdown-content">
+          <a *ngFor="let list of getfolders" (click)="moveEmails(list)">{{list}}</a>
+        </div>
+        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
+      </div>
       <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>
       <button class = "right-nav-button" #rightNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(true)"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
     </div>
@@ -152,43 +157,43 @@
       <div class = "contact-preview" [ngStyle]="{'display' : contactVisible? 'block':'none'}">
         <div class = "email-pad">
           <div>
-            <h1 class="contact-name">{{currentContact.name}}</h1>
+            <h1 class="contact-name">{{currentContact!.name}}</h1>
           </div>
           <br>
-          <div *ngFor="let mail of currentContact.mails">
+          <div *ngFor="let mail of currentContact!.mails">
             <h4>mail: {{mail}}</h4>
           </div>
         </div>
       </div>
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}">
         <tbody>
-            <tr (click)="previewEmail(email.key)" *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
+            <tr *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
               <td>
                 <div class = "td-div" id = "table-check-div">
                   <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)">
                 </div>
               </td>  
-              <td>
+              <td (click)="previewEmail(email.key)">
                 <div class = "td-div" id = "table-sender-div">
                   {{email.value.sender}} 
                 </div> 
               </td>
-              <td>
+              <td (click)="previewEmail(email.key)">
                 <div class = "td-div" id = "table-receivers-div">
                   {{email.value.receivers}} 
                 </div>
               </td>  
-              <td>
+              <td (click)="previewEmail(email.key)">
                 <div class = "td-div" id = "table-subject-div">
                   {{email.value.subject}} 
                 </div> 
               </td>  
-              <td>
+              <td (click)="previewEmail(email.key)">
                 <div class = "td-div" id = "table-body-div">
                   {{email.value.body}} 
                 </div> 
               </td>  
-              <td>
+              <td (click)="previewEmail(email.key)">
                 <div class = "td-div" id = "table-date-div">
                   {{email.value.date | date: (email.value.date.getDate() === nowDate.getDate())? 'h:mm a':'MMM d'}}
                 </div>

@@ -394,6 +394,11 @@
   text-align: center;
 }
 
+#table-check-div input{
+  top: calc(50% - 6px);
+  position: relative;
+}
+
 #table-check-div{
   width: 40px;
 }
@@ -577,7 +582,7 @@ tr:hover:not(.table-headers){
   display: block;
 }
 
-.dropdown-content:hover + .filter-button{
+.dropdown-content:hover + .filter-button + .move-button{
   background: white;
   color: var(--primary);
 }
@@ -610,6 +615,11 @@ tr:hover:not(.table-headers){
 }
 
 .edit-content a:hover {
+  background: white;
+  color: var(--primary);
+}
+
+.dropdown-content a:hover {
   background: white;
   color: var(--primary);
 }
