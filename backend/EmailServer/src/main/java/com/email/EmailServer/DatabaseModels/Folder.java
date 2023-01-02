@@ -29,7 +29,7 @@ public class Folder{
     @Column(name="folder_name")
     private String name;
 
-    @Column(name="emails_id")
+    @Column(name="emails_id" , length = 100000)
     private Set<Long> emailsId = new HashSet<Long>();
 
     @Column(name="type")
