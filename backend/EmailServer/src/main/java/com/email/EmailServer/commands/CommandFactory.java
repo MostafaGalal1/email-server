@@ -42,6 +42,7 @@ public class CommandFactory {
             case "savetodraft"-> command = new SendEmailToDraft(Data);
             case "deleteemail"-> command = new DeleteEmailPermanently(Data);
             case "restoreemail"-> command = new RestoreEmailFromTrash(Data);
+            case "movetotrash"-> command = new MoveEmailToTrash(Data);
         }
         return command;
     }

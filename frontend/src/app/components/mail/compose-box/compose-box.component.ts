@@ -16,6 +16,7 @@ export class ComposeBoxComponent implements OnInit {
   static subject : string ="";
   static message : string ="";
   static priority : string = '';
+  private formData: FormData = new FormData;
   file : File[] = [];
 
   email : emailToSend = {
@@ -25,7 +26,7 @@ export class ComposeBoxComponent implements OnInit {
     subject:"",
     priority : 2,
     id : -1,
-    attachments : []
+    attachments : new FormData
   };
 
   static to : string = "" ;
@@ -38,7 +39,6 @@ export class ComposeBoxComponent implements OnInit {
   }
   
   send(){
-
     this.email.priority = parseInt( (<HTMLInputElement>document.getElementById("priority")).value);
     if((<HTMLInputElement>document.getElementById("priority")).value == "choose priority" ){
       this.email.priority = 2;
@@ -47,7 +47,8 @@ export class ComposeBoxComponent implements OnInit {
     this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
     this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.id = ComposeBoxComponent.id;
-    this.email.sender =  localStorage.getItem('currentUser')+ "";
+    this.email.attachments = this.formData;
+    this.email.sender =  localStorage.getItem('currentUser') + "";
     console.log(this.email);
 
     this.apiService.sendEmail(this.email);
@@ -66,20 +67,23 @@ export class ComposeBoxComponent implements OnInit {
     this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     this.email.id = ComposeBoxComponent.id;
-    console.log(this.email);
+
+
+    this.email.attachments = this.formData;
+
+    console.log(this.email.attachments)
     MailComponent.compose = false;
     this.apiService.saveToDraft(this.email).subscribe();
     ComposeBoxComponent.id = -1;
   }
   
   upload(file2 : any){
-    console.log(file2.files);
-    this.email.attachments = [];
     let currentInput = file2.files;
     if (currentInput.length === 0) {
       return
     }
-
+    
+    console.log(currentInput);
     for (let i = 0 ; i < currentInput.length; i++){
       let file = currentInput[i];
       let fileName = file.name;
@@ -89,10 +93,7 @@ export class ComposeBoxComponent implements OnInit {
       if (currentInput[0] == null) {
         return
       }
-      let formData = new FormData();
-      formData.append("file", file);
-      formData.append("ext", extension);
-      this.email.attachments.push(formData);
+      this.formData.append("files", file);
     }
   }
 

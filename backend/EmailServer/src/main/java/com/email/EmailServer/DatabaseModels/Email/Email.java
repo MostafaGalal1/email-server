@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Email{
     private List<Attachment> attachments = new ArrayList<Attachment>();
 
 
-    public Email()
+    private Email()
     {
 
     }
@@ -55,8 +56,6 @@ public class Email{
     {
         this.buildEmail(jsonObject);
         this.SetContentSet();
-
-        ServerSystem.AddEmailToDatabase(this);
     }
 
     private void buildEmail(JSONObject jsonObject)
@@ -67,12 +66,21 @@ public class Email{
         this.content = jsonObject.getString("body");
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
-        ////////////////////// attachment//////////////////////////////////
+        ServerSystem.AddEmailToDatabase(this);
+        this.createAttachments(jsonObject);
+    }
+
+    private void createAttachments(JSONObject jsonObject){
+        List<MultipartFile> Files = new Gson().fromJson(jsonObject.getJSONArray("attachments").toString(), List.class);
+        for (MultipartFile file: Files){
+            Attachment attachment = new Attachment(file,this);
+            this.attachments.add(attachment);
+        }
+        ServerSystem.AddEmailToDatabase(this);
     }
 
     public void UpdateEmail(JSONObject jsonObject){
         this.buildEmail(jsonObject);
-        ServerSystem.AddEmailToDatabase(this);
     }
 
     public JSONObject getJsonOfHeader()
@@ -84,7 +92,7 @@ public class Email{
         jsonObject.put("receivers", this.receiversAddress);
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
-        jsonObject.put("date", this.dateOfEmail.toInstant());////////////// needs linking with frontend way of storage
+        jsonObject.put("date", this.dateOfEmail.toInstant());
         return jsonObject;
     }
 

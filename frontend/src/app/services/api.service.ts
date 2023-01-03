@@ -35,6 +35,10 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/Email/MoveEmail' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "id": email});
   }
 
+  moveToTrash(emailID : string): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/MoveToTrash' ,  {"username":localStorage.getItem('currentUser'), "id": emailID});
+  }
+
   restoreEmails(): Observable<object> {
     return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser')});
   }

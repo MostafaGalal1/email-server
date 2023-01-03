@@ -30,7 +30,6 @@ public class UserFacade
         if (this.user.TrashHasEmail(EmailID))
             return false;
 
-        this.user.RemoveEmailFromAllFolders(EmailID);
         MoveEmailToTrash(EmailID);
         return true;
     }
@@ -101,7 +100,7 @@ public class UserFacade
         while (iterator.hasNext())
         {
             Email email = iterator.next();
-            if (this.Check30DayRemovalForOneEmail(email));
+            if (this.Check30DayRemovalForOneEmail(email))
             this.user.RemoveEmailFromAllFolders(email.getId());
         }
     }
@@ -157,6 +156,8 @@ public class UserFacade
 
     public boolean MoveEmailToFolderRequest(String FolderName, long EmailID)
     {
+        if (this.user.HasFolderSecondary(FolderName) == false)
+            return false;
         this.MoveEmailToFolder(FolderName, EmailID);
         return true;
     }

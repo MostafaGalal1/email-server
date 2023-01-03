@@ -9,10 +9,10 @@ public class MoveEmailToTrash implements ICommand
     private String userAddress;
     private long emailID;
 
-    public MoveEmailToTrash(String userAddress, long EmailID)
+    public MoveEmailToTrash(JSONObject Data)
     {
-        this.userAddress = userAddress;
-        this.emailID = EmailID;
+        this.userAddress = Data.getString("username");
+        this.emailID  =Data.getLong("id");
     }
 
     @Override
