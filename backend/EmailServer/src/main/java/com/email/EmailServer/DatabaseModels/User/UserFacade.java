@@ -168,17 +168,6 @@ public class UserFacade
         this.user.AddEmailToFolder(FolderName, EmailID);
     }
 
-    public boolean SendEmailToDraftRequest(JSONObject EmailJson)
-    {
-        if (this.CheckSReceiverNotFoundInDatabase(EmailJson))
-            return false;
-
-        long EmailID = this.CheckAndCreateExistingEmailAndReturnID(EmailJson);
-        this.MoveEmailToDraft(EmailID);
-
-        return true;
-    }
-
     public boolean SendEmailToSenderAndReceiversRequest(JSONObject EmailJson)
     {
         if (this.CheckSReceiverNotFoundInDatabase(EmailJson))
@@ -192,15 +181,15 @@ public class UserFacade
         return true;
     }
 
-    private boolean CheckSReceiverNotFoundInDatabase(JSONObject EmailJson)
+    public boolean SendEmailToDraftRequest(JSONObject EmailJson)
     {
-        List<String> ReceiversHandle = new Gson().fromJson(EmailJson.getJSONArray("receivers").toString(), List.class);
-        for (String Receiver : ReceiversHandle)
-        {
-            if (this.CheckUserFoundInDataBase(Receiver) == false)
-                return true;
-        }
-        return false;
+        if (this.CheckSReceiverNotFoundInDatabase(EmailJson))
+            return false;
+
+        long EmailID = this.CheckAndCreateExistingEmailAndReturnID(EmailJson);
+        this.MoveEmailToDraft(EmailID);
+
+        return true;
     }
 
     private void SendEmailToSender(JSONObject EmailJson, long EmailID)
@@ -254,6 +243,17 @@ public class UserFacade
             return false;
         else
             return true;
+    }
+
+    private boolean CheckSReceiverNotFoundInDatabase(JSONObject EmailJson)
+    {
+        List<String> ReceiversHandle = new Gson().fromJson(EmailJson.getJSONArray("receivers").toString(), List.class);
+        for (String Receiver : ReceiversHandle)
+        {
+            if (this.CheckUserFoundInDataBase(Receiver) == false)
+                return true;
+        }
+        return false;
     }
 
     public boolean AddFolder(String folderName)
