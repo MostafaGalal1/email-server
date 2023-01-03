@@ -1,10 +1,12 @@
 package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+
+import com.email.EmailServer.DatabaseModels.Repos.JSONObjectConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.json.JSONObject;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -21,6 +23,7 @@ public class Attachment {
     @JoinColumn(name="email_id", nullable = false)
     private Email email;
 
+    @Convert(converter = JSONObjectConverter.class)
     @Column(name = "attachment_data", length = 100000)
     private JSONObject file;
 

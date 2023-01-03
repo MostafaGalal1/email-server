@@ -64,8 +64,17 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.16</version>
 		</dependency>
-    </dependencies>
-
+		<dependency>
+			<groupId>io.hypersistence</groupId>
+			<artifactId>hypersistence-utils-hibernate-60</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.qdox</groupId>
+			<artifactId>qdox</artifactId>
+			<version>2.0-M9</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
