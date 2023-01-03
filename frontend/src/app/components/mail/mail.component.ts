@@ -200,7 +200,7 @@ export class MailComponent implements OnInit{
   async deleteEmail(){
     if (MailComponent.currentFolder !== "Trash"){
       for(const emailID in this.selectionQueue){
-        this.apiService.moveEmail("Trash", emailID).subscribe(() => {
+        this.apiService.moveToTrash(emailID).subscribe(() => {
           this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
             MailComponent.emails = response.data;
             for (let i = 0; i < MailComponent.emails.length; i++){

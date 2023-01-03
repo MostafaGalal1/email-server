@@ -142,8 +142,6 @@ public class User
     {
         this.folders.forEach((folderName, folder) ->
         {
-            if (folderName.equals(this.TrashName)) return;
-
             if (folder.HasEmail(EmailID))
                 folder.RemoveEmail(EmailID);
         });

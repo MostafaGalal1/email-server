@@ -117,5 +117,11 @@ public class Controller {
         return proxy.run("RestoreEmail", new JSONObject(data));
     }
 
+    @PostMapping("/MoveToTrash")
+    @ResponseBody
+    public String MoveToTrash(@RequestBody String data){
+        return proxy.run("MoveToTrash", new JSONObject(data));
+    }
+
 
 }
