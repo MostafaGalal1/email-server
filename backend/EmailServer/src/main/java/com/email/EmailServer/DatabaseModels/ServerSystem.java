@@ -1,6 +1,7 @@
 package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+import com.email.EmailServer.DatabaseModels.Folder.Folder;
 import com.email.EmailServer.DatabaseModels.Repos.ContactRepo;
 import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
 import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;

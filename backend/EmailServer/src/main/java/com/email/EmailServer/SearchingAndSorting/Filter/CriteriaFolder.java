@@ -1,7 +1,7 @@
 package com.email.EmailServer.SearchingAndSorting.Filter;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
-import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Folder.Folder;
 
 import java.util.ArrayList;
 import java.util.List;
