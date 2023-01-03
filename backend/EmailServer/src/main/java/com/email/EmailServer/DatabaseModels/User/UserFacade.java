@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserFacade
@@ -67,8 +68,10 @@ public class UserFacade
         return this.SearchAndSortEmails(FolderName, filterCriteria, SortOption);
     }
 
-    public List<JSONObject> GetFoldersRequest(String FolderName, String SortOption)
+    public List<JSONObject> GetFolderEmailsRequest(String FolderName, String SortOption)
     {
+        this.CheckFolderIsTrashAndRemove30DaysEmails(FolderName);
+
         AndCriteria andCriteria = new AndCriteria(new ArrayList<>());
         return this.SearchAndSortEmails(FolderName, andCriteria, SortOption);
     }
@@ -84,6 +87,39 @@ public class UserFacade
         List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
         return jsonList;
     }
+
+    private void CheckFolderIsTrashAndRemove30DaysEmails(String FolderName)
+    {
+        if (this.IsTrash(FolderName) == false)
+            return;
+        this.RemoveAllPast30EmailsInTrash();
+    }
+
+    private void RemoveAllPast30EmailsInTrash()
+    {
+        EmailIterator iterator = this.GetTrashIterator();
+        while (iterator.hasNext())
+        {
+            Email email = iterator.next();
+            if (this.Check30DayRemovalForOneEmail(email));
+            this.user.RemoveEmailFromAllFolders(email.getId());
+        }
+    }
+
+    private boolean Check30DayRemovalForOneEmail(Email email)
+    {
+        Date date1 = email.getDateOfEmail();
+        Date date2 = new Date();
+
+        long time_difference = date2.getTime() - date1.getTime();
+        long days_difference = time_difference / (1000*60*60*24);
+
+        if (days_difference >= 30)
+            return true;
+        else
+            return false;
+    }
+
 
     private List<JSONObject> ConvertEmailsToJsons(List<Email> Emails)
     {
@@ -333,5 +369,17 @@ public class UserFacade
         return ID;
     }
 
+    private EmailIterator GetTrashIterator()
+    {
+        EmailIterator iterator = this.user.GetFolderIterator(this.user.TrashName);
+        return iterator;
+    }
 
+    private boolean IsTrash(String FolderName)
+    {
+        if (FolderName == this.user.TrashName)
+            return true;
+        else
+            return false;
+    }
 }
