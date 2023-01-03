@@ -8,6 +8,7 @@ import lombok.*;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,16 +68,28 @@ public class Email{
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
         ServerSystem.AddEmailToDatabase(this);
-        this.createAttachments(jsonObject);
+        this.CreateAttachments(jsonObject);
     }
 
-    private void createAttachments(JSONObject jsonObject){
+    private void CreateAttachments(JSONObject jsonObject){
         List<MultipartFile> Files = new Gson().fromJson(jsonObject.getJSONArray("attachments").toString(), List.class);
         for (MultipartFile file: Files){
-            Attachment attachment = new Attachment(file,this);
+            JSONObject jsonData = this.ExtractData(file);
+            Attachment attachment = new Attachment(jsonData,this);
             this.attachments.add(attachment);
         }
         ServerSystem.AddEmailToDatabase(this);
+    }
+    private JSONObject ExtractData(MultipartFile file){
+       try {
+           JSONObject jsonData = new JSONObject();
+           jsonData.put("link",file.getBytes());
+           jsonData.put("name",file.getOriginalFilename());
+           jsonData.put("type",file.getContentType());
+           return jsonData;
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
     }
 
     public void UpdateEmail(JSONObject jsonObject){
@@ -93,21 +106,24 @@ public class Email{
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
         jsonObject.put("date", this.dateOfEmail.toInstant());
+        List<JSONObject> Attachments = this.GetAttachments();
+        jsonObject.put("attachments",Attachments);
+
         return jsonObject;
+    }
+
+    private List<JSONObject> GetAttachments(){
+        List<JSONObject> Attachments = new ArrayList<>();
+        for(Attachment attachment : this.attachments){
+            JSONObject data = attachment.getFile();
+            Attachments.add(data);
+        }
+        return Attachments;
     }
 
     public static Email getExistingEmailByID(long ID)
     {
         return ServerSystem.GetEmailByID(ID);
-    }
-
-    /////////////////////////////////////////////////////////////
-    public void getJsonOfEmail() //Needs adding attachment to json ///////////////////////////////////////////////////
-    {
-        JSONObject jsonObject = this.getJsonOfHeader();
-
-        jsonObject.put("content", this.getContent());
-        // goda haiekteb el attachment
     }
 
     private void SetContentSet()
