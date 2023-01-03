@@ -50,8 +50,7 @@ export class ComposeBoxComponent implements OnInit {
     this.email.attachments = this.formData;
     this.email.sender =  localStorage.getItem('currentUser') + "";
     console.log(this.email);
-
-    this.apiService.sendEmail(this.email).subscribe();
+    this.apiService.sendEmail(this.email.attachments).subscribe();
     ComposeBoxComponent.id = -1;
     MailComponent.compose = false;
   } 
@@ -78,23 +77,15 @@ export class ComposeBoxComponent implements OnInit {
   }
   
   upload(file2 : any){
-    let currentInput = file2.files;
-    if (currentInput.length === 0) {
-      return
-    }
+    console.log(file2.files);
+    this.file = file2.files;
+    this.email.attachments.append("username" , localStorage.getItem('currentUser')+"");
+    this.email.attachments.append("mail" ,JSON.stringify(this.email));
     
-    console.log(currentInput);
-    for (let i = 0 ; i < currentInput.length; i++){
-      let file = currentInput[i];
-      let fileName = file.name;
-      let regex = new RegExp('[^.]+$');
-      let extension = fileName.match(regex);
-
-      if (currentInput[0] == null) {
-        return
-      }
-      this.formData.append("files", file);
+    for(var i = 0 ;i < this.file.length ; i++){
+      this.email.attachments.append("files" , this.file[i]);
     }
+
   }
 
   get getto(){
