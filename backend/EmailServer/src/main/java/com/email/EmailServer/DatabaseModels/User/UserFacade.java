@@ -25,7 +25,7 @@ public class UserFacade
         this.user = user;
     }
 
-    public boolean SendEmailToTrash(long EmailID)
+    public boolean SendEmailToTrashRequest(long EmailID)
     {
         if (this.user.TrashHasEmail(EmailID))
             return false;
@@ -111,15 +111,20 @@ public class UserFacade
         Date date1 = email.getDateOfEmail();
         Date date2 = new Date();
 
-        long time_difference = date2.getTime() - date1.getTime();
-        long days_difference = time_difference / (1000*60*60*24);
+        long days_difference = this.GetDifferenceBetweenDatesInDays(date1, date2);
 
         if (days_difference >= 30)
             return true;
         else
             return false;
     }
+    private long GetDifferenceBetweenDatesInDays(Date date1, Date date2)
+    {
+        long time_difference = date2.getTime() - date1.getTime();
+        long days_difference = time_difference / (1000*60*60*24);
 
+        return days_difference;
+    }
 
     private List<JSONObject> ConvertEmailsToJsons(List<Email> Emails)
     {
@@ -351,7 +356,6 @@ public class UserFacade
     {
         this.MoveEmailToFolder(this.user.TrashName, EmailID);
     }
-
     private boolean CheckUserFoundInDataBase(String UserAdress)
     {
         User testUser = ServerSystem.GetUserByAddress(UserAdress);
