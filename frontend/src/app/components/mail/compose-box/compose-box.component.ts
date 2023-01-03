@@ -13,12 +13,12 @@ import { map } from 'rxjs';
   styleUrls: ['./compose-box.component.css']
 })
 export class ComposeBoxComponent implements OnInit {
-  attachment : FormData = new FormData; 
-
   static subject : string ="";
   static message : string ="";
   static priority : string = '';
+  private formData: FormData = new FormData;
   file : File[] = [];
+
   email : emailToSend = {
     sender :"",
     receivers:[],
@@ -26,9 +26,12 @@ export class ComposeBoxComponent implements OnInit {
     subject:"",
     priority : 2,
     id : -1,
+    attachments : new FormData
   };
+
   static to : string = "" ;
   static id :number = -1;
+
   constructor(private apiService : ApiService, private http : HttpClient) { }
   
   ngOnInit(): void {
@@ -36,7 +39,6 @@ export class ComposeBoxComponent implements OnInit {
   }
   
   send(){
-
     this.email.priority = parseInt( (<HTMLInputElement>document.getElementById("priority")).value);
     if((<HTMLInputElement>document.getElementById("priority")).value == "choose priority" ){
       this.email.priority = 2;
@@ -45,9 +47,11 @@ export class ComposeBoxComponent implements OnInit {
     this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
     this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.id = ComposeBoxComponent.id;
-    this.email.sender =  localStorage.getItem('currentUser')+ "";
+    this.email.attachments = this.formData;
+    this.email.sender =  localStorage.getItem('currentUser') + "";
     console.log(this.email);
-    this.apiService.sendEmail(this.email).subscribe({});
+
+    this.apiService.sendEmail(this.email).subscribe();
     ComposeBoxComponent.id = -1;
     MailComponent.compose = false;
   } 
@@ -63,19 +67,36 @@ export class ComposeBoxComponent implements OnInit {
     this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     this.email.id = ComposeBoxComponent.id;
-    console.log(this.email);
+
+
+    this.email.attachments = this.formData;
+
+    console.log(this.email.attachments)
     MailComponent.compose = false;
-    this.apiService.saveToDraft(this.email).subscribe({});
+    this.apiService.saveToDraft(this.email).subscribe();
     ComposeBoxComponent.id = -1;
   }
   
   upload(file2 : any){
-    console.log(file2.files);
-    this.file = file2.files;
-    for(var i = 0 ;i < this.file.length ; i++){
-      this.attachment.append("file" , this.file[i]);
+    let currentInput = file2.files;
+    if (currentInput.length === 0) {
+      return
+    }
+    
+    console.log(currentInput);
+    for (let i = 0 ; i < currentInput.length; i++){
+      let file = currentInput[i];
+      let fileName = file.name;
+      let regex = new RegExp('[^.]+$');
+      let extension = fileName.match(regex);
+
+      if (currentInput[0] == null) {
+        return
+      }
+      this.formData.append("files", file);
     }
   }
+
   get getto(){
     return ComposeBoxComponent.to;
   }

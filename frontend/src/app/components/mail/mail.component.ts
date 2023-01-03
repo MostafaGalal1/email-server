@@ -422,6 +422,7 @@ export class MailComponent implements OnInit{
       }
     });
     this.emailVisible = false;
+    console.log(MailComponent.emails);
   }
 
   async refreshEmails(){
