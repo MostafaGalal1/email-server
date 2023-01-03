@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class EmailIterator implements Iterator
 {
-    private  Set<Long> Set;
+    private Set<Long> Set;
     private Iterator MyIterator;
 
     public EmailIterator(Set<Long> set)

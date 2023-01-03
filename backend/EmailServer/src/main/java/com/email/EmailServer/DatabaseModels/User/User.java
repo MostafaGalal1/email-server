@@ -1,7 +1,7 @@
 package com.email.EmailServer.DatabaseModels.User;
 
 
-import com.email.EmailServer.DatabaseModels.Folder;
+import com.email.EmailServer.DatabaseModels.Folder.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
 import jakarta.persistence.*;
@@ -43,6 +43,8 @@ public class User
 
     @OneToMany(mappedBy = "user")
     private Map<String, Folder> folders = new HashMap<>();
+
+
 
     final String InboxName = "Inbox";
     final String SentName = "Sent";
