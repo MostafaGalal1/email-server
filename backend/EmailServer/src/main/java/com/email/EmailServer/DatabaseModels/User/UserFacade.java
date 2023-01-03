@@ -64,16 +64,16 @@ public class UserFacade
     public List<JSONObject> SearchFoldersRequest(String FolderName, JSONObject RequestJson, String SortOption)
     {
         EmailCriteria filterCriteria = FiltersExtracter.ExtractAllFilters(RequestJson);
-        return this.SearchandSortEmails(FolderName, filterCriteria, SortOption);
+        return this.SearchAndSortEmails(FolderName, filterCriteria, SortOption);
     }
 
     public List<JSONObject> GetFoldersRequest(String FolderName, String SortOption)
     {
         AndCriteria andCriteria = new AndCriteria(new ArrayList<>());
-        return this.SearchandSortEmails(FolderName, andCriteria, SortOption);
+        return this.SearchAndSortEmails(FolderName, andCriteria, SortOption);
     }
 
-    private List<JSONObject> SearchandSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
+    private List<JSONObject> SearchAndSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
 
@@ -202,13 +202,15 @@ public class UserFacade
         else
         {
             ID = this.ExtractIDFromEmailJson(EmailJson);
+            Email email = Email.getExistingEmailByID(ID);
+            email.UpdateEmail(EmailJson);
         }
         return ID;
     }
 
     private boolean CheckIsNewEmail(JSONObject EmailJson)
     {
-        if (EmailJson.has("id"))
+        if (EmailJson.getLong("id") != -1)
             return false;
         else
             return true;
@@ -330,4 +332,6 @@ public class UserFacade
         long ID = jsonObject.getLong("id");
         return ID;
     }
+
+
 }

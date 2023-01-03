@@ -1,9 +1,7 @@
 package com.email.EmailServer.DatabaseModels.Email;
 
 import com.email.EmailServer.DatabaseModels.Attachment;
-import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.ServerSystem;
-import com.email.EmailServer.DatabaseModels.User.User;
 import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,10 +23,6 @@ public class Email{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @Setter(AccessLevel.NONE)
-    @JoinColumn(name="folder_id", nullable = false)
-    private Folder folder;
     @Column(name = "email_sender_address", nullable = false)
     private String senderAddress;
 
