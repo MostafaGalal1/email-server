@@ -10,7 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {  }
   
-  searchMails(searchForm : object): Observable<object> {
+  searchEmails(searchForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/login', searchForm);
   }
 

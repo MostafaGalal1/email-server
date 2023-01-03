@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { MailComponent } from '../mail.component';
 
 @Component({
   selector: 'app-filter-search',
@@ -22,20 +23,14 @@ export class FilterSearchComponent implements OnInit {
     subject: '',
     body: '',
     priority: '',
-    rangeDate: '1 day',
+    rangeDate: '',
     startDate: '',
     attachment: ''
   });
 
   onSubmit(){
-    this.apiService.searchMails(this.searchForm.value).subscribe(
-      (error) => {
-        alert("Username taken");
-      },
-      () => {
-        this.router.navigate(["/mail/search"]);
-      }
+    this.apiService.searchEmails(this.searchForm.value).subscribe(
+      (response:any) => MailComponent.emails = response.data
     );
   }
-
 }

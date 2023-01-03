@@ -103,7 +103,7 @@
     <div class = "navigation-bar">
       <button class = "refresh-button" #refreshButton type = "button" (click)="refreshEmails()"><span class="material-symbols-outlined">refresh</span></button>
       <div class = "search-container" [ngStyle]="{'background-color': searchColor}">
-        <button class = "Search-button" type = "button"><span class="material-symbols-outlined">search</span></button>
+        <button class = "Search-button" type = "button" (click)="searchEmails()"><span class="material-symbols-outlined">search</span></button>
         <input type = "text" id = "search_text" placeholder="Search in mail" #searchBar (focus)="whitenBar()" (clickOutside)="darkenBar()">
         <button class = "reset-button" type = "button" #resetButton><span class="material-symbols-outlined">close</span></button>
         <button class = "filter-button" type = "button" #filterButton [ngStyle]="{'display' : filterBoxVisible? 'none':''}" value="Search" (click)="showFilter()"><span class="material-symbols-outlined">tune</span></button>
