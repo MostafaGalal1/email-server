@@ -100,7 +100,7 @@ public class UserFacade
         while (iterator.hasNext())
         {
             Email email = iterator.next();
-            if (this.Check30DayRemovalForOneEmail(email));
+            if (this.Check30DayRemovalForOneEmail(email))
             this.user.RemoveEmailFromAllFolders(email.getId());
         }
     }

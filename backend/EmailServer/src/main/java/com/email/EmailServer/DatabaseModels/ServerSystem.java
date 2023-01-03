@@ -18,13 +18,16 @@ public class ServerSystem{
     private static EmailRepo emailRepo;
     @Autowired
     private static ContactRepo contactRepo;
+    @Autowired
+    private static AttachmentRepo attachmentRepo;
 
-    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo, ContactRepo ContactRepo)
+    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo, ContactRepo ContactRepo, AttachmentRepo AttachmentRepo)
     {
         userRepo = UserRepo;
         folderRepo = FolderRepo;
         emailRepo = EmailRepo;
         contactRepo = ContactRepo;
+        attachmentRepo = AttachmentRepo;
     }
 
     public static void AddFolderToDataBase(Folder folder)
@@ -65,4 +68,6 @@ public class ServerSystem{
     public static void RemoveContactFromDataBase(Contact contact){
         contactRepo.delete(contact);
     }
+
+    public static void AddAttachmentToDataBase(Attachment attachment){ attachmentRepo.save(attachment); }
 }
