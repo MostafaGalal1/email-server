@@ -36,7 +36,7 @@ export class MailComponent implements OnInit{
   protected emailVisible:boolean;
   protected contactVisible:boolean;
   protected currentEmail!:Email;
-  protected currentFolder:string;
+  static currentFolder:string;
   protected checkAll:boolean;
   protected page:number = 0;
   static compose:boolean;
@@ -45,7 +45,6 @@ export class MailComponent implements OnInit{
   protected searchColor:string;
   protected nowDate:Date;
   protected currentContact:Contact;
-  static ems:Email;
   protected tempEmail:Email;
   static emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
@@ -75,9 +74,7 @@ export class MailComponent implements OnInit{
   {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
   {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), attachments:[]} ];
   protected emailsQueue: {[id : number] : Email};
-  protected attachs : string[] = ["https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920-800x450.jpg",
-"https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg?w=1390&crop=1",
-"https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
+  protected attachs : string[] = [];
   protected selectionQueue: {[id : number] : Email};  
   static folders: string[] = [];
   static contacts: Contact[] = [{name:"", mails:[""]}];
@@ -97,7 +94,7 @@ export class MailComponent implements OnInit{
     MailComponent.folderBoxVisible = false;
     MailComponent.contactBoxVisible = false;
     this.searchColor = "";
-    this.currentFolder = "Inbox";
+    MailComponent.currentFolder = "Inbox";
     this.currentEmail = MailComponent.emails[0];
     this.currentContact = {name : "" , mails :[]};
     this.edit_visible = true;
@@ -107,13 +104,13 @@ export class MailComponent implements OnInit{
   ngOnInit(): void {
     this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
     this.apiService.getContacts().subscribe((response:any) => MailComponent.contacts = response.data);
-    this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => MailComponent.emails = response.data);
-    setTimeout(() => {
+    this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+      MailComponent.emails = response.data;
       for (let i = 0; i < MailComponent.emails.length; i++){
         MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
         this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
-    }, 200);
+    });
   }
 
   returnZero() {
@@ -201,11 +198,42 @@ export class MailComponent implements OnInit{
   }
 
   async deleteEmail(){
-    for(const emailID in this.selectionQueue){
-      console.log(parseInt(emailID));
-      delete this.emailsQueue[parseInt(emailID)];
-      delete this.selectionQueue[parseInt(emailID)];
+    if (MailComponent.currentFolder !== "Trash"){
+      for(const emailID in this.selectionQueue){
+        this.apiService.moveEmail("Trash", emailID).subscribe(() => {
+          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+            MailComponent.emails = response.data;
+            for (let i = 0; i < MailComponent.emails.length; i++){
+              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+              this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+            }
+          });
+        });
+        delete this.emailsQueue[emailID];
+        delete this.selectionQueue[emailID];
+      }
+    } else {
+      for(const emailID in this.selectionQueue){
+        this.apiService.deleteEmail(emailID).subscribe(() => {
+          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+            MailComponent.emails = response.data;
+            for (let i = 0; i < MailComponent.emails.length; i++){
+              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+              this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+            }
+          });
+        });
+        delete this.emailsQueue[emailID];
+        delete this.selectionQueue[emailID];
+      }
     }
+    this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+      MailComponent.emails = response.data;
+      for (let i = 0; i < MailComponent.emails.length; i++){
+        MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+        this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+      }
+    });
     this.checkAll = false;
     this.emailVisible = false;
     this.buttonsVisible = false;
@@ -327,20 +355,50 @@ export class MailComponent implements OnInit{
   }
 
   async moveEmails(folder : string){
-    let emailIDs = [];
-    for(const emailID in this.selectionQueue){
-      emailIDs.push(emailID);
-      delete this.emailsQueue[emailID];
-      delete this.selectionQueue[emailID];
+    if (MailComponent.currentFolder !== "Trash"){
+      for(const emailID in this.selectionQueue){
+        this.apiService.moveEmail(folder, emailID).subscribe(() => {
+          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+            MailComponent.emails = response.data;
+            for (let i = 0; i < MailComponent.emails.length; i++){
+              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+              this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+            }
+          });
+        });
+        delete this.emailsQueue[emailID];
+        delete this.selectionQueue[emailID];
+      }
+    } else {
+      for(const emailID in this.selectionQueue){
+        this.apiService.restoreEmail(emailID).subscribe(() => {
+          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+            MailComponent.emails = response.data;
+            for (let i = 0; i < MailComponent.emails.length; i++){
+              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+              this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+            }
+          });
+        });
+        delete this.emailsQueue[emailID];
+        delete this.selectionQueue[emailID];
+      }
     }
-    this.apiService.moveEmails(this.currentFolder, emailIDs).subscribe();
     this.checkAll = false;
     this.emailVisible = false;
     this.buttonsVisible = false;
   }
 
   async restoreEmails(){
-    this.apiService.restoreEmails().subscribe();
+    this.apiService.restoreEmails().subscribe(() => {
+      this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+        MailComponent.emails = response.data;
+        for (let i = 0; i < MailComponent.emails.length; i++){
+          MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+          this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+        }
+      });
+    });
     for(const emailID in this.selectionQueue){
       delete this.emailsQueue[emailID];
       delete this.selectionQueue[emailID];
@@ -351,39 +409,38 @@ export class MailComponent implements OnInit{
   }
 
   async getEmails(folder : string){
-    this.currentFolder = folder;
-    this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (MailComponent.emails = response.data));
-    console.log(MailComponent.emails);
+    MailComponent.currentFolder = folder;
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    setTimeout(() => {
+    this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+      MailComponent.emails = response.data;
       for (let i = 0 ; i < MailComponent.emails.length; i++){
         MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
         this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
-    }, 200);
+    });
     this.emailVisible = false;
   }
 
   async refreshEmails(){
-    this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (MailComponent.emails = response.data));
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    setTimeout(() => {
+    this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+      MailComponent.emails = response.data;
       for (let i = 0 ; i < MailComponent.emails.length; i++){
         MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
         this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
-    }, 200);
+    });
     this.emailVisible = false;
   }
 
   async previewEmail(emailID : number){
-    if(this.currentFolder === "Draft"){
+    if(MailComponent.currentFolder === "Draft"){
       this.composeIt();
       
       for(var i = 0 ; i< MailComponent.emails.length;i++){
@@ -446,20 +503,17 @@ export class MailComponent implements OnInit{
   }
 
   async sortEmails(criterion : string){
-    this.apiService.getEmails(this.currentFolder, criterion).subscribe((response:any) => {MailComponent.emails = response.data;
-    });
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
     this.emailsQueue = {};
-    setTimeout(() => {
+    this.apiService.getEmails(MailComponent.currentFolder, criterion).subscribe((response:any) => {
+      MailComponent.emails = response.data;
       for (let i = 0 ; i < MailComponent.emails.length; i++){
         MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
         this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
-      console.log(MailComponent.emails);
-      console.log(this.emailsQueue);
-    }, 200);
+    });
     this.emailVisible = false;
   }
   

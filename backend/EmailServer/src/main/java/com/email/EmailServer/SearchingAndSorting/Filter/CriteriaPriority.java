@@ -14,7 +14,7 @@ public class CriteriaPriority implements EmailCriteria
 
     public CriteriaPriority(JSONObject jsonObject)
     {
-        if (jsonObject.getInt(this.ObjectInJson) == -1)
+        if (jsonObject.getInt(this.ObjectInJson) == 0)
         {
             this.CritiriaActive = false;
             return;

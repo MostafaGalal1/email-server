@@ -19,29 +19,29 @@
         <div class="priority-div">
             <span class="priority-slabel"><label for="priority">Priority</label></span>
             <div>
-                <input type="range" list="tickmarks" step="25" formControlName="priority"/>
+                <input type="range" list="tickmarks" min=0 max=4 step=1 formControlName="priority"/>
                 <datalist id="tickmarks">
-                    <option value="0">Poor</option>
-                    <option value="1">Low</option>
-                    <option value="2">Moderate</option>
-                    <option value="3">High</option>
-                    <option value="4">Urgent</option>
+                    <option [value]=0>Poor</option>
+                    <option [value]=1>Low</option>
+                    <option [value]=2>Moderate</option>
+                    <option [value]=3>High</option>
+                    <option [value]=4>Urgent</option>
                 </datalist>
             </div>
         </div>
         <div class="date-div">
             <span class="date-slabel"><label for="date">Date</label></span>
             <select class="data-within-list" name="data-within-list" formControlName="rangeDate">
-                <option value="1">1 day</option>
-                <option value="3">3 days</option>
-                <option value="7">1 week</option>
-                <option value="14">2 weeks</option>
-                <option value="30">1 month</option>
-                <option value="61">2 months</option>
-                <option value="182">6 months</option>
-                <option value="365">1 year</option>
+                <option [value]=1>1 day</option>
+                <option [value]=3>3 days</option>
+                <option [value]=7>1 week</option>
+                <option [value]=14>2 weeks</option>
+                <option [value]=30>1 month</option>
+                <option [value]=61>2 months</option>
+                <option [value]=182>6 months</option>
+                <option [value]=365>1 year</option>
             </select>
-            <input type="date" class="start-date" name="startDate">
+            <input type="date" class="start-date" name="startDate" formControlName="startDate">
         </div>
         <div class="attach-div">
             <span class="attach-slabel"><label for="attachment">Has attachment</label></span>

@@ -22,15 +22,17 @@ export class FilterSearchComponent implements OnInit {
     receivers: '',
     subject: '',
     body: '',
-    priority: '',
+    priority: 0,
     rangeDate: '',
     startDate: '',
-    attachment: ''
+    attachment: false
   });
 
   onSubmit(){
-    this.apiService.searchEmails(this.searchForm.value).subscribe(
-      (response:any) => MailComponent.emails = response.data
+    console.log(this.searchForm);
+    this.apiService.searchEmails(MailComponent.currentFolder, "Date", this.searchForm.value).subscribe(
+      (response:any) => {MailComponent.emails = response.data;
+      }
     );
   }
 }

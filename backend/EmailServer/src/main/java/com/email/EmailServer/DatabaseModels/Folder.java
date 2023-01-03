@@ -30,7 +30,7 @@ public class Folder{
     private String name;
 
     @Column(name="emails_id" , length = 100000)
-    private Set<Long> emailsId = new HashSet<Long>();
+    private Set<Long> emailsId = new HashSet<>();
 
     @Column(name="type")
     private FolderType type;

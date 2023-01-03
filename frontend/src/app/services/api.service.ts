@@ -10,8 +10,8 @@ export class ApiService {
 
   constructor(private http: HttpClient) {  }
   
-  searchEmails(searchForm : object): Observable<object> {
-    return this.http.post<object>('http://localhost:8080/login', searchForm);
+  searchEmails(folder : string, criterion : string, searchForm : object): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/SearchInFolder', {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion, "searchForm":searchForm});
   }
 
   createFolder(folderForm : object): Observable<object> {
@@ -30,8 +30,8 @@ export class ApiService {
     return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion});
   }
 
-  moveEmails(folder : string, emails : string[]): Observable<object> {
-    return this.http.post<object>('http://localhost:8080/Email/GetFolderEmails' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "mails": emails});
+  moveEmail(folder : string, email : string): Observable<object> {
+    return this.http.post<object>('http://localhost:8080/Email/MoveEmail' ,  {"username":localStorage.getItem('currentUser'), "folderName":folder, "id": email});
   }
 
   restoreEmails(): Observable<object> {
@@ -54,8 +54,16 @@ export class ApiService {
   //  return this.http.post<Object>('http://localhost:8080/Email/RenameFolder', {"username":localStorage.getItem('currentUser'),"oldName":oldName,"newName":newName, "addresses":mails});
   //}
 
-  deleteFolder(folderName:String): Observable<Object> {
+  deleteFolder(folderName:String) : Observable<Object> {
     return this.http.delete<Object>('http://localhost:8080/Email/DeleteFolder', {body: {"username":localStorage.getItem('currentUser'),"folderName":folderName}});
+  }
+
+  deleteEmail(emailID : String) : Observable<Object> {
+    return this.http.delete<Object>('http://localhost:8080/Email/DeleteEmail', {body: {"username":localStorage.getItem('currentUser'), "id":emailID}});
+  }
+
+  restoreEmail(emailID : string): Observable<Object> {
+    return this.http.post<Object>('http://localhost:8080/Email/RestoreEmail', {"username":localStorage.getItem('currentUser'), "id":emailID});
   }
 
   editFolder(oldName:String, newName:String): Observable<Object> {

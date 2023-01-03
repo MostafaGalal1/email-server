@@ -1,10 +1,7 @@
 package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
-import com.email.EmailServer.DatabaseModels.Repos.ContactRepo;
-import com.email.EmailServer.DatabaseModels.Repos.EmailRepo;
-import com.email.EmailServer.DatabaseModels.Repos.FolderRepo;
-import com.email.EmailServer.DatabaseModels.Repos.UserRepo;
+import com.email.EmailServer.DatabaseModels.Repos.*;
 import com.email.EmailServer.DatabaseModels.User.Contact;
 import com.email.EmailServer.DatabaseModels.User.User;
 import org.springframework.beans.factory.annotation.Autowired;

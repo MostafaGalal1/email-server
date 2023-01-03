@@ -44,6 +44,8 @@ public class User
     @OneToMany(mappedBy = "user")
     private Map<String, Folder> folders = new HashMap<>();
 
+
+
     final String InboxName = "Inbox";
     final String SentName = "Sent";
     final String DraftName = "Draft";

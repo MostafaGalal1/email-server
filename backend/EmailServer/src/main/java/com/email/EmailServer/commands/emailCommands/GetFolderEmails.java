@@ -24,7 +24,7 @@ public class GetFolderEmails implements ICommand
     {
         UserFacade userFacade = new UserFacade(this.userAddress);
 
-        List<JSONObject> emailHeaders = userFacade.GetFoldersRequest(folderName, this.sortOption);
+        List<JSONObject> emailHeaders = userFacade.GetFolderEmailsRequest(folderName, this.sortOption);
         return CreateApi(emailHeaders);
     }
 
