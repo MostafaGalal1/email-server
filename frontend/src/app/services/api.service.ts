@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { Email, emailToSend } from '../shared/email';
 
@@ -74,8 +75,13 @@ export class ApiService {
     return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
   }
 
-  sendEmail(email:emailToSend): Observable<Object> {
-    return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
+  sendEmail(email:emailToSend) {
+    console.log(email);
+    axios.post('http://localhost:8080/Email/SendEmail', email, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
   }
 
   saveToDraft(email:emailToSend): Observable<Object> {
