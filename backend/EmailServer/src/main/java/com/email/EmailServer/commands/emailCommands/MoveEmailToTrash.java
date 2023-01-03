@@ -19,7 +19,7 @@ public class MoveEmailToTrash implements ICommand
     public JSONObject execute()
     {
         UserFacade userFacade = new UserFacade(this.userAddress);
-        boolean State = userFacade.SendEmailToTrash(this.emailID);
+        boolean State = userFacade.SendEmailToTrashRequest(this.emailID);
         return CreateApi(State);
     }
 

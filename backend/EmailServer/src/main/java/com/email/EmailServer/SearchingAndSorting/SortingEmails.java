@@ -44,7 +44,7 @@ public class SortingEmails
 
     private void setComparator(String SortOption)
     {
-        if (SortOption == "Date")
+        if (SortOption.equals("Date"))
             this.comparator = this.GetDateComparator();
         else
             this.comparator = this.GetPriorityComparator();
