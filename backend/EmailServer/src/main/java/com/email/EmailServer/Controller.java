@@ -2,6 +2,9 @@ package com.email.EmailServer;
 
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @CrossOrigin(origins = {})
@@ -50,8 +53,9 @@ public class Controller {
 
     @PostMapping("/SendEmail")
     @ResponseBody
-    public String SendEmail(@RequestBody String data){
-        System.out.println(data);
+    public String SendEmail(@RequestPart(name ="files",required = false) MultipartFile[] data , @RequestParam(name ="mail") String username) throws IOException {
+        System.out.println(data[0].getContentType().toString());
+        System.out.println(username);
         return proxy.run("SendEmail",new JSONObject(data));
     }
 

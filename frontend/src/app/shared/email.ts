@@ -16,7 +16,8 @@ export interface emailToSend {
     subject : string;
     body : string;
     priority : number,
-    id : number
+    id : number, 
+    attachments : FormData
 }
 
 export interface Attachment {

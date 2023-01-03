@@ -48,18 +48,12 @@ export class MailComponent implements OnInit{
   static emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
       `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
-
   The problems are prepared by the Programming Club IIT Indore team. Do not miss the round!
-
   Special prizes for Indian participants: 10 best participants get a t-shirt + 10 t-shirts are randomly distributed among those with ranks between 11 and 100, inclusive.
-
   Register Now →
   The round will be held on the rules of Codeforces, so read the rules (here and here) beforehand.
-
   It will be for newcomers or participants from the second division (non-rated users or those having less than 2100 rating points). Want to compete? Do not forget to register for the contest and check your handle on the registrants page. The registration will be closed 5 minutes before the contest.
-
   If you have any questions, please feel free to ask me on the pages of Codeforces. If you no longer wish to receive these emails, click https://codeforces.com/unsubscribe/contests/efa30bad32b237fb5d0a0a309237837163a097b8/ to unsubscribe.
-
   Wish you high rating,
   MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57")  , attachments:[]},
     {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},

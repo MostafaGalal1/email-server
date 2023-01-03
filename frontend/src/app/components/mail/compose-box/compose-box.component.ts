@@ -26,6 +26,7 @@ export class ComposeBoxComponent implements OnInit {
     subject:"",
     priority : 2,
     id : -1,
+    attachments : new FormData
   };
   static to : string = "" ;
   static id :number = -1;
@@ -47,7 +48,7 @@ export class ComposeBoxComponent implements OnInit {
     this.email.id = ComposeBoxComponent.id;
     this.email.sender =  localStorage.getItem('currentUser')+ "";
     console.log(this.email);
-    this.apiService.sendEmail(this.email).subscribe({});
+    this.apiService.sendEmail(this.email.attachments).subscribe();
     ComposeBoxComponent.id = -1;
     MailComponent.compose = false;
   } 
@@ -72,9 +73,13 @@ export class ComposeBoxComponent implements OnInit {
   upload(file2 : any){
     console.log(file2.files);
     this.file = file2.files;
+    this.email.attachments.append("username" , localStorage.getItem('currentUser')+"");
+    this.email.attachments.append("mail" ,JSON.stringify(this.email));
+    
     for(var i = 0 ;i < this.file.length ; i++){
-      this.attachment.append("file" , this.file[i]);
+      this.email.attachments.append("files" , this.file[i]);
     }
+
   }
   get getto(){
     return ComposeBoxComponent.to;

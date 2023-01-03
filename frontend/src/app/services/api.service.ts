@@ -78,7 +78,7 @@ export class ApiService {
     return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
   }
 
-  sendEmail(email:emailToSend): Observable<Object> {
+  sendEmail(email?:FormData): Observable<Object> {
     return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
   }
 
