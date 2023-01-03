@@ -21,7 +21,6 @@
     "@angular/router": "^14.2.0",
     "@zxcvbn-ts/core": "^2.1.0",
     "@zxcvbn-ts/language-en": "^2.1.0",
-    "angular-dark-mode": "^3.0.3",
     "angular-password-strength-meter": "^5.0.1",
     "ng-click-outside": "^9.0.1",
     "ngx-pagination": "^6.0.3",

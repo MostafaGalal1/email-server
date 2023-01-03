@@ -122,7 +122,7 @@
         <div class="dropdown-content">
           <a *ngFor="let list of getfolders" (click)="moveEmails(list)">{{list}}</a>
         </div>
-        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
+        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0 || currentFolder === 'Trash'" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
       </div>
       <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>
       <button class = "right-nav-button" #rightNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(true)"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
@@ -137,7 +137,7 @@
           </div>
           <br>
           <div>
-            <h4>From: {{currentEmail.sender}}</h4>  
+            <h4>From: {{currentEmail.sender}}</h4>
             <h5>To: {{currentEmail.receivers}}</h5>
             <br>
             <p>{{currentEmail.body}}</p>
@@ -172,33 +172,33 @@
                 <div class = "td-div" id = "table-check-div">
                   <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.id)">
                 </div>
-              </td>  
+              </td>
               <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-sender-div">
-                  {{email.sender}} 
-                </div> 
+                  {{email.sender}}
+                </div>
               </td>
               <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-receivers-div">
-                  {{email.receivers}} 
+                  {{email.receivers}}
                 </div>
-              </td>  
+              </td>
               <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-subject-div">
-                  {{email.subject}} 
-                </div> 
-              </td>  
+                  {{email.subject}}
+                </div>
+              </td>
               <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-body-div">
-                  {{email.body}} 
-                </div> 
-              </td>  
+                  {{email.body}}
+                </div>
+              </td>
               <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-date-div">
                   {{email.date | date: (email.date.getDate() == nowDate.getDate())? 'h:mm a':'MMM d'}}
                 </div>
-              </td>  
-            </tr>  
+              </td>
+            </tr>
         </tbody>
       </table>
     </div>
