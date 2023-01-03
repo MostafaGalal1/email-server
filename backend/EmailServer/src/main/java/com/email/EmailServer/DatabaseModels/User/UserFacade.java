@@ -1,7 +1,7 @@
 package com.email.EmailServer.DatabaseModels.User;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
-import com.email.EmailServer.DatabaseModels.Folder.Folder;
+import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;

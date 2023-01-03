@@ -1,14 +1,14 @@
-package com.email.EmailServer.DatabaseModels.Folder;
+package com.email.EmailServer.DatabaseModels;
 
 
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
 import com.email.EmailServer.DatabaseModels.User.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -29,10 +29,8 @@ public class Folder{
     @Column(name="folder_name")
     private String name;
 
-    //@Column(name="emails_id", length = 100000)
-    //@OneToMany(name="emails_id")
-    @OneToMany
-    private Map<Long, Date> emailsId = new HashMap<>();
+    @Column(name="emails_id" , length = 100000)
+    private Set<Long> emailsId = new HashSet<>();
 
     @Column(name="type")
     private FolderType type;
@@ -61,12 +59,12 @@ public class Folder{
 
     public boolean HasEmail(Long EmailID)
     {
-        return this.emailsId.containsKey(EmailID);
+        return this.emailsId.contains(EmailID);
     }
 
     public void AddEmail(long EmailID)
     {
-        this.emailsId.put(EmailID, new Date());
+        this.emailsId.add(EmailID);
         ServerSystem.AddFolderToDataBase(this);
     }
 
@@ -87,7 +85,7 @@ public class Folder{
 
     public EmailIterator GetIterator()
     {
-        return new EmailIterator(this.emailsId.keySet());
+        return new EmailIterator(this.emailsId);
     }
 
     public enum FolderType
