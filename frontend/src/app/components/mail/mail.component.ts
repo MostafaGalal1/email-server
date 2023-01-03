@@ -341,7 +341,7 @@ export class MailComponent implements OnInit{
   async getEmails(folder : string){
     this.currentFolder = folder;
     this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => (this.emails = response.data));
-
+    console.log(this.emails);
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};

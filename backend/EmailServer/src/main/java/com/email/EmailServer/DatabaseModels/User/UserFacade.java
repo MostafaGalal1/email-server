@@ -76,11 +76,9 @@ public class UserFacade
     private List<JSONObject> SearchandSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);
-
+        System.out.println(Emails);
         Emails = this.FilterEmailsForSearch(Emails, filterCriteria);
-
         Emails = SortingEmails.SortEmails(Emails, SortOption);
-
         List<JSONObject> jsonList = this.ConvertEmailsToJsons(Emails);
         return jsonList;
     }
