@@ -3,40 +3,39 @@ package com.email.EmailServer.SearchingAndSorting.Filter;
 import com.email.EmailServer.DatabaseModels.Email.Email;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class CriteriaDate implements EmailCriteria
 {
-    private Date Date;
-    private final String ObjectInJson = "date";
-    private boolean CritiriaActive = true;
+    private Date StartDate;
+    private Date EndDate;
+    private final String StartJson = "startdate";
+    private final String EndJson = "enddate";
+
     public CriteriaDate(JSONObject jsonObject)
     {
-        if (jsonObject.getString(this.ObjectInJson).equals(""))
-        {
-            this.CritiriaActive = false;
-            return;
-        }
-        this.Date = (Date)jsonObject.get(this.ObjectInJson);
+//        if (jsonObject.getString(this.StartJson).equals(""))
+//            this.StartDate = new GregorianCalendar(1970, Calendar.FEBRUARY, 11).getTime();
+//        else
+//            this.StartDate = (Date)jsonObject.getString(this.StartJson)
+//        this.Date = (Date)jsonObject.get(this.ObjectInJson);
     }
 
     @Override
     public List<Email> MeetCriteria(List<Email> list)
     {
-        if (this.CritiriaActive == false)
-        {
-            return list;
-        }
+//        if (this.CritiriaActive == false)
+//        {
+//            return list;
+//        }
 
         List<Email> newList = new ArrayList<>();
-
-        for (Email email : list)
-        {
-            if (email.getDateOfEmail().compareTo(this.Date) == 0)
-                newList.add(email);
-        }
+//
+//        for (Email email : list)
+//        {
+//            if (email.getDateOfEmail().compareTo(this.Date) == 0)
+//                newList.add(email);
+//        }
         return newList;
     }
 }
