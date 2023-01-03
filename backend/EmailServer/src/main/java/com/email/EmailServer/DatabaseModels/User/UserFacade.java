@@ -202,13 +202,15 @@ public class UserFacade
         else
         {
             ID = this.ExtractIDFromEmailJson(EmailJson);
+            Email email = Email.getExistingEmailByID(ID);
+            email.UpdateEmail(EmailJson);
         }
         return ID;
     }
 
     private boolean CheckIsNewEmail(JSONObject EmailJson)
     {
-        if (EmailJson.has("id"))
+        if (EmailJson.getLong("id") != -1)
             return false;
         else
             return true;
@@ -330,4 +332,6 @@ public class UserFacade
         long ID = jsonObject.getLong("id");
         return ID;
     }
+
+
 }

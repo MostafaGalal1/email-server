@@ -45,6 +45,8 @@ export class MailComponent implements OnInit{
   protected searchColor:string;
   protected nowDate:Date;
   protected currentContact:Contact;
+  static ems:Email;
+  protected tempEmail:Email;
   static emails:Email[] = [{id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt", "hjghhfuyfyuffyuuyfyufyuyuuy"], subject:"rggfggfdf", body:
   `Hello, MostafaM.Galal.
   I'm glad to invite you to take part in Codeforces Round #841 (Div. 2) and Divide by Zero 2022. It starts on Tuesday, December, 27, 2022 14:35 (UTC). The contest duration is 2 hours. The allowed programming languages are C/C++, Pascal, Perl, Java, C#, Python (2 and 3), Ruby, PHP, Haskell, Scala, OCaml, D, Go, JavaScript and Kotlin.
@@ -72,11 +74,11 @@ export class MailComponent implements OnInit{
   {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
   {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
   {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), attachments:[]} ];
-  protected emailsQueue: {[id : string] : Email};
+  protected emailsQueue: {[id : number] : Email};
   protected attachs : string[] = ["https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920-800x450.jpg",
 "https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg?w=1390&crop=1",
 "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/330px-Google_Images_2015_logo.svg.png"]
-  protected selectionQueue: {[id : string] : Email};  
+  protected selectionQueue: {[id : number] : Email};  
   static folders: string[] = [];
   static contacts: Contact[] = [{name:"", mails:[""]}];
 
@@ -97,17 +99,21 @@ export class MailComponent implements OnInit{
     this.searchColor = "";
     this.currentFolder = "Inbox";
     this.currentEmail = MailComponent.emails[0];
-    this.currentContact = MailComponent.contacts[0];
+    this.currentContact = {name : "" , mails :[]};
     this.edit_visible = true;
+    this.tempEmail = MailComponent.emails[0];
   }
 
   ngOnInit(): void {
     this.apiService.getFolders().subscribe((response:any) => MailComponent.folders = response.data);
     this.apiService.getContacts().subscribe((response:any) => MailComponent.contacts = response.data);
-    for (let i = 0 ; i < MailComponent.emails.length; i++){
-      MailComponent.emails[i].id = i;
-      this.emailsQueue[i.toString()] = MailComponent.emails[i];
-    }
+    this.apiService.getEmails(this.currentFolder, "Date").subscribe((response:any) => MailComponent.emails = response.data);
+    setTimeout(() => {
+      for (let i = 0; i < MailComponent.emails.length; i++){
+        MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+        this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+      }
+    }, 200);
   }
 
   returnZero() {
@@ -167,14 +173,14 @@ export class MailComponent implements OnInit{
     });
   }
 
-  async emailSelection(event:any, emailID:string) {
+  async emailSelection(event:any, emailID:number) {
     if (event.target !== undefined){
       if (event.target.checked) {
-        document.getElementById(emailID)!.style.background = "var(--email-selection)";
+        document.getElementById(emailID.toString())!.style.background = "var(--email-selection)";
         this.selectionQueue[emailID] = this.emailsQueue[emailID];
         this.buttonsVisible = true;
       } else {
-        document.getElementById(emailID)!.style.background = "white";
+        document.getElementById(emailID.toString())!.style.background = "white";
         delete this.selectionQueue[emailID];
         if (!this.checkAll)
           this.buttonsVisible = false;
@@ -182,11 +188,11 @@ export class MailComponent implements OnInit{
     } else {
       try {
         if (this.checkAll) {
-          document.getElementById(emailID)!.style.background = "var(--email-selection)";
+          document.getElementById(emailID.toString())!.style.background = "var(--email-selection)";
           this.selectionQueue[emailID] = this.emailsQueue[emailID];
           this.buttonsVisible = true;
         } else {
-          document.getElementById(emailID)!.style.background = "white";
+          document.getElementById(emailID.toString())!.style.background = "white";
           delete this.selectionQueue[emailID];
           this.buttonsVisible = false;
         }
@@ -196,8 +202,9 @@ export class MailComponent implements OnInit{
 
   async deleteEmail(){
     for(const emailID in this.selectionQueue){
-      delete this.emailsQueue[emailID];
-      delete this.selectionQueue[emailID];
+      console.log(parseInt(emailID));
+      delete this.emailsQueue[parseInt(emailID)];
+      delete this.selectionQueue[parseInt(emailID)];
     }
     this.checkAll = false;
     this.emailVisible = false;
@@ -211,7 +218,7 @@ export class MailComponent implements OnInit{
         this.checkAll = true;
       }
       for (const emailID in this.emailsQueue){ 
-        this.emailSelection(this.checkAll, emailID);
+        this.emailSelection(this.checkAll, parseInt(emailID));
       }
   }
 
@@ -220,7 +227,7 @@ export class MailComponent implements OnInit{
     if (this.checkAll){
       this.checkAll = false;
       for (const emailID in this.emailsQueue){ 
-        this.emailSelection(this.checkAll, emailID);
+        this.emailSelection(this.checkAll, parseInt(emailID));
       }
     }
   }
@@ -293,25 +300,30 @@ export class MailComponent implements OnInit{
   }
 
   get getcomposeVisible() {
-    console.log( MailComponent.compose) ; 
+
     return MailComponent.compose;
   }
 
   get getFolderVisible() {
-    console.log( MailComponent.folderBoxVisible) ; 
+
     return MailComponent.folderBoxVisible;
   }
   
   get getContactVisible() {
-    console.log( MailComponent.contactBoxVisible) ; 
+
     return MailComponent.contactBoxVisible;
   }
+
   get getfolders(){
     return MailComponent.folders;
   }
 
   get getcontacts(){
     return MailComponent.contacts;
+  }
+
+  get getemails(){
+    return MailComponent.emails;
   }
 
   async moveEmails(folder : string){
@@ -370,19 +382,26 @@ export class MailComponent implements OnInit{
     this.emailVisible = false;
   }
 
-  async previewEmail(emailID : string){
+  async previewEmail(emailID : number){
     if(this.currentFolder === "Draft"){
       this.composeIt();
+      
+      for(var i = 0 ; i< MailComponent.emails.length;i++){
+        if(MailComponent.emails[i].id == emailID){
+          this.tempEmail = MailComponent.emails[i]
+          ComposeBoxComponent.id = Number(emailID);
+        }
+      }
       ComposeBoxComponent.to = ""; 
-      for(var i = 0 ; i < MailComponent.emails[Number(emailID)]["receivers"].length;i++){
-        if(i != MailComponent.emails[Number(emailID)]["receivers"].length-1)
-          ComposeBoxComponent.to += MailComponent.emails[Number(emailID)]["receivers"][i] + ", ";
+      for(var i = 0 ; i < this.tempEmail["receivers"].length;i++){
+        if(i != this.tempEmail["receivers"]?.length-1)
+          ComposeBoxComponent.to += this.tempEmail["receivers"][i] + ", ";
         else{
-          ComposeBoxComponent.to += MailComponent.emails[Number(emailID)]["receivers"][i] ;
+          ComposeBoxComponent.to += this.tempEmail["receivers"][i] ;
         }  
       }  
-      ComposeBoxComponent.message = MailComponent.emails[Number(emailID)]['body'];
-      ComposeBoxComponent.subject = MailComponent.emails[Number(emailID)]["subject"];
+      ComposeBoxComponent.message = this.tempEmail['body'];
+      ComposeBoxComponent.subject = this.tempEmail["subject"];
       ComposeBoxComponent.priority = "3"
       return;
     }
@@ -408,22 +427,27 @@ export class MailComponent implements OnInit{
   }
 
   async navigateEmails(left : boolean){
-    let emailID:number = this.currentEmail.id;
-    if (left && emailID < MailComponent.emails.length-1) {
+    let emailIterator = 0;
+    for (let i = 0; i < MailComponent.emails.length; i++){
+      if (MailComponent.emails[i].id == this.currentEmail.id)
+        emailIterator = i; 
+    }
+    if (left && emailIterator < MailComponent.emails.length-1) {
       this.selectionQueue = {};
-      emailID++;
-      this.selectionQueue[emailID.toString()] = this.emailsQueue[emailID.toString()];
-      this.currentEmail = this.emailsQueue[emailID.toString()];
-    } else if (!left && emailID > 0) {
+      emailIterator++;
+      this.selectionQueue[emailIterator] = this.emailsQueue[emailIterator];
+      this.currentEmail = this.emailsQueue[emailIterator];
+    } else if (!left && emailIterator > 0) {
       this.selectionQueue = {};
-      emailID--;
-      this.selectionQueue[emailID.toString()] = this.emailsQueue[emailID.toString()];
-      this.currentEmail = this.emailsQueue[emailID.toString()];
+      emailIterator--;
+      this.selectionQueue[emailIterator] = this.emailsQueue[emailIterator];
+      this.currentEmail = this.emailsQueue[emailIterator];
     }
   }
 
   async sortEmails(criterion : string){
-    this.apiService.getEmails(this.currentFolder, criterion).subscribe((response:any) => (MailComponent.emails = response.data));
+    this.apiService.getEmails(this.currentFolder, criterion).subscribe((response:any) => {MailComponent.emails = response.data;
+    });
     this.checkAll = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
@@ -433,6 +457,8 @@ export class MailComponent implements OnInit{
         MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
         this.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
+      console.log(MailComponent.emails);
+      console.log(this.emailsQueue);
     }, 200);
     this.emailVisible = false;
   }

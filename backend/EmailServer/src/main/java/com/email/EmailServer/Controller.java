@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:54040"})
+@CrossOrigin(origins = {})
 @RestController
 @RequestMapping("/Email")
 public class Controller {
@@ -51,6 +51,7 @@ public class Controller {
     @PostMapping("/SendEmail")
     @ResponseBody
     public String SendEmail(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("SendEmail",new JSONObject(data));
     }
 
@@ -89,5 +90,32 @@ public class Controller {
     public String DeleteContact(@RequestBody String data){
         return proxy.run("DeleteContact", new JSONObject(data));
     }
+
+    @PostMapping("/MoveEmail")
+    @ResponseBody
+    public String MoveEmail(@RequestBody String data){
+        return proxy.run("MoveEmail", new JSONObject(data));
+    }
+
+    @PostMapping("/SaveToDraft")
+    @ResponseBody
+    public String SaveToDraft(@RequestBody String data){
+
+        System.out.println(data);
+        return proxy.run("SaveToDraft", new JSONObject(data));
+    }
+
+    @DeleteMapping("/DeleteEmail")
+    @ResponseBody
+    public String DeleteEmail(@RequestBody String data){
+        return proxy.run("DeleteEmail", new JSONObject(data));
+    }
+
+    @PostMapping("/RestoreEmail")
+    @ResponseBody
+    public String RestoreEmail(@RequestBody String data){
+        return proxy.run("RestoreEmail", new JSONObject(data));
+    }
+
 
 }

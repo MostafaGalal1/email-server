@@ -167,35 +167,35 @@
       </div>
       <table class = "emails-table" [cellSpacing]="0" role="grid" aria-readonly="true" [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}">
         <tbody>
-            <tr *ngFor="let email of emailsQueue | keyvalue : returnZero | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.key">
+            <tr *ngFor="let email of getemails | paginate : {itemsPerPage : 50, currentPage : page}" [id]="email.id">
               <td>
                 <div class = "td-div" id = "table-check-div">
-                  <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.key)">
+                  <input type="checkbox" [checked]="checkAll" (change)="emailSelection($event, email.id)">
                 </div>
               </td>  
-              <td (click)="previewEmail(email.key)">
+              <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-sender-div">
-                  {{email.value.sender}} 
+                  {{email.sender}} 
                 </div> 
               </td>
-              <td (click)="previewEmail(email.key)">
+              <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-receivers-div">
-                  {{email.value.receivers}} 
+                  {{email.receivers}} 
                 </div>
               </td>  
-              <td (click)="previewEmail(email.key)">
+              <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-subject-div">
-                  {{email.value.subject}} 
+                  {{email.subject}} 
                 </div> 
               </td>  
-              <td (click)="previewEmail(email.key)">
+              <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-body-div">
-                  {{email.value.body}} 
+                  {{email.body}} 
                 </div> 
               </td>  
-              <td (click)="previewEmail(email.key)">
+              <td (click)="previewEmail(email.id)">
                 <div class = "td-div" id = "table-date-div">
-                  {{email.value.date | date: (email.value.date.getDate() === nowDate.getDate())? 'h:mm a':'MMM d'}}
+                  {{email.date | date: (email.date.getDate() == nowDate.getDate())? 'h:mm a':'MMM d'}}
                 </div>
               </td>  
             </tr>  

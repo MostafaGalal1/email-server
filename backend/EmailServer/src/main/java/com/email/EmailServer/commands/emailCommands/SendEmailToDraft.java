@@ -9,10 +9,10 @@ public class SendEmailToDraft implements ICommand
     private String userAddress;
     private JSONObject email;
 
-    public SendEmailToDraft(String userAdress, JSONObject data)
+    public SendEmailToDraft(JSONObject Data)
     {
-        this.userAddress = userAdress;
-        this.email = data;
+        this.userAddress = Data.getString("sender");
+        this.email = Data;
     }
 
     @Override

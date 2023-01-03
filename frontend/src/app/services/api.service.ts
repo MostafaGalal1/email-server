@@ -70,4 +70,8 @@ export class ApiService {
     return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
   }
 
+  saveToDraft(email:emailToSend): Observable<Object> {
+    return this.http.post<Object>('http://localhost:8080/Email/SaveToDraft', email);
+  }
+
 }

@@ -16,5 +16,4 @@ public class Proxy {
         return commandFactory.create(command,data).execute().toString();
     }
 
-
 }
