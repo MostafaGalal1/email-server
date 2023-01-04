@@ -16,7 +16,7 @@ export class ComposeBoxComponent implements OnInit {
   static subject : string ="";
   static message : string ="";
   static priority : string = '';
-  private formData: FormData = new FormData;
+  private formData: FormData = new FormData();
   file : File[] = [];
 
   email : emailToSend = {
@@ -26,7 +26,7 @@ export class ComposeBoxComponent implements OnInit {
     subject:"",
     priority : 2,
     id : -1,
-    attachments : new FormData
+    attachments : this.formData
   };
 
   static to : string = "" ;
@@ -47,11 +47,17 @@ export class ComposeBoxComponent implements OnInit {
     this.email.receivers =(<HTMLInputElement>document.getElementById("to")).value.split(", ");
     this.email.subject = (<HTMLInputElement>document.getElementById("subject-message"))!.value;
     this.email.id = ComposeBoxComponent.id;
-    this.email.attachments = this.formData;
     this.email.sender =  localStorage.getItem('currentUser') + "";
+    
+    this.formData.append("body", this.email.body);
+    this.formData.append("sender", this.email.sender);
+
     console.log(this.email);
 
-    this.apiService.sendEmail(this.email);
+      for(var pair of this.formData.entries()) {
+        console.log(pair[0]+', '+pair[1]);
+      }
+    this.apiService.sendEmail(this.formData);
     ComposeBoxComponent.id = -1;
     MailComponent.compose = false;
   } 
@@ -70,7 +76,6 @@ export class ComposeBoxComponent implements OnInit {
 
 
     this.email.attachments = this.formData;
-
     console.log(this.email.attachments)
     MailComponent.compose = false;
     this.apiService.saveToDraft(this.email).subscribe();

@@ -1,9 +1,12 @@
 package com.email.EmailServer.DatabaseModels;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
+
+import com.email.EmailServer.DatabaseModels.Repos.JSONObjectConverter;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.annotations.Type;
+import org.json.JSONObject;
 
 @Getter
 @Setter
@@ -20,15 +23,16 @@ public class Attachment {
     @JoinColumn(name="email_id", nullable = false)
     private Email email;
 
-    @Column(name = "attachment_data", length = 512)
-    private MultipartFile file;
+    @Convert(converter = JSONObjectConverter.class)
+    @Column(name = "attachment_data", length = 100000)
+    private JSONObject file;
 
     private Attachment(){
 
     }
 
-    public Attachment(MultipartFile MultipartFile, Email Email){
-        this.file = MultipartFile;
+    public Attachment(JSONObject JsonData, Email Email){
+        this.file = JsonData;
         this.email = Email;
         ServerSystem.AddAttachmentToDataBase(this);
     }

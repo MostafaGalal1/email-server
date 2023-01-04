@@ -76,16 +76,27 @@ export class ApiService {
   }
 
   sortEmails(folder : string, criteria : string): Observable<Email[]> {
-    return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
+    return this.http.get<Email[]>('http://localhost:8080/Email/' + folder + '/sort/' + criteria);
   }
 
-  sendEmail(email:emailToSend) {
-    console.log(email);
-    axios.post('http://localhost:8080/Email/SendEmail', email, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
+  async sendEmail(formData : FormData) {
+    alert(JSON.stringify(formData))
+  formData.append("zbsddgdy", "file");
+    let formDataObject = Object.fromEntries(formData.entries());
+  // Format the plain form data as JSON
+  let formD = JSON.stringify(formDataObject);
+  let fetchOptions = {
+    //HTTP method set to POST.
+    method: "POST",
+    //Set the headers that specify you're sending a JSON body request and accepting JSON response
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    // POST request body as JSON string.
+    body: formD,
+  };
+    let res = await fetch('http://localhost:8080/Email/SendEmail',fetchOptions);
+    console.log(res)
   }
 
   saveToDraft(email:emailToSend): Observable<Object> {
