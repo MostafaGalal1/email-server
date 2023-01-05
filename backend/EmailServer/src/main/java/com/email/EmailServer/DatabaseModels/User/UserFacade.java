@@ -355,7 +355,8 @@ public class UserFacade
     {
         this.MoveEmailToFolder(this.user.SentName, EmailID);
     }
-    private void MoveEmailToDraft(long EmailID)
+    private void
+    MoveEmailToDraft(long EmailID)
     {
         this.MoveEmailToFolder(this.user.DraftName, EmailID);
     }

@@ -35,16 +35,3 @@ public class GetFolderEmails implements ICommand
     }
 }
 
-
-/*
-
-{"userName":"fgdgdfgdfdg", "currentFolder"
-:"" "sender":"rgrergegr", "recievers":"["dgre","gergrege","gregreg","regrgerge"]", "priority":3, "attachment":false, "subject":"", "Date":"dfddd"
-"body": "anyword"
- "sortOption": "byDate"}
-
-{"userName":"fgdgdfgdfdg", "currentFolder":"",
-
-
-
- */

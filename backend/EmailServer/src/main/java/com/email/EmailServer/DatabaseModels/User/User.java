@@ -196,7 +196,8 @@ public class User
         DatabaseDriver.AddUserToDataBase(this);
     }
     protected List<JSONObject> GetAllContactsJson(){
-        Set<String> names = this.contacts.keySet();
+        String[] names =  this.contacts.keySet().toArray(new String[0]);
+        Arrays.sort(names);
         List<JSONObject> contactJsons = new ArrayList<>();
         for(String contactName : names ) {
             JSONObject contactJson = this.GetContactJson(contactName);

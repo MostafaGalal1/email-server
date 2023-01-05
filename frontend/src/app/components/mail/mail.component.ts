@@ -539,8 +539,8 @@ export class MailComponent implements OnInit{
     } else if (!left && emailIterator > 0) {
       this.selectionQueue = {};
       emailIterator--;
-      this.selectionQueue[MailComponent.emails[emailIterator].id] = MailComponent.emails[emailIterator];
-      this.currentEmail = MailComponent.emails[emailIterator];
+      this.selectionQueue[emailIterator] = MailComponent.emailsQueue[emailIterator];
+      this.currentEmail = MailComponent.emailsQueue[emailIterator];
     }
   }
 
@@ -577,7 +577,6 @@ export class MailComponent implements OnInit{
   }
 
   darkModeToggle(): void {
-    alert('sfsgg');
   }
 
   async checkRadio(radio : string){
