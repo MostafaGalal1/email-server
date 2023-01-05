@@ -116,8 +116,8 @@
       </div>
       <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : (emailVisible||contactVisible)? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
       <button class = "select-button" #selectButton [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
-      <div class="dropdown" (clickOutside)="cancelFilter()">
-        <div class="dropdown-content" id="filterMenu">
+      <div class="dropdown">
+        <div class="dropdown-content" id="filterMenu" (clickOutside)="cancelFilter()">
           <a (click)="sortEmails('Date')">Date</a>
           <a (click)="sortEmails('Priority')">Priority</a>
         </div>
@@ -125,10 +125,10 @@
       </div>
       <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
       <div class="dropdown">
-        <div class="dropdown-content">
+        <div class="dropdown-content" id="folderMenu" (clickOutside)="cancelFolders()">
           <a *ngFor="let list of getfolders" (click)="moveEmails(list)">{{list}}</a>
         </div>
-        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0 && currentFolder !== 'Trash'" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
+        <button class = "move-button" #moveButton (click)="viewFolders()" *ngIf="getfolders.length > 0 && currentFolder !== 'Trash'" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
       </div>
       <button class = "restore-button" #restoreButton *ngIf="currentFolder === 'Trash'" (click)="restoreEmails()" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">restore_from_trash</span></button>
       <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>

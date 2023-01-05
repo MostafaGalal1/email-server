@@ -146,8 +146,25 @@ export class MailComponent implements OnInit{
     }, 5);
   }
 
+  async viewFolders(){
+    var temp = <HTMLInputElement>document.getElementById("folderMenu");
+    setTimeout(() => {
+      if(temp.style.display === 'block')
+        temp.style.display = 'none';
+      else{
+        temp.style.display = 'block'
+      }
+    }, 5);
+  }
+
   async cancelFilter(){
     var temp = <HTMLInputElement>document.getElementById("filterMenu");
+    temp.style.display = 'none';
+  }
+
+
+  async cancelFolders(){
+    var temp = <HTMLInputElement>document.getElementById("folderMenu");
     temp.style.display = 'none';
   }
 
@@ -224,7 +241,6 @@ export class MailComponent implements OnInit{
         delete MailComponent.emailsQueue[emailID];
         delete this.selectionQueue[emailID];
       }
-      console.log(1);
     } else {
       for(const emailID in this.selectionQueue){
         this.apiService.deleteEmail(emailID).subscribe(() => {
@@ -249,6 +265,7 @@ export class MailComponent implements OnInit{
       }
     });
     this.checkAll = false;
+    this.contactVisible = false;
     this.emailVisible = false;
     this.buttonsVisible = false;
   }
@@ -421,8 +438,9 @@ export class MailComponent implements OnInit{
         MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
       }
     });
+    this.contactVisible = false;
     this.emailVisible = false;
-    console.log(MailComponent.emails);
+    this.buttonsVisible = false;
   }
 
   async refreshEmails(){
@@ -475,12 +493,14 @@ export class MailComponent implements OnInit{
   async previewContact(index : number){
     this.currentContact = MailComponent.contacts[index];
     this.contactVisible = true;
-    this.buttonsVisible = true;
+    this.emailVisible = false;
+    this.buttonsVisible = false;
+    this.selectionQueue = {};
   }
 
   async backToFolder(){
-    this.emailVisible = false;
     this.contactVisible = false;
+    this.emailVisible = false;
     this.buttonsVisible = false;
     this.selectionQueue = {};
   }
