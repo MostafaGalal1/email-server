@@ -3,14 +3,14 @@ package com.email.EmailServer.DatabaseModels.Email;
 import com.email.EmailServer.DatabaseModels.Attachment;
 import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import jakarta.persistence.*;
 import lombok.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Setter
 @Getter
@@ -67,7 +67,7 @@ public class Email{
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
         DatabaseDriver.AddEmailToDatabase(this);
-        List<JSONObject> Files = new Gson().fromJson(jsonObject.getJSONArray("receivers").toString(), List.class);
+        JSONArray Files = jsonObject.getJSONArray("attachments");
         this.attachments = this.CreateAttachments(Files);
     }
 
@@ -86,15 +86,15 @@ public class Email{
         jsonObject.put("receivers", this.receiversAddress);
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
-        jsonObject.put("date", this.dateOfEmail.toInstant());////////////// needs linking with frontend way of storage
+        jsonObject.put("date", this.dateOfEmail.toInstant());
 
         return jsonObject;
     }
 
-    private List<Attachment> CreateAttachments(List<JSONObject> Files){
+    private List<Attachment> CreateAttachments(JSONArray Files){
         List<Attachment> Attachments = new ArrayList<>();
-        for(JSONObject file : Files){
-            Attachment attachment = new Attachment(file, this);
+        for(int index = 0; index < Files.length(); index++){
+            Attachment attachment = new Attachment(Files.getJSONObject(index), this);
             Attachments.add(attachment);
         }
         return Attachments;
@@ -105,14 +105,14 @@ public class Email{
         return DatabaseDriver.GetEmailByID(ID);
     }
 
-    /////////////////////////////////////////////////////////////
-    public void getJsonOfEmail() //Needs adding attachment to json ///////////////////////////////////////////////////
-    {
-        JSONObject jsonObject = this.getJsonOfHeader();
-
-        jsonObject.put("content", this.getContent());
-        // goda haiekteb el attachment
-    }
+   public List<JSONObject> GetJsonAttachments(){
+        List<JSONObject> Attachments = new ArrayList<>();
+        for (Attachment attachment : this.attachments){
+            JSONObject jsonObject = attachment.getFile();
+            Attachments.add(jsonObject);
+        }
+        return Attachments;
+   }
 
     private void SetContentSet()
     {

@@ -43,6 +43,7 @@ public class CommandFactory {
             case "deleteemail"-> command = new DeleteEmailPermanently(Data);
             case "restoreemail"-> command = new RestoreEmailFromTrash(Data);
             case "movetotrash"-> command = new MoveEmailToTrash(Data);
+            case "getattachments"-> command = new GetAttachments(Data);
         }
         return command;
     }

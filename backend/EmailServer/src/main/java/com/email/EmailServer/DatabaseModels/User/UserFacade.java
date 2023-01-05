@@ -75,6 +75,12 @@ public class UserFacade
         return this.SearchAndSortEmails(FolderName, andCriteria, SortOption);
     }
 
+    public List<JSONObject> GetEmailAttachmentsById(Long ID){
+        Email email = Email.getExistingEmailByID(ID);
+        List<JSONObject> Attachments = email.GetJsonAttachments();
+        return Attachments;
+    }
+
     private List<JSONObject> SearchAndSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
     {
         List<Email> Emails = this.GetAllFolderEmails(FolderName);

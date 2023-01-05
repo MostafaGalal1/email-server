@@ -3,6 +3,7 @@ package com.email.EmailServer.DatabaseModels;
 import com.email.EmailServer.DatabaseModels.Email.Email;
 
 import com.email.EmailServer.DatabaseModels.Repos.JSONObjectConverter;
+import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
