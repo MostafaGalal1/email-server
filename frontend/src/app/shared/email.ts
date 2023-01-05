@@ -5,19 +5,7 @@ export interface Email {
     date : Date;
     subject : string;
     body : string;
-    attachments : Attachment[]
-
-}
-
-
-export interface emailToSend {
-    sender : string;
-    receivers : string[];
-    subject : string;
-    body : string;
-    priority : number,
-    id : number,
-    attachments : FormData
+    priority : number;
 }
 
 export interface Attachment {

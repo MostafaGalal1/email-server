@@ -1,8 +1,13 @@
 package com.email.EmailServer;
 
+import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @CrossOrigin(origins = {})
@@ -51,11 +56,16 @@ public class Controller {
 
     @PostMapping("/SendEmail")
     @ResponseBody
-    public String sendMail( @RequestPart(name ="files",required = false) MultipartFile[] data,
-                            @RequestParam(name = "sender") String sender
-                            @RequestParam(name ="sender") String sender) {
-        System.out.println(data);
-        return proxy.run("SendEmail",new JSONObject(data));
+    public String SendEmail(@RequestPart(name ="files",required = false) MultipartFile[] Files, @RequestParam(name ="mail") String data) {
+        System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println(Files + " " + data);
+        System.out.println();
+        System.out.println();System.out.println();
+        System.out.println();
+
+        List<JSONObject> jsonFiles = this.CreateJsonAttachments(Files);
+        JSONObject jsonData = new JSONObject(data).put("attachments",jsonFiles);
+        return proxy.run("SendEmail",jsonData);
     }
 
     @PostMapping("/GetFolderEmails")
@@ -103,7 +113,6 @@ public class Controller {
     @PostMapping("/SaveToDraft")
     @ResponseBody
     public String SaveToDraft(@RequestBody String data){
-
         System.out.println(data);
         return proxy.run("SaveToDraft", new JSONObject(data));
     }
@@ -126,5 +135,26 @@ public class Controller {
         return proxy.run("MoveToTrash", new JSONObject(data));
     }
 
+    private List<JSONObject> CreateJsonAttachments(MultipartFile[] Files){
+        List<JSONObject> jsonFiles = new ArrayList<>();
+        if (Files == null)
+            return jsonFiles;
+        for (MultipartFile file: Files){
+            JSONObject jsonData = this.ExtractData(file);
+            jsonFiles.add(jsonData);
+        }
+        return jsonFiles;
+    }
+    private JSONObject ExtractData(MultipartFile file){
+        try {
+            JSONObject jsonData = new JSONObject();
+            jsonData.put("link",file.getBytes());
+            jsonData.put("name",file.getOriginalFilename());
+            jsonData.put("type",file.getContentType());
+            return jsonData;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

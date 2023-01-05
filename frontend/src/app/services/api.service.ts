@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { Observable } from 'rxjs';
-import { Email, emailToSend } from '../shared/email';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Email } from '../shared/email';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,18 @@ import { Email, emailToSend } from '../shared/email';
 export class ApiService {
 
   constructor(private http: HttpClient) {  }
-  
+
+  draftID = new BehaviorSubject(-1);
+  draftID$ = this.draftID.asObservable();
+
+  getDraft(): Observable<number> {
+      return this.draftID$;
+  }
+
+  setDraft(id : number) {
+      this.draftID.next(id);
+  }
+
   searchEmails(folder : string, criterion : string, searchForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/Email/SearchInFolder', {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion, "searchForm":searchForm});
   }
@@ -79,27 +90,11 @@ export class ApiService {
     return this.http.get<Email[]>('http://localhost:8080/Email/' + folder + '/sort/' + criteria);
   }
 
-  async sendEmail(formData : FormData) {
-    alert(JSON.stringify(formData))
-  formData.append("zbsddgdy", "file");
-    let formDataObject = Object.fromEntries(formData.entries());
-  // Format the plain form data as JSON
-  let formD = JSON.stringify(formDataObject);
-  let fetchOptions = {
-    //HTTP method set to POST.
-    method: "POST",
-    //Set the headers that specify you're sending a JSON body request and accepting JSON response
-    headers: {
-      "Content-Type": "multipart/form-data"
-    },
-    // POST request body as JSON string.
-    body: formD,
-  };
-    let res = await fetch('http://localhost:8080/Email/SendEmail',fetchOptions);
-    console.log(res)
+  sendEmail(email:FormData): Observable<Object> {
+    return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
   }
 
-  saveToDraft(email:emailToSend): Observable<Object> {
+  saveToDraft(email:object): Observable<Object> {
     return this.http.post<Object>('http://localhost:8080/Email/SaveToDraft', email);
   }
 
