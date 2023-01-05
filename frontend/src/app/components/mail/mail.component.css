@@ -449,6 +449,7 @@ tr:hover:not(.table-headers){
 .fsublist-div{
   display: block;
   position: relative;
+  overflow: visible!important;
   width: 132px;
   border-radius: 100px;
   padding: 1px 6px;
@@ -549,6 +550,12 @@ tr:hover:not(.table-headers){
 .folders-div ul, .contacts-div ul{
   padding-inline-start: 16px;
   padding-top: 4px;
+  overflow: visible;
+}
+
+.folders-div li, .contacts-div li{
+  list-style-type: none;
+  overflow: visible;
 }
 
 .dropdown {
@@ -593,9 +600,12 @@ input[type="radio"]:checked + .options-div{
 }
 
 .edit-dropdown{
-  position: relative;
+  display: block;
+  position: absolute;
   align-self: center;
   z-index: 1;
+  height: 60px;
+  width: 120px;
 }
 
 .edit-content{
@@ -603,7 +613,6 @@ input[type="radio"]:checked + .options-div{
   color: black;
   background-color: var(--hover);
   margin-top: 0px;
-  position: fixed;
   margin-left: 64px;
   box-shadow:
     2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
