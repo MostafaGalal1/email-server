@@ -9,9 +9,14 @@ export interface Email {
 }
 
 export interface Attachment {
-    link : string,
+    link : number[],
     name : string,
     type : string
+}
+
+export interface newAttachment {
+    link : string,
+    name : string,
 }
 
 

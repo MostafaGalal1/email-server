@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Email } from '../shared/email';
+import { Attachment, Email } from '../shared/email';
 
 @Injectable({
   providedIn: 'root'
@@ -93,8 +93,12 @@ export class ApiService {
     return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
   }
 
-  saveToDraft(email:object): Observable<Object> {
+  saveToDraft(email:FormData): Observable<Object> {
     return this.http.post<Object>('http://localhost:8080/Email/SaveToDraft', email);
+  }
+
+  getattachemt(id : number): Observable<Object>{
+    return this.http.post<object>( "http://localhost:8080/Email/GetAttachments" , {"username" : localStorage.getItem('currentUser')  ,   "id" : id});
   }
 
 }

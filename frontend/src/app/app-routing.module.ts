@@ -6,7 +6,7 @@ import { SignupComponent } from './components/signup';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'mail', component: MailComponent},
+  { path: 'mail', component: MailComponent  , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: '**', redirectTo: 'login' }

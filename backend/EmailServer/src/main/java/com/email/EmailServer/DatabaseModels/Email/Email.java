@@ -67,6 +67,7 @@ public class Email{
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
         DatabaseDriver.AddEmailToDatabase(this);
+        System.out.println(jsonObject);
         JSONArray Files = jsonObject.getJSONArray("attachments");
         this.attachments = this.CreateAttachments(Files);
     }
