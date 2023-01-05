@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
   
   validateData():boolean{
     let valid = true;
-    console.log(this.username);
     if (this.username.value === "" && this.password.value === ""){
       this.error.innerText = "Enter username and password";
       valid = false;

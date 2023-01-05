@@ -43,12 +43,10 @@ export class ContactBoxComponent implements OnInit {
         }
       });
     }else{
-      console.log("hello");
       if(this.contactForm.value.contactName! === MailComponent.contacts[MailComponent.indexContact].name && this.contactForm.value.addresses! === MailComponent.contacts[MailComponent.indexContact].name ) // compare the usercontactName also
         return;
       
-      let tmp = {} as Contact
-      console.log("hello2")
+      let tmp = {} as Contact;
       tmp.name = this.contactForm.value.contactName!;
       let tmpAddresses = <string>this.contactForm.value.addresses!; 
       this.contactForm.value.oldName = MailComponent.contacts[MailComponent.indexContact].name;
@@ -56,7 +54,6 @@ export class ContactBoxComponent implements OnInit {
       //MailComponent.contacts[MailComponent.indexContact].name = tmp.name;
       //MailComponent.contacts[MailComponent.indexContact].mails = tmp.mails;
       MailComponent.contactBoxVisible = false;
-      console.log(this.contactForm.value);
       this.apiService.editContact(this.contactForm.value).subscribe();
     }
   }

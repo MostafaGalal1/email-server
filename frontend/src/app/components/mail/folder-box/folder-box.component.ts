@@ -26,7 +26,6 @@ export class FolderBoxComponent implements OnInit {
   });
   static namee : string = "";
   onSubmit(event:any){
-    console.log("asdasda");
     if(MailComponent.editOrCeate_folder== false){  
       if(this.folderForm.value.folderName! === "")
         return;
@@ -39,7 +38,6 @@ export class FolderBoxComponent implements OnInit {
         }
       });
     }else{
-      console.log("hello");
       if(this.folderForm.value.folderName! === MailComponent.folders[MailComponent.indexFolder])
         return;
       var oldName = MailComponent.folders[MailComponent.indexFolder];
