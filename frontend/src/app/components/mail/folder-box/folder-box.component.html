@@ -1,6 +1,6 @@
 <div class="folder-box" >
     <div class="info-div">
-        <span class="info-slabel"><label>New Folder</label></span>
+        <span class="info-slabel" id="foldername">New Folder</span>
         <button class="close-button" type = "button" (click)="closeFolderBox()"><span class="material-symbols-outlined">close</span></button>
     </div>
     <form [formGroup]="folderForm" (ngSubmit)="onSubmit($event)">

@@ -160,3 +160,9 @@
   padding: 0;
   border: 1px;
 }
+
+
+.info-slabel{
+    font-size: large!important;
+    color:var(--secondary)!important;
+  }

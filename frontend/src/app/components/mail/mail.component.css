@@ -593,7 +593,7 @@ input[type="radio"]:checked + .options-div{
 }
 
 .edit-dropdown{
-  position: relative;
+  position:relative;
   align-self: center;
   z-index: 1;
 }
@@ -627,4 +627,10 @@ input[type="radio"]:checked + .options-div{
 .dropdown-content a:hover {
   background: white;
   color: var(--primary);
+}
+
+
+.info-slabel{
+  font-size: large!important;
+  color:var(--secondary)!important;
 }

@@ -300,11 +300,18 @@ export class MailComponent implements OnInit{
     MailComponent.editOrCeate_folder = i;
     if(i == true){
       MailComponent.indexFolder = index;
-      FolderBoxComponent.namee = MailComponent.folders[index]
+      FolderBoxComponent.namee = MailComponent.folders[index];
+      (document.getElementById("foldername")!.textContent) = "Edit Folder";
+
+    }else{
+      (document.getElementById("foldername")!.textContent) = "New Folder";
+      FolderBoxComponent.namee = "";
     }
     if (MailComponent.folderBoxVisible)
       return;
     setTimeout(() => {
+      
+      
       MailComponent.folderBoxVisible = true;
     });
   }
@@ -315,6 +322,7 @@ export class MailComponent implements OnInit{
       MailComponent.indexContact = index;
       ContactBoxComponent.namee = MailComponent.contacts[index].name
       ContactBoxComponent.mailss = "";
+
       for(var ii = 0 ; ii < MailComponent.contacts[Number(index)].mails?.length;ii++){
         if(ii != MailComponent.contacts[Number(index)].mails[ii]?.length-1)
           ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] + ", ";
@@ -322,10 +330,16 @@ export class MailComponent implements OnInit{
           ContactBoxComponent.mailss += MailComponent.contacts[Number(index)].mails[ii] ;
         }
       }
+      (document.getElementById("contactname")!.textContent) = "Edit Contact";
+    }else{
+      (document.getElementById("contactname")!.textContent) = "Create Contact";
+      ContactBoxComponent.namee = "";
+      ContactBoxComponent.mailss = "";
     }
     if (MailComponent.contactBoxVisible)
       return;
     setTimeout(() => {
+      
       MailComponent.contactBoxVisible = true;
     });
   }
@@ -591,6 +605,7 @@ export class MailComponent implements OnInit{
 
   
   addAttachments(){
+    
     for(var i = 0 ;i < this.attachs2.length ; i++){
       
       this.attachs2[i].link =  "data:".concat(this.attachs[i].type).concat(";base64,").concat(this.attachs2[i].link);
