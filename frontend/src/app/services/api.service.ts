@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import axios from 'axios';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Email } from '../shared/email';
 

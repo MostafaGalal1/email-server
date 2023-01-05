@@ -57,15 +57,16 @@ export class MailComponent implements OnInit{
   If you have any questions, please feel free to ask me on the pages of Codeforces. If you no longer wish to receive these emails, click https://codeforces.com/unsubscribe/contests/efa30bad32b237fb5d0a0a309237837163a097b8/ to unsubscribe.
   Wish you high rating,
   MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57"), priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+  
+  {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
     {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), priority:-1}];
   static emailsQueue: {[id : number] : Email};
   protected attachs : string[] = [];
@@ -132,6 +133,22 @@ export class MailComponent implements OnInit{
     setTimeout(() => {
       this.searchColor = "white";
     }, 250);
+  }
+
+  async viewFilter(){
+    var temp = <HTMLInputElement>document.getElementById("filterMenu");
+    setTimeout(() => {
+      if(temp.style.display === 'block')
+        temp.style.display = 'none';
+      else{
+        temp.style.display = 'block'
+      }
+    }, 5);
+  }
+
+  async cancelFilter(){
+    var temp = <HTMLInputElement>document.getElementById("filterMenu");
+    temp.style.display = 'none';
   }
 
   async darkenBar(){
@@ -333,7 +350,6 @@ export class MailComponent implements OnInit{
   }
 
   get getFolderVisible() {
-
     return MailComponent.folderBoxVisible;
   }
   
@@ -355,34 +371,18 @@ export class MailComponent implements OnInit{
   }
 
   async moveEmails(folder : string){
-    if (MailComponent.currentFolder !== "Trash"){
-      for(const emailID in this.selectionQueue){
-        this.apiService.moveEmail(folder, emailID).subscribe(() => {
-          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
-            MailComponent.emails = response.data;
-            for (let i = 0; i < MailComponent.emails.length; i++){
-              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
-              MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
-            }
-          });
+    for(const emailID in this.selectionQueue){
+      this.apiService.moveEmail(folder, emailID).subscribe(() => {
+        this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+          MailComponent.emails = response.data;
+          for (let i = 0; i < MailComponent.emails.length; i++){
+            MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+            MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+          }
         });
-        delete MailComponent.emailsQueue[emailID];
-        delete this.selectionQueue[emailID];
-      }
-    } else {
-      for(const emailID in this.selectionQueue){
-        this.apiService.restoreEmail(emailID).subscribe(() => {
-          this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
-            MailComponent.emails = response.data;
-            for (let i = 0; i < MailComponent.emails.length; i++){
-              MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
-              MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
-            }
-          });
-        });
-        delete MailComponent.emailsQueue[emailID];
-        delete this.selectionQueue[emailID];
-      }
+      });
+      delete MailComponent.emailsQueue[emailID];
+      delete this.selectionQueue[emailID];
     }
     this.checkAll = false;
     this.emailVisible = false;
@@ -390,16 +390,16 @@ export class MailComponent implements OnInit{
   }
 
   async restoreEmails(){
-    this.apiService.restoreEmails().subscribe(() => {
-      this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
-        MailComponent.emails = response.data;
-        for (let i = 0; i < MailComponent.emails.length; i++){
-          MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
-          MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
-        }
-      });
-    });
     for(const emailID in this.selectionQueue){
+      this.apiService.restoreEmail(emailID).subscribe(() => {
+        this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
+          MailComponent.emails = response.data;
+          for (let i = 0; i < MailComponent.emails.length; i++){
+            MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+            MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+          }
+        });
+      });
       delete MailComponent.emailsQueue[emailID];
       delete this.selectionQueue[emailID];
     }
@@ -538,6 +538,14 @@ export class MailComponent implements OnInit{
 
   darkModeToggle(): void {
     alert('sfsgg');
+  }
+
+  async checkRadio(radio : string){
+    setTimeout(() => {
+      console.log(radio);
+      let temp = <HTMLInputElement>document.getElementById(radio);
+      temp.checked = true;
+    }, 10);
   }
 
   /*

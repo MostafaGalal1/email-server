@@ -6,6 +6,7 @@
 
 :root {
     --primary:#02A884;
+    --extra: #24724e;
     --secondary: #015A47;
     --primary_gradient: linear-gradient(160deg, #9ffbde 0%, #72FDDF 25%, #02A884 50%, #015A47 100%);
     --creamy:#f2f2f2f2;

@@ -29,19 +29,23 @@
         <span class="material-symbols-outlined">edit</span>
         <input type="button" class="button" value="Compose">
       </div>
-      <div class="options-div" (click)="getEmails('Inbox')">
+      <input type="radio" name = "mRadio" [id]="'m1'" checked="true" [ngStyle]="{'visibility':'hidden'}"/>
+      <div class="options-div" (click)="getEmails('Inbox');checkRadio('m1');">
         <span class="material-symbols-outlined">inbox</span>
         <input type="button" class="button" value="Inbox">
       </div>
-      <div class="options-div" (click)="getEmails('Sent')">
+      <input type="radio" name = "mRadio" [id]="'m2'" [ngStyle]="{'visibility':'hidden'}"/>
+      <div class="options-div" (click)="getEmails('Sent');checkRadio('m2');">
         <span class="material-symbols-outlined">send</span>
         <input type="button" class="button" value="Sent">
       </div>
-      <div class="options-div" (click)="getEmails('Draft')">
+      <input type="radio" name = "mRadio" [id]="'m3'" [ngStyle]="{'visibility':'hidden'}"/>
+      <div class="options-div" (click)="getEmails('Draft');checkRadio('m3');">
         <span class="material-symbols-outlined">draft</span>
         <input type="button" class="button" value="Draft">
       </div>
-      <div class="options-div" (click)="getEmails('Trash')">
+      <input type="radio" name = "mRadio" [id]="'m4'" [ngStyle]="{'visibility':'hidden'}"/>
+      <div class="options-div" (click)="getEmails('Trash');checkRadio('m4');">
         <span class="material-symbols-outlined">delete</span>
         <input type="button" class="button" value="Trash">
       </div>
@@ -56,9 +60,10 @@
         <div class="folders-list">
           <ul *ngFor="let list of getfolders ; let i=index">
             <li>
+              <input type="radio" name = "mRadio" [id]="'f'+i" [ngStyle]="{'visibility':'hidden'}"/>
               <div class="fsublist-div" (clickOutside)="hideEditBox('edit-folder'+i)">
                 <span class="material-symbols-outlined">folder</span>
-                <input type="button" class="button" value={{list}} (click)="getEmails(list)">
+                <input type="button" class="button" value={{list}} (click)="getEmails(list);checkRadio('f'+i);">
                 <button class = "edit-button" #editButton (click)="showEditBox('edit-folder'+i)"  type = "button"><span class="material-symbols-outlined">more_vert</span>
                 </button>
                 <div class="edit-dropdown">
@@ -81,9 +86,10 @@
         <div class="contacts-list">
           <ul *ngFor="let list of getcontacts; let i=index">
             <li>
+              <input type="radio" name = "mRadio" [id]="'c'+i" [ngStyle]="{'visibility':'hidden'}"/>
               <div class="fsublist-div" (clickOutside)="hideEditBox('edit-contact'+i)">
                 <span class="material-symbols-outlined">account_circle</span>
-                <input type="button" class="button" value={{list.name}} (click)="previewContact(i)">
+                <input type="button" class="button" value={{list.name}} (click)="previewContact(i);checkRadio('c'+i);">
                 <button class = "edit-button" #editButton (click)="showEditBox('edit-contact'+i)" type = "button"><span class="material-symbols-outlined">more_vert</span></button>
                 <div class="edit-dropdown">
                   <div class="edit-content" id="edit-contact{{i}}">
@@ -110,20 +116,21 @@
       </div>
       <button class = "return-button" #returnButton type = "button" [ngStyle]="{'display' : (emailVisible||contactVisible)? '':'none'}" (click)="backToFolder()"><span class="material-symbols-outlined">keyboard_return</span></button>
       <button class = "select-button" #selectButton [ngStyle]="{'display' : !(emailVisible||contactVisible)? '':'none'}" type = "button" (click)="selectAll()"><span class="material-symbols-outlined">{{checkAll? "check_box":"check_box_outline_blank"}}</span></button>
-      <div class="dropdown">
-        <div class="dropdown-content">
+      <div class="dropdown" (clickOutside)="cancelFilter()">
+        <div class="dropdown-content" id="filterMenu">
           <a (click)="sortEmails('Date')">Date</a>
           <a (click)="sortEmails('Priority')">Priority</a>
         </div>
-        <button class = "filter-button" #filterButton [ngStyle]="{'display' : !(emailVisible||contactVisible) && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
+        <button class = "filter-button" #filterButton (click)="viewFilter()" [ngStyle]="{'display' : !(emailVisible||contactVisible) && !buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">filter_alt</span></button>
       </div>
       <button class = "delete-button" #deleteButton [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button" (click)="deleteEmail()"><span class="material-symbols-outlined">delete</span></button>
       <div class="dropdown">
         <div class="dropdown-content">
           <a *ngFor="let list of getfolders" (click)="moveEmails(list)">{{list}}</a>
         </div>
-        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0 || currentFolder === 'Trash'" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
+        <button class = "move-button" #moveButton *ngIf="getfolders.length > 0 && currentFolder !== 'Trash'" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">drive_file_move</span></button>
       </div>
+      <button class = "restore-button" #restoreButton *ngIf="currentFolder === 'Trash'" (click)="restoreEmails()" [ngStyle]="{'display' : buttonsVisible? '':'none'}" type = "button"><span class="material-symbols-outlined">restore_from_trash</span></button>
       <button class = "left-nav-button" #leftNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(false)"><span class="material-symbols-outlined">arrow_back_ios</span></button>
       <button class = "right-nav-button" #rightNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(true)"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
     </div>
