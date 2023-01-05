@@ -43,18 +43,18 @@ public class Folder{
         this.name = Name;
         this.type = Type;
         this.user = User;
-        ServerSystem.AddFolderToDataBase(this);
+        DatabaseDriver.AddFolderToDataBase(this);
     }
 
     public void DestroyFolder() // removes from database
     {
-        ServerSystem.RemoveFolderFromDataBase(this);
+        DatabaseDriver.RemoveFolderFromDataBase(this);
     }
 
     public void setName(String newName)
     {
         this.name = newName;
-        ServerSystem.AddFolderToDataBase(this);
+        DatabaseDriver.AddFolderToDataBase(this);
     }
 
     public boolean HasEmail(Long EmailID)
@@ -65,7 +65,7 @@ public class Folder{
     public void AddEmail(long EmailID)
     {
         this.emailsId.add(EmailID);
-        ServerSystem.AddFolderToDataBase(this);
+        DatabaseDriver.AddFolderToDataBase(this);
     }
 
     public boolean isPrimary()
@@ -79,7 +79,7 @@ public class Folder{
             return false;
 
         this.emailsId.remove(EmailID);
-        ServerSystem.AddFolderToDataBase(this);
+        DatabaseDriver.AddFolderToDataBase(this);
         return true;
     }
 

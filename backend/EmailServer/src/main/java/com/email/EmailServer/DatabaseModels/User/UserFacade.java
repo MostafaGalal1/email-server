@@ -5,7 +5,7 @@ import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
 import com.email.EmailServer.SearchingAndSorting.Filter.AndCriteria;
 import com.email.EmailServer.SearchingAndSorting.Filter.EmailCriteria;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import com.email.EmailServer.SearchingAndSorting.Filter.FiltersExtracter;
 import com.email.EmailServer.SearchingAndSorting.SortingEmails;
 import com.google.gson.Gson;
@@ -21,7 +21,7 @@ public class UserFacade
 
     public UserFacade(String UserAddress)
     {
-        User user = ServerSystem.GetUserByAddress(UserAddress);
+        User user = DatabaseDriver.GetUserByAddress(UserAddress);
         this.user = user;
     }
 
@@ -73,6 +73,12 @@ public class UserFacade
 
         AndCriteria andCriteria = new AndCriteria(new ArrayList<>());
         return this.SearchAndSortEmails(FolderName, andCriteria, SortOption);
+    }
+
+    public List<JSONObject> GetEmailAttachmentsById(Long ID){
+        Email email = Email.getExistingEmailByID(ID);
+        List<JSONObject> Attachments = email.GetJsonAttachments();
+        return Attachments;
     }
 
     private List<JSONObject> SearchAndSortEmails(String FolderName, EmailCriteria filterCriteria, String SortOption)
@@ -300,13 +306,13 @@ public class UserFacade
     }
 
     public static boolean CreateNewUser(String firstName, String lastName, String username, String password){
-        if(ServerSystem.GetUserByAddress(username) != null) return false;
+        if(DatabaseDriver.GetUserByAddress(username) != null) return false;
         new User(firstName, lastName, username, password);
         return true;
     }
 
     public static boolean ValidateUser(String username, String password){
-        User user = ServerSystem.GetUserByAddress(username);
+        User user = DatabaseDriver.GetUserByAddress(username);
         if(user == null) return false;
         if(!user.getPassword().equals(password)) return false;
         return true;
@@ -359,7 +365,7 @@ public class UserFacade
     }
     private boolean CheckUserFoundInDataBase(String UserAdress)
     {
-        User testUser = ServerSystem.GetUserByAddress(UserAdress);
+        User testUser = DatabaseDriver.GetUserByAddress(UserAdress);
         if (testUser == null)
             return false;
         else

@@ -2,10 +2,7 @@ package com.email.EmailServer.SearchingAndSorting;
 
 import com.email.EmailServer.DatabaseModels.Email.Email;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class SortingEmails
 {
@@ -38,6 +35,8 @@ public class SortingEmails
             Email email = queue.poll();
             newList.add(email);
         }
+
+        Collections.reverse(newList);
 
         this.Emails = newList;
     }

@@ -1,16 +1,16 @@
 package com.email.EmailServer.DatabaseModels.Email;
 
 import com.email.EmailServer.DatabaseModels.Attachment;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import jakarta.persistence.*;
 import lombok.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Setter
 @Getter
@@ -55,7 +55,7 @@ public class Email{
         this.buildEmail(jsonObject);
         this.SetContentSet();
 
-        ServerSystem.AddEmailToDatabase(this);
+        DatabaseDriver.AddEmailToDatabase(this);
     }
 
     private void buildEmail(JSONObject jsonObject)
@@ -66,12 +66,15 @@ public class Email{
         this.content = jsonObject.getString("body");
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
-        ////////////////////// attachment//////////////////////////////////
+        DatabaseDriver.AddEmailToDatabase(this);
+        JSONArray Files = jsonObject.getJSONArray("attachments");
+        this.attachments = this.CreateAttachments(Files);
     }
 
     public void UpdateEmail(JSONObject jsonObject){
         this.buildEmail(jsonObject);
-        ServerSystem.AddEmailToDatabase(this);
+        this.SetContentSet();
+        DatabaseDriver.AddEmailToDatabase(this);
     }
 
     public JSONObject getJsonOfHeader()
@@ -83,23 +86,33 @@ public class Email{
         jsonObject.put("receivers", this.receiversAddress);
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
-        jsonObject.put("date", this.dateOfEmail.toInstant());////////////// needs linking with frontend way of storage
+        jsonObject.put("date", this.dateOfEmail.toInstant());
+
         return jsonObject;
+    }
+
+    private List<Attachment> CreateAttachments(JSONArray Files){
+        List<Attachment> Attachments = new ArrayList<>();
+        for(int index = 0; index < Files.length(); index++){
+            Attachment attachment = new Attachment(Files.getJSONObject(index), this);
+            Attachments.add(attachment);
+        }
+        return Attachments;
     }
 
     public static Email getExistingEmailByID(long ID)
     {
-        return ServerSystem.GetEmailByID(ID);
+        return DatabaseDriver.GetEmailByID(ID);
     }
 
-    /////////////////////////////////////////////////////////////
-    public void getJsonOfEmail() //Needs adding attachment to json ///////////////////////////////////////////////////
-    {
-        JSONObject jsonObject = this.getJsonOfHeader();
-
-        jsonObject.put("content", this.getContent());
-        // goda haiekteb el attachment
-    }
+   public List<JSONObject> GetJsonAttachments(){
+        List<JSONObject> Attachments = new ArrayList<>();
+        for (Attachment attachment : this.attachments){
+            JSONObject jsonObject = attachment.getFile();
+            Attachments.add(jsonObject);
+        }
+        return Attachments;
+   }
 
     private void SetContentSet()
     {
@@ -116,12 +129,8 @@ public class Email{
         return this.contentSet.contains(Word);
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public boolean HashAttachment()
     {
-        if (obj instanceof Email) return false;
-
-        Email OtherEmail = (Email) obj;
-        return (this.getId() == OtherEmail.getId());
+        return (this.attachments.size() > 0);
     }
 }

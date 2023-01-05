@@ -3,9 +3,9 @@ package com.email.EmailServer.DatabaseModels;
 import com.email.EmailServer.DatabaseModels.Email.Email;
 
 import com.email.EmailServer.DatabaseModels.Repos.JSONObjectConverter;
+import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.json.JSONObject;
 
 @Getter
@@ -34,6 +34,6 @@ public class Attachment {
     public Attachment(JSONObject JsonData, Email Email){
         this.file = JsonData;
         this.email = Email;
-        ServerSystem.AddAttachmentToDataBase(this);
+        DatabaseDriver.AddAttachmentToDataBase(this);
     }
 }

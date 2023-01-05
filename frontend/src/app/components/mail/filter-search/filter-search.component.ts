@@ -11,7 +11,7 @@ import { MailComponent } from '../mail.component';
 })
 export class FilterSearchComponent implements OnInit {
 
-  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) { 
+  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) {
   }
 
   ngOnInit(): void {

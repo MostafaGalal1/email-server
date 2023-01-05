@@ -18,6 +18,7 @@ public class FiltersExtracter
         list.add(new CriteriaReceiver(jsonObject));
         list.add(new CriteriaSender(jsonObject));
         list.add(new CriteriaSubject(jsonObject));
+        list.add(new CriteriaAttachment(jsonObject));
 
         AndCriteria andCriteria = new AndCriteria(list);
 
