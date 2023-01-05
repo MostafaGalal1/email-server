@@ -50,7 +50,6 @@ export class SignupComponent implements OnInit {
         this.usernameError!.innerText = "Username already taken";
         return;
       }
-      this.router.navigate(["/login"]);
     });
   }
 
