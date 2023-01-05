@@ -1,7 +1,7 @@
 .compose-box{
     position : absolute;
     width: 500px;
-    height: 374px;
+    height: 384px;
     background-color: white;
     visibility: visible;
     color: #202124;
@@ -32,9 +32,9 @@ label{
   display: block;
   text-align: left;
   height: 2px;
-  font-weight: bold;
-  color: #282d36;
+  color: grey;
   margin-left: 15px;
+  height: auto;
 }
 
 #subject{
@@ -46,6 +46,18 @@ label{
 #subject:focus{
   outline: none;
   border-bottom: 2px solid var(--primary);
+}
+
+#pLabel{
+  align-self: center;
+  width: 70px;
+}
+
+#errorLabel{
+  display: none;
+  padding-bottom: 12px;
+  color: red;
+  font-size: small!important;
 }
 
 #to{
@@ -91,6 +103,7 @@ label{
   background: var(--primary);
   color: var(--creamy);
   transition: 0.35s;
+  bottom: 16px;
 }
 
 .draft{
@@ -107,6 +120,8 @@ label{
   background: var(--primary);
   color: var(--creamy);
   transition: 0.35s;
+  bottom: 16px;
+  text-align: center;
 }
 
 .send:hover, .draft:hover{

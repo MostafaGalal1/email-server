@@ -41,7 +41,6 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges){
-    console.log(changes);
     if (!changes['currentID'].firstChange){
       (<FormArray>this.emailForm.get('receivers')).clear();
       let receiversArray = ComposeBoxComponent.to.split(", ");
@@ -56,6 +55,7 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
   }
 
   send(){
+    let temp = <HTMLInputElement>document.getElementById("errorLabel");
     (<FormArray>this.emailForm.get('receivers')).clear();
     let receiversArray = (<HTMLInputElement>document.getElementById("to")).value.split(", ");
     for (let i = 0; i < receiversArray.length; i++){
@@ -63,11 +63,17 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
     }
 
     this.emailToSend.append("mail", JSON.stringify(this.emailForm.value));
-    console.log(this.emailForm.value);
-    this.apiService.sendEmail(this.emailToSend).subscribe();
+    this.apiService.sendEmail(this.emailToSend).subscribe((response:any) => {
+      if (response.state == "failed"){
+        temp.style.display = "block";
+        return;
+      } else {
+        temp.style.display = "none";
+        MailComponent.compose = false;
+      }
+    });
 
     this.emailToSend = new FormData();
-    MailComponent.compose = false;
   }
 
   saveToDraft(){
@@ -83,8 +89,7 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
   }
 
   upload(files : any){
-    this.emailToSend = new FormData()
-    console.log(files.files);
+    this.emailToSend = new FormData();
     for(var i = 0 ;i < files.files.length ; i++){
       this.emailToSend.append("files", files.files[i]);
     }

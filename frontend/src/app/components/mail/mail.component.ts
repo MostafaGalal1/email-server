@@ -255,7 +255,6 @@ export class MailComponent implements OnInit{
         });
         delete MailComponent.emailsQueue[emailID];
         delete this.selectionQueue[emailID];
-        console.log(2);
       }
     }
     this.apiService.getEmails(MailComponent.currentFolder, "Date").subscribe((response:any) => {
@@ -549,8 +548,8 @@ export class MailComponent implements OnInit{
     if (left && emailIterator < MailComponent.emails.length-1) {
       this.selectionQueue = {};
       emailIterator++;
-      this.selectionQueue[emailIterator] = MailComponent.emailsQueue[emailIterator];
-      this.currentEmail = MailComponent.emailsQueue[emailIterator];
+      this.selectionQueue[MailComponent.emails[emailIterator].id] = MailComponent.emails[emailIterator];
+      this.currentEmail = MailComponent.emails[emailIterator];
     } else if (!left && emailIterator > 0) {
       this.selectionQueue = {};
       emailIterator--;
@@ -592,12 +591,10 @@ export class MailComponent implements OnInit{
   }
 
   darkModeToggle(): void {
-    alert('sfsgg');
   }
 
   async checkRadio(radio : string){
     setTimeout(() => {
-      console.log(radio);
       let temp = <HTMLInputElement>document.getElementById(radio);
       temp.checked = true;
     }, 10);
