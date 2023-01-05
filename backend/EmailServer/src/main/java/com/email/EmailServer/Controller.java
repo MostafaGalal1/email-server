@@ -58,6 +58,7 @@ public class Controller {
     @PostMapping("/SendEmail")
     @ResponseBody
     public String SendEmail(@RequestPart(name ="files",required = false) MultipartFile[] Files , @RequestParam(name ="mail") String data) throws IOException {
+        System.out.println(data);
         List<JSONObject> jsonFiles = this.CreateJsonAttachments(Files);
         JSONObject jsonData = new JSONObject(data).put("attachments",jsonFiles);
         return proxy.run("SendEmail",jsonData);
