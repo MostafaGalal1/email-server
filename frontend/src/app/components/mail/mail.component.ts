@@ -535,13 +535,13 @@ export class MailComponent implements OnInit{
     if (left && emailIterator < MailComponent.emails.length-1) {
       this.selectionQueue = {};
       emailIterator++;
-      this.selectionQueue[emailIterator] = MailComponent.emailsQueue[emailIterator];
-      this.currentEmail = MailComponent.emailsQueue[emailIterator];
+      this.selectionQueue[emailIterator] = MailComponent.emails[emailIterator];
+      this.currentEmail = MailComponent.emails[emailIterator];
     } else if (!left && emailIterator > 0) {
       this.selectionQueue = {};
       emailIterator--;
-      this.selectionQueue[emailIterator] = MailComponent.emailsQueue[emailIterator];
-      this.currentEmail = MailComponent.emailsQueue[emailIterator];
+      this.selectionQueue[emailIterator] = MailComponent.emails[emailIterator];
+      this.currentEmail = MailComponent.emails[emailIterator];
     }
   }
 

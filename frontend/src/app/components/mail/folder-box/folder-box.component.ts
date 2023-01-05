@@ -43,11 +43,15 @@ export class FolderBoxComponent implements OnInit {
       if(this.folderForm.value.folderName! === MailComponent.folders[MailComponent.indexFolder])
         return;
       var oldName = MailComponent.folders[MailComponent.indexFolder];
-      MailComponent.folders[MailComponent.indexFolder]=this.folderForm.value.folderName!;
-      MailComponent.folderBoxVisible = false;
-      this.apiService.editFolder(oldName,MailComponent.folders[MailComponent.indexFolder]).subscribe();
+      this.apiService.editFolder(oldName,MailComponent.folders[MailComponent.indexFolder]).subscribe((response:any) => {
+        if (response.state === "success"){ 
+          MailComponent.folders[MailComponent.indexFolder]=this.folderForm.value.folderName!;
+          MailComponent.folderBoxVisible = false;
+        } else {
+          alert("Folder exists");
+        }
+      });
     }
-
   }
 
   closeFolderBox(){
