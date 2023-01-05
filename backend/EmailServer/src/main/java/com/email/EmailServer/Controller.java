@@ -106,9 +106,12 @@ public class Controller {
 
     @PostMapping("/SaveToDraft")
     @ResponseBody
-    public String SaveToDraft(@RequestBody String data){
+    public String SaveToDraft(@RequestPart(name ="files",required = false) MultipartFile[] Files , @RequestParam(name ="mail") String data) throws IOException {
+        List<JSONObject> jsonFiles = this.CreateJsonAttachments(Files);
         System.out.println(data);
-        return proxy.run("SaveToDraft", new JSONObject(data));
+
+        JSONObject jsonData = new JSONObject(data).put("attachments",jsonFiles);
+        return proxy.run("SaveToDraft", jsonData);
     }
 
     @DeleteMapping("/DeleteEmail")

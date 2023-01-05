@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Email } from 'src/app/shared/email';
+import { Attachment, Email, newAttachment } from 'src/app/shared/email';
 import { Location } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Contact } from 'src/app/shared/contact';
 import { ComposeBoxComponent } from './compose-box/compose-box.component';
 import { FolderBoxComponent } from './folder-box/folder-box.component';
 import { ContactBoxComponent } from './contact-box/contact-box.component';
-
+import { Buffer } from 'buffer';
 @Component({
   selector: 'app-mail',
   templateUrl: './mail.component.html',
@@ -69,7 +69,8 @@ export class MailComponent implements OnInit{
   {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
     {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), priority:-1}];
   static emailsQueue: {[id : number] : Email};
-  protected attachs : string[] = [];
+  protected attachs : Attachment[] = [];
+  protected attachs2 : newAttachment[] = [];
   protected selectionQueue: {[id : number] : Email};
   static folders: string[] = [];
   static contacts: Contact[] = [{name:"", mails:[""]}];
@@ -488,8 +489,28 @@ export class MailComponent implements OnInit{
     this.selectionQueue = {};
     this.selectionQueue[emailID] = MailComponent.emailsQueue[emailID];
     this.currentEmail = MailComponent.emailsQueue[emailID];
+    this.apiService.getattachemt(emailID).subscribe((i : any) => {
+      this.attachs = i.data;
+      this.attachs2 = [];
+      for(var ii = 0; ii < this.attachs.length ;ii++){
+        var decoder = new TextDecoder('utf8');
+        var dfj = this.attachs[ii].link.map(Number);
+        var u8 = new  Uint8Array(dfj);
+        var b64encoded = Buffer.from(u8).toString('base64');
+        this.attachs2.push({link: b64encoded , name :this.attachs[ii].name});
+      }this.addAttachments();
+
+    });
   }
 
+   Uint8ToString(u8a :any){
+    var CHUNK_SZ = 0x8000;
+    var c = [];
+    for (var i=0; i < u8a.length; i+=CHUNK_SZ) {
+      c.push(String.fromCharCode.apply(null, u8a.subarray(i, i+CHUNK_SZ)));
+    }
+    return c.join("");
+  }
   async previewContact(index : number){
     this.currentContact = MailComponent.contacts[index];
     this.contactVisible = true;
@@ -568,12 +589,12 @@ export class MailComponent implements OnInit{
     }, 10);
   }
 
-  /*
-  addAttachments(email : Email){
-    var destinationNode = document.getElementById("attachments");
-    for(var i = 0 ;i < email.attachments.length ; i++){
-      this.attachs[i] =  "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].link);
+  
+  addAttachments(){
+    for(var i = 0 ;i < this.attachs2.length ; i++){
+      
+      this.attachs2[i].link =  "data:".concat(this.attachs[i].type).concat(";base64,").concat(this.attachs2[i].link);
     }
   }
-  */
+  
 }

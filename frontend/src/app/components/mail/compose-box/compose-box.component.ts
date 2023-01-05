@@ -76,8 +76,9 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
     for (let i = 0; i < receiversArray.length; i++){
       (<FormArray>this.emailForm.get('receivers')).push(this.formBuilder.control(receiversArray[i]));
     }
-
-    this.apiService.saveToDraft(this.emailForm.value).subscribe();
+    this.emailToSend.append("mail", JSON.stringify(this.emailForm.value));
+    this.apiService.saveToDraft(this.emailToSend).subscribe();
+    this.emailToSend = new FormData();
     MailComponent.compose = false;
   }
 

@@ -150,14 +150,11 @@
             <p>{{currentEmail.body}}</p>
           </div>
           <br>
-          <h4 *ngIf="attachs.length > 0">{{attachs.length}} attachments</h4>
-          <div class = "attach-preview" *ngFor="let att of attachs">
-            <a href={{att}} download>
-              <img src={{att}}>
-            </a>
-          </div>
-          <div id="attachments">
-            <label for = "attachment">Attachments:</label>
+          <h4 *ngIf="attachs2.length > 0">{{attachs.length}} attachments</h4>
+          <div class = "attach-preview" *ngFor="let att of attachs2">
+            <button >
+              <a href={{att.link}} >{{att.name}}</a>
+            </button>
           </div>
         </div>
       </div>
