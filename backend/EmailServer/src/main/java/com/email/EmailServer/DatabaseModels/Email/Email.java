@@ -26,7 +26,7 @@ public class Email{
     private String senderAddress;
 
     @Column(name = "email_receivers_address" , length = 100000)
-    private List<String> receiversAddress = new ArrayList<>();
+    private List receiversAddress = new ArrayList<>();
 
     @Column(name = "email_subject")
     private String subject;
@@ -66,11 +66,14 @@ public class Email{
         this.content = jsonObject.getString("body");
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
-        ////////////////////// attachment//////////////////////////////////
+        ServerSystem.AddEmailToDatabase(this);
+        List<JSONObject> Files = new Gson().fromJson(jsonObject.getJSONArray("receivers").toString(), List.class);
+        this.attachments = this.CreateAttachments(Files);
     }
 
     public void UpdateEmail(JSONObject jsonObject){
         this.buildEmail(jsonObject);
+        this.SetContentSet();
         ServerSystem.AddEmailToDatabase(this);
     }
 
@@ -84,7 +87,17 @@ public class Email{
         jsonObject.put("subject",this.subject);
         jsonObject.put("body", this.content);
         jsonObject.put("date", this.dateOfEmail.toInstant());////////////// needs linking with frontend way of storage
+
         return jsonObject;
+    }
+
+    private List<Attachment> CreateAttachments(List<JSONObject> Files){
+        List<Attachment> Attachments = new ArrayList<>();
+        for(JSONObject file : Files){
+            Attachment attachment = new Attachment(file, this);
+            Attachments.add(attachment);
+        }
+        return Attachments;
     }
 
     public static Email getExistingEmailByID(long ID)

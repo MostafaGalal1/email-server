@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Email, emailToSend } from '../shared/email';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Email } from '../shared/email';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,18 @@ import { Email, emailToSend } from '../shared/email';
 export class ApiService {
 
   constructor(private http: HttpClient) {  }
-  
+
+  draftID = new BehaviorSubject(-1);
+  draftID$ = this.draftID.asObservable();
+
+  getDraft(): Observable<number> {
+      return this.draftID$;
+  }
+
+  setDraft(id : number) {
+      this.draftID.next(id);
+  }
+
   searchEmails(folder : string, criterion : string, searchForm : object): Observable<object> {
     return this.http.post<object>('http://localhost:8080/Email/SearchInFolder', {"username":localStorage.getItem('currentUser'), "folderName":folder, "sortOption": criterion, "searchForm":searchForm});
   }
@@ -75,14 +86,14 @@ export class ApiService {
   }
 
   sortEmails(folder : string, criteria : string): Observable<Email[]> {
-    return this.http.get<Email[]>('http://localhost:8080/mail/' + folder + '/sort/' + criteria);
+    return this.http.get<Email[]>('http://localhost:8080/Email/' + folder + '/sort/' + criteria);
   }
 
-  sendEmail(email?:FormData): Observable<Object> {
+  sendEmail(email:FormData): Observable<Object> {
     return this.http.post<Object>('http://localhost:8080/Email/SendEmail', email);
   }
 
-  saveToDraft(email:emailToSend): Observable<Object> {
+  saveToDraft(email:object): Observable<Object> {
     return this.http.post<Object>('http://localhost:8080/Email/SaveToDraft', email);
   }
 

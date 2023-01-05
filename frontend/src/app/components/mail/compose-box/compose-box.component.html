@@ -1,30 +1,32 @@
-<div class = "compose-box" >
-    <div>
-        <label for="to">To</label><br>
-        <input name="to" placeholder="to" type="text" id="to" value = {{getto}}> 
-    </div>
-    <div>
-        <label for="subject">Subject</label><br>
-        <input name="subject-message" placeholder="Subject" type="text" id="subject-message" value={{getsubject}} >
-    </div>
-    <div>
-        <label for="message">message</label><br>
-        <textarea type="text" placeholder="message.." rows="9"  id="message" value={{getmessage}}></textarea>
-    </div>
-    <div class="attach">
-        <select name="priority"  id="priority" value={{getpriority}}>
-        <option selected disabled>choose priority</option>
-        <option value=4>Very High</option>
-        <option value=3>High</option>
-        <option value=2>Medium</option>
-        <option value=1>Low</option>
-        </select>
-        <div >
-        <input type="file" class="file"   multiple="multiple"  (change)="upload($event.target)"  >
+<div class = "compose-box">
+    <form class = "form" [formGroup]="emailForm" (ngSubmit)="send()">
+        <div>
+            <label for="to">To</label><br>
+            <input name="to" placeholder="To" type="text" id="to" value={{to}}> 
         </div>
-    </div>
-    <div>
-        <button class="send" (click)="send()"  >Send</button>
-        <button class="send" (click)="saveToDraft()" >Save to draft</button>
-    </div>
+        <div>
+            <label for="subject">Subject</label><br>
+            <input name="subject" placeholder="Subject" type="text" id="subject" value={{subject}} formControlName="subject">
+        </div>
+        <div>
+            <label for="body">message</label><br>
+            <textarea type="text" placeholder="Message..." rows="9"  id="body" value={{message}} formControlName="body"></textarea>
+        </div>
+        <div class="attach">
+            <select name="priority" id="priority" value={{priority}} formControlName="priority">
+            <option selected disabled>choose priority</option>
+            <option value=1>Low</option>
+            <option value=2>Moderate</option>
+            <option value=3>High</option>
+            <option value=4>Urgent</option>
+            </select>
+            <div >
+            <input type="file" class="file" multiple="multiple" (change)="upload($event.target)">
+            </div>
+        </div>
+        <div>
+            <input class="send" type="submit" value="Send">
+            <input class="draft" (click)="saveToDraft()" value="Draft">
+        </div>
+    </form>
 </div>

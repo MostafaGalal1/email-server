@@ -38,6 +38,7 @@ export class MailComponent implements OnInit{
   static currentFolder:string;
   protected checkAll:boolean;
   protected page:number = 0;
+  protected draftID:number = -1;
   static compose:boolean;
   protected currentUser:string|null;
   protected searchReset:boolean;
@@ -55,17 +56,17 @@ export class MailComponent implements OnInit{
   It will be for newcomers or participants from the second division (non-rated users or those having less than 2100 rating points). Want to compete? Do not forget to register for the contest and check your handle on the registrants page. The registration will be closed 5 minutes before the contest.
   If you have any questions, please feel free to ask me on the pages of Codeforces. If you no longer wish to receive these emails, click https://codeforces.com/unsubscribe/contests/efa30bad32b237fb5d0a0a309237837163a097b8/ to unsubscribe.
   Wish you high rating,
-  MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57")  , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , attachments:[]},
-    {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), attachments:[]} ];
+  MikeMirzayanov and Codeforces team`, date:new Date("Fri Dec 08 2019 07:44:57"), priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "Seiortreoi", "jtjytyjt"], subject:"rggrtgjptjpgfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"trtrhhtrfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "sdfsggdf", "SDGgfrth", "jtjytthhtrhyryjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sdfgf", "SDGgfrth", "jtjytyjt"], subject:"rggfggfdf", body:"gdgfddfggdfgfd", date:new Date() , priority:-1},
+    {id:0, sender:"SFghfg", receivers:["sd435534534f", "sdfsggdf", "SDGgfrth", "jtjytyjt"], subject:"543893045fdf", body:"gdgfddfggdfgfd", date:new Date(), priority:-1}];
   static emailsQueue: {[id : number] : Email};
   protected attachs : string[] = [];
   protected selectionQueue: {[id : number] : Email};
@@ -147,17 +148,18 @@ export class MailComponent implements OnInit{
   }
 
   async composeIt(){
-    if (MailComponent.compose)
-      return;
     setTimeout(() => {
+      ComposeBoxComponent.id = -1;
+      ComposeBoxComponent.to = "";
+      ComposeBoxComponent.subject = "";
+      ComposeBoxComponent.message = "";
+      ComposeBoxComponent.priority = 0;
+      this.draftID = -1;
       MailComponent.compose = true;
-    });
+    }, 20);
   }
 
   async hideCompose(){
-    if(!MailComponent.compose ){
-      return ;
-    }
     setTimeout(() => {
       MailComponent.compose = false;
     });
@@ -235,21 +237,21 @@ export class MailComponent implements OnInit{
   }
 
   async selectAll(){
-    if (this.checkAll){
-      this.checkAll = false;
-    } else {
-      this.checkAll = true;
-    }
-    for (const emailID in MailComponent.emailsQueue){
-      this.emailSelection(this.checkAll, parseInt(emailID));
-    }
+      if (this.checkAll){
+        this.checkAll = false;
+      } else {
+        this.checkAll = true;
+      }
+      for (const emailID in MailComponent.emailsQueue){ 
+        this.emailSelection(this.checkAll, parseInt(emailID));
+      }
   }
 
 
   async resetSelection(){
     if (this.checkAll){
       this.checkAll = false;
-      for (const emailID in MailComponent.emailsQueue){
+      for (const emailID in MailComponent.emailsQueue){ 
         this.emailSelection(this.checkAll, parseInt(emailID));
       }
     }
@@ -305,6 +307,10 @@ export class MailComponent implements OnInit{
     });
   }
 
+  get currentFolder(){
+    return MailComponent.currentFolder
+  }
+
   async showEditBox(boxID : string){
     var temp = <HTMLInputElement>document.getElementById(boxID);
     setTimeout(() => {
@@ -323,7 +329,6 @@ export class MailComponent implements OnInit{
   }
 
   get getcomposeVisible() {
-
     return MailComponent.compose;
   }
 
@@ -331,11 +336,7 @@ export class MailComponent implements OnInit{
 
     return MailComponent.folderBoxVisible;
   }
-
-  get currentFolder() {
-    return MailComponent.currentFolder;
-  }
-
+  
   get getContactVisible() {
 
     return MailComponent.contactBoxVisible;
@@ -441,25 +442,27 @@ export class MailComponent implements OnInit{
 
   async previewEmail(emailID : number){
     if(MailComponent.currentFolder === "Draft"){
-      this.composeIt();
-
-      for(var i = 0 ; i< MailComponent.emails.length;i++){
+      for(var i = 0 ; i < MailComponent.emails.length; i++){
         if(MailComponent.emails[i].id == emailID){
           this.tempEmail = MailComponent.emails[i]
-          ComposeBoxComponent.id = Number(emailID);
         }
       }
-      ComposeBoxComponent.to = "";
-      for(var i = 0 ; i < this.tempEmail["receivers"].length;i++){
-        if(i != this.tempEmail["receivers"]?.length-1)
+      setTimeout(() => { 
+        ComposeBoxComponent.id = emailID;
+        ComposeBoxComponent.to = "";
+        for(let i = 0 ; i < this.tempEmail["receivers"].length - 1;i++){
           ComposeBoxComponent.to += this.tempEmail["receivers"][i] + ", ";
-        else{
-          ComposeBoxComponent.to += this.tempEmail["receivers"][i] ;
         }
-      }
-      ComposeBoxComponent.message = this.tempEmail['body'];
-      ComposeBoxComponent.subject = this.tempEmail["subject"];
-      ComposeBoxComponent.priority = "3"
+        if (this.tempEmail["receivers"].length > 0)
+          ComposeBoxComponent.to += this.tempEmail["receivers"][this.tempEmail["receivers"].length - 1];
+        ComposeBoxComponent.subject = this.tempEmail["subject"];
+        ComposeBoxComponent.message = this.tempEmail["body"];
+        if (this.tempEmail["priority"] !== undefined)
+          ComposeBoxComponent.priority = this.tempEmail["priority"];
+        
+        this.draftID = emailID;
+        MailComponent.compose = true;
+      }, 20);
       return;
     }
     this.emailVisible = true;
@@ -467,7 +470,6 @@ export class MailComponent implements OnInit{
     this.selectionQueue = {};
     this.selectionQueue[emailID] = MailComponent.emailsQueue[emailID];
     this.currentEmail = MailComponent.emailsQueue[emailID];
-
   }
 
   async previewContact(index : number){
@@ -538,11 +540,12 @@ export class MailComponent implements OnInit{
     alert('sfsgg');
   }
 
+  /*
   addAttachments(email : Email){
     var destinationNode = document.getElementById("attachments");
     for(var i = 0 ;i < email.attachments.length ; i++){
       this.attachs[i] =  "data:".concat(email.attachments[i].type).concat(";base64,").concat(email.attachments[i].link);
     }
-
   }
+  */
 }

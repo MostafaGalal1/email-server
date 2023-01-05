@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +108,7 @@ public class Controller {
     @PostMapping("/SaveToDraft")
     @ResponseBody
     public String SaveToDraft(@RequestBody String data){
+        System.out.println(data);
         return proxy.run("SaveToDraft", new JSONObject(data));
     }
 
@@ -132,6 +132,8 @@ public class Controller {
 
     private List<JSONObject> CreateJsonAttachments(MultipartFile[] Files){
         List<JSONObject> jsonFiles = new ArrayList<>();
+        if (Files == null)
+            return jsonFiles;
         for (MultipartFile file: Files){
             JSONObject jsonData = this.ExtractData(file);
             jsonFiles.add(jsonData);

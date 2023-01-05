@@ -66,7 +66,7 @@ public class CriteriaDate implements EmailCriteria
     private void SetRangeDate(JSONObject jsonObject)
     {
         String RangeString = jsonObject.getString(this.RangeJson);
-        if (RangeString == "")
+        if (RangeString.equals(""))
             this.RangeDate = 100000000;
         else
             this.RangeDate = Integer.parseInt(RangeString);

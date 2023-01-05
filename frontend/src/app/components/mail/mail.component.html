@@ -128,7 +128,7 @@
       <button class = "right-nav-button" #rightNavButton [ngStyle]="{'display' : emailVisible? '':'none'}" type = "button" (click)="navigateEmails(true)"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
     </div>
     <app-filter-search class = "filter-search" #filterSearch [ngStyle]="{'display' : filterBoxVisible? '':'none'}" (clickOutside)="hideFilter()"></app-filter-search>
-    <app-compose-box class = "compose-box" #composeBox [ngStyle]="{'display' : getcomposeVisible? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
+    <app-compose-box [currentID]="draftID" class = "compose-box" #composeBox [ngStyle]="{'display' : getcomposeVisible? '':'none'}" (clickOutside)="hideCompose()"></app-compose-box>
     <div class="emails-container">
       <div class = "email-preview" [ngStyle]="{'display' : emailVisible? 'block':'none'}">
         <div class = "email-pad">
