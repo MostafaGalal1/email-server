@@ -1,7 +1,7 @@
 package com.email.EmailServer.DatabaseModels.Email;
 
 import com.email.EmailServer.DatabaseModels.Attachment;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +26,7 @@ public class Email{
     private String senderAddress;
 
     @Column(name = "email_receivers_address" , length = 100000)
-    private List receiversAddress = new ArrayList<>();
+    private List<String> receiversAddress = new ArrayList<>();
 
     @Column(name = "email_subject")
     private String subject;
@@ -55,7 +55,7 @@ public class Email{
         this.buildEmail(jsonObject);
         this.SetContentSet();
 
-        ServerSystem.AddEmailToDatabase(this);
+        DatabaseDriver.AddEmailToDatabase(this);
     }
 
     private void buildEmail(JSONObject jsonObject)
@@ -66,7 +66,7 @@ public class Email{
         this.content = jsonObject.getString("body");
         this.dateOfEmail = new Date();
         this.priority = jsonObject.getInt("priority");
-        ServerSystem.AddEmailToDatabase(this);
+        DatabaseDriver.AddEmailToDatabase(this);
         List<JSONObject> Files = new Gson().fromJson(jsonObject.getJSONArray("receivers").toString(), List.class);
         this.attachments = this.CreateAttachments(Files);
     }
@@ -74,7 +74,7 @@ public class Email{
     public void UpdateEmail(JSONObject jsonObject){
         this.buildEmail(jsonObject);
         this.SetContentSet();
-        ServerSystem.AddEmailToDatabase(this);
+        DatabaseDriver.AddEmailToDatabase(this);
     }
 
     public JSONObject getJsonOfHeader()
@@ -102,7 +102,7 @@ public class Email{
 
     public static Email getExistingEmailByID(long ID)
     {
-        return ServerSystem.GetEmailByID(ID);
+        return DatabaseDriver.GetEmailByID(ID);
     }
 
     /////////////////////////////////////////////////////////////
@@ -129,12 +129,8 @@ public class Email{
         return this.contentSet.contains(Word);
     }
 
-    @Override
-    public boolean equals(Object obj)
+    public boolean HashAttachment()
     {
-        if (obj instanceof Email) return false;
-
-        Email OtherEmail = (Email) obj;
-        return (this.getId() == OtherEmail.getId());
+        return (this.attachments.size() > 0);
     }
 }

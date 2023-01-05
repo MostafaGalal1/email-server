@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 public class Proxy {
     private final CommandFactory commandFactory;
 
-    public Proxy() {
+    public Proxy()
+    {
         this.commandFactory = CommandFactory.getInstance();
     }
 
-    public synchronized String run(String command, JSONObject data){
+    public synchronized String run(String command, JSONObject data)
+    {
         return commandFactory.create(command,data).execute().toString();
     }
 

@@ -14,9 +14,9 @@ import { map } from 'rxjs';
   styleUrls: ['./compose-box.component.css']
 })
 export class ComposeBoxComponent implements OnInit, OnChanges {
-  @Input() currentID : number = -1; 
+  @Input() currentID : number = -1;
   protected emailToSend : FormData;
-  
+
   protected emailForm = this.formBuilder.group({
     sender: localStorage.getItem("currentUser"),
     receivers: this.formBuilder.array([]),
@@ -36,7 +36,7 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
   constructor(private apiService : ApiService, private http : HttpClient, private formBuilder : FormBuilder) {
     this.emailToSend = new FormData();
   }
-  
+
   ngOnInit(): void {
   }
 
@@ -54,7 +54,7 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
       this.emailForm.get("priority")?.setValue(ComposeBoxComponent.priority);
     }
   }
-  
+
   send(){
     (<FormArray>this.emailForm.get('receivers')).clear();
     let receiversArray = (<HTMLInputElement>document.getElementById("to")).value.split(", ");
@@ -68,7 +68,7 @@ export class ComposeBoxComponent implements OnInit, OnChanges {
 
     this.emailToSend = new FormData();
     MailComponent.compose = false;
-  } 
+  }
 
   saveToDraft(){
     (<FormArray>this.emailForm.get('receivers')).clear();

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServerSystem{
+public class DatabaseDriver {
 
     @Autowired
     private static UserRepo userRepo;
@@ -21,7 +21,7 @@ public class ServerSystem{
     @Autowired
     private static AttachmentRepo attachmentRepo;
 
-    public ServerSystem(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo, ContactRepo ContactRepo, AttachmentRepo AttachmentRepo)
+    public DatabaseDriver(UserRepo UserRepo, FolderRepo FolderRepo, EmailRepo EmailRepo, ContactRepo ContactRepo, AttachmentRepo AttachmentRepo)
     {
         userRepo = UserRepo;
         folderRepo = FolderRepo;

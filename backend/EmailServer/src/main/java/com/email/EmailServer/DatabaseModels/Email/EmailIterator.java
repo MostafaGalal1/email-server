@@ -1,7 +1,6 @@
 package com.email.EmailServer.DatabaseModels.Email;
 
-import com.email.EmailServer.DatabaseModels.Email.Email;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class EmailIterator implements Iterator
     public Email next()
     {
         long EmailId = (long)this.MyIterator.next();
-        Email WantedEmail = ServerSystem.GetEmailByID(EmailId);
+        Email WantedEmail = DatabaseDriver.GetEmailByID(EmailId);
         String wantedname = WantedEmail.getSenderAddress();
         return WantedEmail;
     }

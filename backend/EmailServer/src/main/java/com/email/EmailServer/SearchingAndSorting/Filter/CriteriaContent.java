@@ -16,14 +16,12 @@ public class CriteriaContent implements EmailCriteria
 
     public CriteriaContent(JSONObject jsonObject)
     {
-//        if (jsonObject.getString(this.ObjectInJson).equals(""))
-//        {
-//            this.CritiriaActive = false;
-//            return;
-//        }
-//        String Content = jsonObject.getString(this.ObjectInJson);
-
-        String Content = "pizza";
+        if (jsonObject.getString(this.ObjectInJson).equals(""))
+        {
+            this.CritiriaActive = false;
+            return;
+        }
+        String Content = jsonObject.getString(this.ObjectInJson);
 
         this.Words = Content.split(" ");
     }
