@@ -1,6 +1,6 @@
 package com.email.EmailServer.DatabaseModels.User;
 
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
@@ -38,17 +38,17 @@ public class Contact {
         this.name = Name;
         this.addresses = Addresses;
         this.user = User;
-        ServerSystem.AddContactToDataBase(this);
+        DatabaseDriver.AddContactToDataBase(this);
     }
     public void EditContact(String Name, List<String> Addresses){
         this.setName(Name);
         this.setAddresses(Addresses);
-        ServerSystem.AddContactToDataBase(this);
+        DatabaseDriver.AddContactToDataBase(this);
     }
 
     public void DestroyContact()
     {
-        ServerSystem.RemoveContactFromDataBase(this);
+        DatabaseDriver.RemoveContactFromDataBase(this);
     }
 
     public JSONObject getJsonOfContact(){

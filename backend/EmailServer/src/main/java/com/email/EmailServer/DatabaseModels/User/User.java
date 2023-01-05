@@ -3,7 +3,7 @@ package com.email.EmailServer.DatabaseModels.User;
 
 import com.email.EmailServer.DatabaseModels.Folder;
 import com.email.EmailServer.DatabaseModels.Email.EmailIterator;
-import com.email.EmailServer.DatabaseModels.ServerSystem;
+import com.email.EmailServer.DatabaseModels.DatabaseDriver;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -57,14 +57,14 @@ public class User
     }
     public User(String FirstName, String LastName, String UserName, String Password)
     {
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
         this.firstName = FirstName;
         this.lastName = LastName;
         this.address = UserName;
         this.password = Password;
         this.date = new Date();
 
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
         this.InitializeFolders();
 
         //ServerSystem.AddUserToDataBase(this);
@@ -88,7 +88,7 @@ public class User
     protected void AddFolder(Folder folder)
     {
         this.folders.put(folder.getName(), folder);
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
     }
 
     protected void RemoveFolder(String FolderName)
@@ -101,7 +101,7 @@ public class User
     private void RemoveFolderFromHashMap(String FolderName)
     {
         this.folders.remove(FolderName);
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
     }
 
     protected void RenameFolder(String oldName, String newName)
@@ -136,7 +136,6 @@ public class User
         if (folder.isPrimary()) return false;
         return true;
     }
-
 
     protected void RemoveEmailFromAllFolders(long EmailID)
     {
@@ -173,7 +172,7 @@ public class User
 
     protected void AddContact(Contact contact){
         this.contacts.put(contact.getName(),contact);
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
     }
 
     protected void EditContact(String oldName, String newName, List<String> Addresses)
@@ -194,7 +193,7 @@ public class User
     private void RemoveContactFromHashMap(String ContactName)
     {
         this.contacts.remove(ContactName);
-        ServerSystem.AddUserToDataBase(this);
+        DatabaseDriver.AddUserToDataBase(this);
     }
     protected List<JSONObject> GetAllContactsJson(){
         Set<String> names = this.contacts.keySet();

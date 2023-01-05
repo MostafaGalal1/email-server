@@ -11,7 +11,7 @@ import { MailComponent } from '../mail.component';
 })
 export class FilterSearchComponent implements OnInit {
 
-  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) { 
+  constructor(private apiService : ApiService, private formBuilder : FormBuilder, private router:Router) {
   }
 
   ngOnInit(): void {
@@ -31,7 +31,12 @@ export class FilterSearchComponent implements OnInit {
   onSubmit(){
     console.log(this.searchForm);
     this.apiService.searchEmails(MailComponent.currentFolder, "Date", this.searchForm.value).subscribe(
-      (response:any) => {MailComponent.emails = response.data;
+      (response:any) => {
+        MailComponent.emails = response.data;
+        for (let i = 0; i < MailComponent.emails.length; i++){
+          MailComponent.emails[i].date = new Date(MailComponent.emails[i].date);
+          MailComponent.emailsQueue[MailComponent.emails[i].id] = MailComponent.emails[i];
+        }
       }
     );
   }
